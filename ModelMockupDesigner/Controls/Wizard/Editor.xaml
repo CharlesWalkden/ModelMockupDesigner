@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="ModelMockupDesigner.Editor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ModelMockupDesigner"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="LightSlateGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="{StaticResource EditorGrayBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" 
+                        Grid.Column="0">
+                <!--<Button Style="{StaticResource FFGButton}"
+                        Content="Save"
+                        Margin="10,0,0,0"
+                        FontSize="{StaticResource FontSizeRegular}"
+                        ="Save_Click"/> -->
+            </StackPanel>
+            <Grid Grid.Column="1">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="Wizard Name" 
+                               VerticalAlignment="Center"
+                               Foreground="White"
+                               FontSize="{StaticResource FontSizeXLarge}"/>
+                    <TextBox Style="{StaticResource PropertyEditorTextBox}"
+                             Text="{Binding WizardName}"
+                             VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Grid for left side panel
+            <Grid Grid.Column="0" Background="{StaticResource EditorGrayBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Border BorderBrush="White" 
+                        BorderThickness="0,0,1,0" Opacity="0.25"/>
+                <Grid Grid.Row="0">
+                    <TextBlock Text="Property Editor" 
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               FontSize="{StaticResource FontSizeXXLarge}"/>
+                    <Border BorderBrush="White" 
+                            BorderThickness="0,1,1,1"
+                            Opacity="0.25"/>
+
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Border BorderBrush="White" 
+                        BorderThickness="0,0,1,1" Opacity="0.25"/>
+
+                    <ScrollViewer Grid.Row="1" Margin="0,0,1,1">
+                        <Grid x:Name="PropertyEditor"/>
+                    </ScrollViewer>
+                </Grid>
+
+                <Grid Grid.Row="2" 
+                      Background="White"
+                      Margin="20">
+                    <Border BorderBrush="White" 
+                        BorderThickness="0,0,1,0" Opacity="0.25"/>
+                </Grid>
+            </Grid>-->
+
+            <Grid Grid.Column="1" Margin="0,5,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+<!--
+                <Grid Grid.Row="0" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="DeletePageButton"
+                            Style="{StaticResource PathButtonDeletePage}"
+                            Grid.Column="0" Height="25" Width="25"
+                            Click="DeletePage_Click" 
+                            ToolTip="Delete current page"/>
+
+                    <Button Style="{StaticResource PathButtonAddPage}"
+                            Margin="2,0,0,0" 
+                            Grid.Column="1" 
+                            Click="NewPage_Click" 
+                            ToolTip="Add a new page"/>
+
+                    <Button x:Name="NavPreviousButton"
+                            Style="{StaticResource PathButtonNavPrevious}"
+                            Margin="2,0,0,0" 
+                            Grid.Column="2" Click="PreviousButton_Click" ToolTip="Previous page"/>
+                    <Button x:Name="NavNextButton"
+                            Style="{StaticResource PathButtonNavNext}" 
+                            Margin="2,0,2,0"
+                            Grid.Column="3" Click="NextButton_Click" ToolTip="Next page"/>
+
+                    <ComboBox x:Name="PageSelector" Grid.Column="4" Margin="5,1,0,0" Width="150"
+                              ItemsSource="{Binding PageList}"
+                              SelectedItem="{Binding CurrentPage, UpdateSourceTrigger=Explicit}" 
+                              SelectionChanged="PageSelector_SelectionChanged"/>
+                </Grid>
+-->
+
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
+
+                    <Grid x:Name="ContentContainer" 
+                          HorizontalAlignment="Stretch" 
+                          VerticalAlignment="Stretch"
+                          Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+            
+        </Grid>
+    </Grid>
+</UserControl>
