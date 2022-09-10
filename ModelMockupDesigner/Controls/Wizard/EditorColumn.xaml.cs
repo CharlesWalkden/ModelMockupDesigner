@@ -3,6 +3,7 @@ using ModelMockupDesigner.Models;
 using ModelMockupDesigner.Models.Wizard;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace ModelMockupDesigner.Controls
 {
@@ -26,23 +28,23 @@ namespace ModelMockupDesigner.Controls
         #region Public Properties
 
         public BaseModel? Model { get => ColumnModel; }
-        public bool IsSelected { get; set; }
+        public EditorSection ColumnParent { get => columnParent; set => columnParent = value; }
 
         #endregion
 
         #region Private Properties
 
         private WizardColumn? ColumnModel => DataContext as WizardColumn;
-
-        private readonly List<EditorPanel> Panels = new List<EditorPanel>(); 
-
+        private EditorSection columnParent { get; set; } 
+ 
         #endregion
 
         #region Constructor
 
-        public EditorColumn()
+        public EditorColumn(EditorSection parent)
         {
             InitializeComponent();
+            columnParent = parent;
         }
 
         #endregion
@@ -53,38 +55,63 @@ namespace ModelMockupDesigner.Controls
         {
             DataContext = columnModel;
 
-            Grid container = new();
-            for (int i = 0; i < columnModel.WizardPanels.Count; i++)
+            for (int i = 0; i <= columnModel.WizardPanels.Count; i++)
             {
                 container.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             }
 
             foreach (WizardPanel wizardPanel in columnModel.WizardPanels)
             {
-                EditorPanel editorPanel = new();
+                EditorPanel editorPanel = new(this);
+                editorPanel.OnSelected += OnSelected;
 
                 container.Children.Add(editorPanel);
-                Grid.SetRow(editorPanel, wizardPanel.Order - 1);
+                Grid.SetRow(editorPanel, wizardPanel.Order);
 
                 await editorPanel.LoadModel(wizardPanel);
             }
-
-            Root.Children.Add(container);
+        }
+        public void Unselect()
+        {
+            HeaderStackPanel.Background = Brushes.Transparent;
+            HeaderTextBlock.Foreground = Application.Current.Resources["ColumnGrayBrush"] as SolidColorBrush;
+            HeaderTextBlock.Background = Brushes.White;
+            Border.Fill = Brushes.Transparent;
         }
 
-        public void Delete(bool unselect)
+        public void Delete()
         {
-
+            ColumnParent.Delete(this);
         }
-        private void DeleteAllContent()
+        public void Delete(EditorPanel child)
         {
-            foreach (FrameworkElement element in Root.Children)
+            if (ColumnModel != null && child.Model != null)
             {
-                if (element is EditorPanel panel)
-                {
-                    panel.Delete(false);
-                }
+                _ = ColumnModel.WizardPanels.Remove((WizardPanel)child.Model);
+                container.Children.Remove(child);
             }
+        }
+
+        private async Task AddPanel()
+        {
+            if (ColumnModel == null)
+                return;
+
+            container.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+
+            WizardPanel wizardPanel = new(ColumnModel);
+            wizardPanel.CreateNew();
+
+            ColumnModel.WizardPanels.Add(wizardPanel);
+
+            EditorPanel editorPanel = new(this);
+            editorPanel.OnSelected += OnSelected;
+
+            container.Children.Add(editorPanel);
+            Grid.SetRow(editorPanel, wizardPanel.Order);
+
+            await editorPanel.LoadModel(wizardPanel);
+
         }
 
 
@@ -93,21 +120,25 @@ namespace ModelMockupDesigner.Controls
 
         #region Events
 
-        public EventHandler<IIsSelectable> OnSelected;
+        public EventHandler<IIsSelectable>? OnSelected;
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            HeaderStackPanel.Background = Brushes.Red;
+            HeaderStackPanel.Background = Application.Current.Resources["ColumnGrayBrush"] as SolidColorBrush;
             HeaderTextBlock.Foreground = Brushes.White;
             HeaderTextBlock.Background = Brushes.Transparent;
             Border.Fill = Brushes.Yellow;
 
-            //EditorActions.UpdateSelection(this);
+            OnSelected?.Invoke(this, this);
         }
         private void HeaderStackPanel_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             ContextMenu contextMenu = new ContextMenu();
 
-            MenuItem menuItem = new MenuItem() { Header = "Delete all controls" };
+            MenuItem menuItem = new MenuItem() { Header = "Delete Column" };
+            menuItem.Click += MenuItem_Click;
+            contextMenu.Items.Add(menuItem);
+
+            menuItem = new MenuItem() { Header = "Add New Panel" };
             menuItem.Click += MenuItem_Click;
             contextMenu.Items.Add(menuItem);
 
@@ -117,9 +148,26 @@ namespace ModelMockupDesigner.Controls
 
             e.Handled = true;
         }
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private async void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            DeleteAllContent();
+            if (sender is MenuItem menuItem)
+            {
+                switch (menuItem.Header)
+                {
+                    case "Delete Column":
+                        {
+                            Delete();
+                            break;
+                        }
+                    case "Add New Panel":
+                        {
+                            await AddPanel();
+                            break;
+                        }
+                    default:
+                        break;
+                }
+            }
         }
 
         #endregion

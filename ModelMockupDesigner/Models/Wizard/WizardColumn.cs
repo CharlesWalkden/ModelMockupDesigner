@@ -9,12 +9,12 @@ namespace ModelMockupDesigner.Models.Wizard
 {
     public class WizardColumn : BaseModel
     {
-        public WizardSection Parent { get; set; }
+        public WizardSection? Parent { get; set; }
 
-        public int Order { get; set; } = 1;
+        public int Order { get; set; } = 0;
         public List<WizardPanel> WizardPanels { get; set; }  
 
-        public WizardColumn(WizardSection parent)
+        public WizardColumn(WizardSection? parent)
         {
             Parent = parent;
             WizardPanels = new List<WizardPanel>();
@@ -22,7 +22,8 @@ namespace ModelMockupDesigner.Models.Wizard
 
         public void CreateNew()
         {
-            Order = Parent.WizardColumns.Count + 1;
+            if (Parent != null)
+                Order = Parent.WizardColumns.Count + 1;
 
             WizardPanel wizardPanel = new(this);
             wizardPanel.CreateNew();

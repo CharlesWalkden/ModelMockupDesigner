@@ -33,6 +33,10 @@
                 <TextBlock Grid.Row="0" Text="Recent Projects" FontSize="25" HorizontalAlignment="Center" />
                 <Border Grid.Row="1" BorderBrush="Black" BorderThickness="2" Margin="10">
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="21*"/>
+                            <ColumnDefinition Width="13*"/>
+                        </Grid.ColumnDefinitions>
                         <!-- List of recent projects to be displayed here -->
                     </Grid>
                 </Border>

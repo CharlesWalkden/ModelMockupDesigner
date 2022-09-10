@@ -6,7 +6,23 @@
              xmlns:local="clr-namespace:ModelMockupDesigner.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <Grid Background="{StaticResource WizardEditorBackgroundBrush}" x:Name="Container" Margin="2.5">
+        <Grid x:Name="Root" Margin="2.5">
+            <Grid x:Name="overlay" 
+              HorizontalAlignment="Stretch" 
+              VerticalAlignment="Stretch" 
+              Background="White" 
+              MinHeight="25" MinWidth="25"
+              AllowDrop="True"
+              DragEnter="Control_DragEnter"
+              DragLeave="Control_DragLeave"
+              Drop="Control_Drop"
+              MouseLeftButtonDown="Control_MouseLeftButtonDown"
+              Panel.ZIndex="100"
+              ContextMenuOpening="Overlay_ContextMenuOpening">
+
+            </Grid>
+
+        </Grid>
     </Grid>
 </UserControl>

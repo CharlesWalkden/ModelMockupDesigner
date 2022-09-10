@@ -3,6 +3,7 @@ using ModelMockupDesigner.Models;
 using ModelMockupDesigner.Models.Wizard;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,6 @@ namespace ModelMockupDesigner.Controls
         #region Public Properties
 
         public BaseModel? Model => SectionModel;
-        public bool IsSelected { get; set; }
 
         #endregion
 
@@ -34,7 +34,6 @@ namespace ModelMockupDesigner.Controls
 
         private WizardSection? SectionModel => DataContext as WizardSection;
 
-        private readonly List<EditorColumn> Columns = new List<EditorColumn>();
 
         #endregion
 
@@ -53,134 +52,86 @@ namespace ModelMockupDesigner.Controls
         {
             DataContext = sectionModel;
 
-            Grid container = new();
-            for (int i = 0; i < sectionModel.WizardColumns.Count; i++)
+            for (int i = 0; i <= sectionModel.WizardColumns.Count; i++)
             {
                 container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             }
 
             foreach (WizardColumn wizardColumn in sectionModel.WizardColumns)
             {
-                EditorColumn editorColumn = new();
+                EditorColumn editorColumn = new(this);
+                editorColumn.OnSelected += OnSelected;
 
                 container.Children.Add(editorColumn);
-                Grid.SetColumn(editorColumn, wizardColumn.Order - 1);
+                Grid.SetColumn(editorColumn, wizardColumn.Order);
 
                 await editorColumn.LoadModel(wizardColumn);
 
             }
-
-            Root.Children.Add(container);
         }
 
-        public void Delete(bool unselect)
+        public void Unselect()
+        {
+            HeaderStackPanel.Background = Brushes.Transparent;
+            HeaderTextBlock.Foreground = Application.Current.Resources["SectionPinkBrush"] as SolidColorBrush;
+            HeaderTextBlock.Background = Brushes.White;
+            Border.Fill = Brushes.Transparent;
+        }
+
+        public void Delete()
         {
 
         }
+        public void Delete(EditorColumn child)
+        {
+            if (SectionModel != null && child.Model != null)
+            {
+                _ = SectionModel.WizardColumns.Remove((WizardColumn)child.Model);
+                container.Children.Remove(child);
+            }
+        }
 
+        private async Task AddColumn()
+        {
+            if (SectionModel == null)
+                return;
+
+            container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+
+            WizardColumn wizardColumn = new(SectionModel);
+            wizardColumn.CreateNew();
+
+            SectionModel.WizardColumns.Add(wizardColumn);
+
+            EditorColumn editorColumn = new(this);
+            editorColumn.OnSelected += OnSelected;
+
+            container.Children.Add(editorColumn);
+            Grid.SetColumn(editorColumn, wizardColumn.Order);
+
+            await editorColumn.LoadModel(wizardColumn);
+        }
 
         #endregion
 
-        #region Override Events
-
-        protected override void OnPreviewDragEnter(DragEventArgs e)
-        {
-            this.AllowDrop = true;
-            base.OnPreviewDragEnter(e);
-            newColumn.Visibility = Visibility.Visible;
-            newRow.Visibility = Visibility.Visible;
-        }
-
-        protected override void OnPreviewDragLeave(DragEventArgs e)
-        {
-
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-
-        }
-
-        #endregion
-
+       
         #region Events
 
-        public EventHandler<IIsSelectable> OnSelected;
+        public EventHandler<IIsSelectable>? OnSelected;
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //HeaderStackPanel.Background = Brushes.Red;
-            //HeaderTextBlock.Foreground = Brushes.White;
-            //HeaderTextBlock.Background = Brushes.Transparent;
-            //Border.Fill = Brushes.Yellow;
+            HeaderStackPanel.Background = Application.Current.Resources["SectionPinkBrush"] as SolidColorBrush;
+            HeaderTextBlock.Foreground = Brushes.White;
+            HeaderTextBlock.Background = Brushes.Transparent;
+            Border.Fill = Brushes.Yellow;
 
-            //EditorActions.UpdateSelection(this);
-        }
-        private void Control_DragEnter(object sender, DragEventArgs e)
-        {
-            //if (sender is Grid target)
-            //{
-            //    target.Background = Brushes.LightBlue;
-            //}
-        }
-        private void Control_DragLeave(object sender, DragEventArgs e)
-        {
-            //if (sender is Grid target)
-            //{
-            //    target.Background = Brushes.Transparent;
-            //}
-        }
-        private void Control_DragOver(object sender, DragEventArgs e)
-        {
-            //if (e.Data.GetDataPresent(typeof(NewControl)))
-            //{
-            //    e.Effects = DragDropEffects.Copy;
-            //}
-            //else
-            //{
-            //    e.Effects = DragDropEffects.None;
-            //}
-        }
-        private void Control_Drop(object sender, DragEventArgs e)
-        {
-            //int column = 0;
-            //int row = 0;
-            //NewControl newControl = e.Data.GetData(typeof(NewControl)) as NewControl;
-
-            //if (sender == newColumn)
-            //{
-            //    column = Root.ColumnDefinitions.Count;
-
-            //    if (newControl != null)
-            //    {
-            //        AddNewColumn(column, newControl);
-            //    }
-            //    else
-            //    {
-            //        AddNewColumn(column);
-            //    }
-
-            //}
-            //if (sender == newRow)
-            //{
-            //    row = Root.RowDefinitions.Count;
-
-            //    if (newControl != null)
-            //    {
-            //        AddNewRow(row, newControl);
-            //    }
-            //    else
-            //    {
-            //        AddNewRow(row);
-            //    }
-            //}
-            //newColumn.Visibility = Visibility.Collapsed;
-            //newRow.Visibility = Visibility.Collapsed;
+            OnSelected?.Invoke(this, this);
         }
         private void HeaderStackPanel_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             ContextMenu contextMenu = new ContextMenu();
 
-            MenuItem menuItem = new MenuItem() { Header = "Delete all controls" };
+            MenuItem menuItem = new MenuItem() { Header = "Add New Column" };
             menuItem.Click += MenuItem_Click;
             contextMenu.Items.Add(menuItem);
 
@@ -190,9 +141,21 @@ namespace ModelMockupDesigner.Controls
 
             e.Handled = true;
         }
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private async void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            if (sender is MenuItem menuItem)
+            {
+                switch (menuItem.Header)
+                {
+                    case "Add New Column":
+                        {
+                            await AddColumn();
+                            break;
+                        }
+                    default:
+                        break;
+                }
+            }
         }
 
         #endregion

@@ -35,7 +35,6 @@ namespace ModelMockupDesigner.Models.Wizard
         {
             WizardSection newSection = new(this);
             newSection.CreateNew(); 
-            newSection.CreateNew();
 
             Sections.Add(newSection);
 

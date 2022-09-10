@@ -9,25 +9,19 @@ using System.Xml;
 
 namespace ModelMockupDesigner.Models.Wizard
 {
-    public class WizardCell : BaseModel, ICellContent
+    public class WizardCell : BaseModel
     {
-        public WizardPanel Parent { get; set; }
+        public ICellParent? Parent { get; set; }
 
-        public int Row { get; set; }
-        public int Column { get; set; }
+        public int Row { get; set; } = 0;
+        public int Column { get; set; } = 0;
 
-        public FrameworkElement? Content { get; set; }
+        public ICellControl? Control { get; set; }
 
-        public WizardCell(WizardPanel parent)
+        public WizardCell(ICellParent? parent)
         {
             Parent = parent;
         }
-
-        public void CreateNew()
-        {
-
-        }
-
 
         #region Xml
 

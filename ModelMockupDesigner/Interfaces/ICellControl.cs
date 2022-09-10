@@ -1,5 +1,4 @@
 ﻿using ModelMockupDesigner.Enums;
-using ModelMockupDesigner.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ModelMockupDesigner.Interfaces
 {
-    public interface ICellParent 
+    public interface ICellControl
     {
         ElementType ElementType { get; }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelMockupDesigner.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,8 @@ namespace ModelMockupDesigner.Models
 {
     public class NewControl
     {
+        public ElementType ElementType { get; set; }
+
+        public string? DisplayText { get; set; }
     }
 }

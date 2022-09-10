@@ -1,4 +1,7 @@
 ﻿using ModelMockupDesigner.Controls;
+using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Interfaces;
+using ModelMockupDesigner.Models;
 using ModelMockupDesigner.Models.Wizard;
 using ModelMockupDesigner.ViewModels;
 using System;
@@ -24,6 +27,8 @@ namespace ModelMockupDesigner
     public partial class Editor : UserControl
     {
         public Wizard? WizardModel { get; set; }
+
+        public IIsSelectable? CurrentSelection { get; set; }
 
         public Editor(WizardEditorViewModel viewModel)
         {
@@ -56,8 +61,8 @@ namespace ModelMockupDesigner
 
             foreach (WizardSection wizardSection in WizardModel.Sections)
             {
-                EditorSection editorSection = new EditorSection();
-                // Add events when created.
+                EditorSection editorSection = new();
+                editorSection.OnSelected += UpdateCurrentSelection;
 
                 if (ContentContainer.Children.Count == 0)
                 {
@@ -68,5 +73,43 @@ namespace ModelMockupDesigner
             }
         }
 
+        private void UpdateCurrentSelection(object? sender, IIsSelectable newSelection)
+        {
+            if (CurrentSelection != null)
+            {
+                if (CurrentSelection.Equals(newSelection))
+                {
+                    return;
+                }
+                else
+                {
+                    CurrentSelection.Unselect();
+                }
+            }
+
+            CurrentSelection = newSelection;
+            
+        }
+
+        #region Temp new field item drag
+
+        private Border? Source { get; set; }
+        private NewControl? SelectedControl { get; set; }
+        private void Border_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (Source != null && SelectedControl != null)
+                    DragDrop.DoDragDrop(Source, SelectedControl, DragDropEffects.All);
+            }
+        }
+
+        private void Border_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Source = (Border)sender;
+            SelectedControl = new NewControl() {ElementType = ElementType.Table}; 
+        }
+
+        #endregion
     }
 }

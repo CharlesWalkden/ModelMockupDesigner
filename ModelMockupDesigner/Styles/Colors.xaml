@@ -34,4 +34,17 @@
     <Color x:Key="DarkGrey">#bababa</Color>
     <SolidColorBrush x:Key="DarkGreyBrush" Color="{StaticResource DarkGrey}"/>
 
+    <Color x:Key="SectionPink">#FFC0CB</Color>
+    <SolidColorBrush x:Key="SectionPinkBrush" Color="{StaticResource SectionPink}"/>
+
+    <Color x:Key="ColumnGray">#808080</Color>
+    <SolidColorBrush x:Key="ColumnGrayBrush" Color="{StaticResource ColumnGray}"/>
+
+    <Color x:Key="PanelRed">#FF0000</Color>
+    <SolidColorBrush x:Key="PanelRedBrush" Color="{StaticResource PanelRed}"/>
+
+    <Color x:Key="WizardEditorBackground">#F1F1F1</Color>
+    <SolidColorBrush x:Key="WizardEditorBackgroundBrush" Color="{StaticResource WizardEditorBackground}"/>
+
+
 </ResourceDictionary>

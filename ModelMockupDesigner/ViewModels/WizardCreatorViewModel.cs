@@ -7,7 +7,7 @@ using ModelMockupDesigner.Enums;
 
 namespace ModelMockupDesigner.ViewModels
 {
-    public class WizardCreatorViewModel : BaseViewModel
+    public class WizardModel : BaseViewModel
     {
         public string? WizardName
         {
@@ -54,7 +54,7 @@ namespace ModelMockupDesigner.ViewModels
 
         #endregion
 
-        public WizardCreatorViewModel()
+        public WizardModel()
         {
 
         }

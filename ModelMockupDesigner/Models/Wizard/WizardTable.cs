@@ -1,4 +1,5 @@
-﻿using ModelMockupDesigner.Interfaces;
+﻿using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,22 +9,25 @@ using System.Xml;
 
 namespace ModelMockupDesigner.Models.Wizard
 {
-    public class WizardTable : BaseModel, ICellContent
+    public class WizardTable : BaseModel, ICellParent, ICellControl
     {
-        public WizardPanel Parent { get; set; }
+        public WizardCell? Parent { get; set; }
 
-
-        public int Row { get; set; }
-        public int Column { get; set; }
         public List<WizardCell> Cells { get; set; }
 
-        public WizardTable(WizardPanel parent)
+        public WizardTable(WizardCell? parent)
         {
             Parent = parent;
             Cells = new List<WizardCell>();
         }
 
+        public void CreateNew()
+        {
+            WizardCell wizardCell = new(this);
 
+            Cells.Add(wizardCell);
+        }
+        public ElementType ElementType { get => ElementType.Table; }
 
         #region Xml
 

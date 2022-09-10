@@ -11,4 +11,22 @@ namespace ModelMockupDesigner.Enums
         Static,
         Dynamic
     }
+
+    public enum ElementType
+    {
+        Textblock,
+        Textbox,
+        SingleList,
+        MultiList,
+        Checkbox,
+        Image,
+        Combobox,
+        Grid,
+        Page,
+        Cell,
+        Table,
+        Panel,
+        Column,
+        Section
+    }
 }

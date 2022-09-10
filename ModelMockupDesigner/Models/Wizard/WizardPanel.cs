@@ -1,4 +1,5 @@
-﻿using ModelMockupDesigner.Interfaces;
+﻿using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,17 +9,17 @@ using System.Xml;
 
 namespace ModelMockupDesigner.Models.Wizard
 {
-    public class WizardPanel : BaseModel
+    public class WizardPanel : BaseModel, ICellParent
     {
         public WizardColumn Parent { get; set; }
 
-        public int Order { get; set; } = 1;
-        public List<ICellContent> Cells { get; set; }
+        public int Order { get; set; } = 0;
+        public List<WizardCell> Cells { get; set; }
 
         public WizardPanel(WizardColumn parent)
         {
             Parent = parent;
-            Cells = new List<ICellContent>();
+            Cells = new List<WizardCell>();
         }
 
         public void CreateNew()
@@ -26,10 +27,11 @@ namespace ModelMockupDesigner.Models.Wizard
             Order = Parent.WizardPanels.Count + 1;
 
             WizardCell wizardCell = new(this);
-            wizardCell.CreateNew(); // Dont think I need this.
 
             Cells.Add(wizardCell);
         }
+
+        public ElementType ElementType { get => ElementType.Panel; }
 
         #region Xml
 
