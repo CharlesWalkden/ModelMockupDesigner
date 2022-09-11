@@ -37,6 +37,6 @@ namespace ModelMockupDesigner.Enums
     }
     public enum DialogResult
     {
-        None, Cancel, OK, Yes, No
+        None, Cancel, OK, Yes, No, Accept
     }
 }

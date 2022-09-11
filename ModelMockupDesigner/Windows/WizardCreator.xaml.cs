@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.ViewModels;
 
 namespace ModelMockupDesigner
@@ -19,18 +21,35 @@ namespace ModelMockupDesigner
     /// <summary>
     /// Interaction logic for WizardCreator.xaml
     /// </summary>
-    public partial class WizardCreator : UserControl
+    public partial class WizardCreator : UserControl, IDialogClient
     {
+        #region Interface
+
+        public event EventHandler<DialogEventArgs>? OnClose;
+
+        #endregion
+
+        public WizardCreatorViewModel? ViewModel { get => DataContext as WizardCreatorViewModel; }
+        public DialogResult DialogResult { get; set; }
         public WizardCreator()
         {
             InitializeComponent();
 
-            WizardCreatorViewModel wizardCreatorViewModel = new()
-            {
-                WizardTheme = Enums.WizardTheme.V6
-            };
+            WizardCreatorViewModel wizardCreatorViewModel = new();
 
             DataContext = wizardCreatorViewModel;
+        }
+
+        private void Accept_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = DialogResult.Accept;
+            OnClose?.Invoke(this, new DialogEventArgs(DialogResult));
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e) 
+        {
+            DialogResult = DialogResult.Cancel;
+            OnClose?.Invoke(this, new DialogEventArgs(DialogResult));
         }
     }
 }

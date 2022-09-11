@@ -38,6 +38,20 @@ namespace ModelMockupDesigner
 
         public event EventHandler<DialogEventArgs>? OnClose;
 
+        public async Task LoadEditor(WizardCreatorViewModel creatorModel)
+        {
+            WizardModel = new()
+            {
+                Name = creatorModel.WizardName,
+                Description = creatorModel.WizardDescription,
+                WizardType = creatorModel.WizardType,
+                WizardTheme = creatorModel.WizardTheme
+            };
+            // Pass in Empty guid as this is a new wizard and we don't currently have one.
+            await WizardModel.BuildWizard(Guid.Empty);
+
+            await LoadUI();
+        }
         public async Task LoadEditor(Guid identifier)
         {
             await CreateWizardModel(identifier);
@@ -48,8 +62,6 @@ namespace ModelMockupDesigner
         private async Task CreateWizardModel(Guid wizardId)
         {
             WizardModel = new Wizard();
-
-            // Add events if needed.
 
             await WizardModel.BuildWizard(wizardId);
         }

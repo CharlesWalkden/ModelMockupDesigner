@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,14 +32,34 @@ namespace ModelMockupDesigner
             Application.Current.Shutdown();
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DialogLauncher<Editor> editor = new DialogLauncher<Editor>(this);
-            if (editor.Control != null)
+            DialogLauncher<WizardCreator> wizardCreator = new(this);
+            wizardCreator.OnClose += WizardCreator_OnClose;
+            wizardCreator.Show();
+        }
+
+        private async void WizardCreator_OnClose(object? sender, DialogEventArgs e)
+        {
+            if (sender is DialogLauncher<WizardCreator> wizardCreator && wizardCreator.Control != null && wizardCreator.Control.DialogResult == DialogResult.Accept && 
+                wizardCreator.Control.ViewModel != null)
             {
-                await editor.Control.LoadEditor(Guid.Empty);
+                switch (wizardCreator.Control.ViewModel.WizardType)
+                {
+                    case WizardType.Dynamic:
+                        {
+                            DialogLauncher<Editor> editor = new(this);
+                            if (editor.Control != null)
+                            {
+                                await editor.Control.LoadEditor(wizardCreator.Control.ViewModel);
+                            }
+                            editor.Show();
+                            break;
+                        }
+                    default:
+                        break;
+                }
             }
-            editor.Show();
         }
     }
 }

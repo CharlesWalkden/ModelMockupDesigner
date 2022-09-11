@@ -25,7 +25,7 @@ namespace ModelMockupDesigner
             get
             {
                 bool res = false;
-                if (Result.HasValue && (Result == DialogResult.Yes || Result == DialogResult.OK))
+                if (Result.HasValue && (Result == DialogResult.Yes || Result == DialogResult.OK || Result == DialogResult.Accept))
                 {
                     res = true;
                 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelMockupDesigner.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,9 @@ namespace ModelMockupDesigner.Models.Wizard
 {
     public class Wizard : BaseModel
     {
+        public string? Description { get; set; }
+        public WizardType? WizardType { get; set; }
+        public WizardTheme? WizardTheme { get; set; }
         public List<WizardSection> Sections { get; set; }
 
         public Wizard()
