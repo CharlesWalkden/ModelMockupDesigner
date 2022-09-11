@@ -29,5 +29,15 @@ namespace ModelMockupDesigner
         {
             Application.Current.Shutdown();
         }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DialogLauncher<Editor> editor = new DialogLauncher<Editor>(this);
+            if (editor.Control != null)
+            {
+                await editor.Control.LoadEditor(Guid.Empty);
+            }
+            editor.Show();
+        }
     }
 }

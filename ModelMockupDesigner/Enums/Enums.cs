@@ -35,4 +35,8 @@ namespace ModelMockupDesigner.Enums
         Column,
         Section
     }
+    public enum DialogResult
+    {
+        None, Cancel, OK, Yes, No
+    }
 }

@@ -24,18 +24,19 @@ namespace ModelMockupDesigner
     /// <summary>
     /// Interaction logic for Editor.xaml
     /// </summary>
-    public partial class Editor : UserControl
+    public partial class Editor : UserControl, IDialogClient
     {
         public Wizard? WizardModel { get; set; }
 
         public IIsSelectable? CurrentSelection { get; set; }
 
-        public Editor(WizardEditorViewModel viewModel)
+        public Editor()
         {
             InitializeComponent();
-
-            DataContext = viewModel;
+            DataContext = new WizardEditorViewModel();
         }
+
+        public event EventHandler<DialogEventArgs>? OnClose;
 
         public async Task LoadEditor(Guid identifier)
         {

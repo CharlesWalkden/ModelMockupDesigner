@@ -23,10 +23,6 @@ namespace ModelMockupDesigner
         public WizardEditor()
         {
             InitializeComponent();
-            Editor editor = new Editor(new());
-            editor.LoadEditor(Guid.Empty);
-
-            root.Children.Add(editor);
         }
     }
 }
