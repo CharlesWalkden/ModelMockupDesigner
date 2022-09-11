@@ -29,5 +29,10 @@ namespace ModelMockupDesigner
         {
             Application.Current.Shutdown();
         }
+
+        private void NewWizard_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
