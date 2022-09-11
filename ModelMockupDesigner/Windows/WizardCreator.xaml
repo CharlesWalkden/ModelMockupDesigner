@@ -6,7 +6,37 @@
              xmlns:local="clr-namespace:ModelMockupDesigner"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <Grid Background="{StaticResource AthenaBlueBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <TextBlock  Text="Wizard name:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
+            <TextBox Text="{Binding WizardName,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="40" Margin="15"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <TextBlock  Text="Wizard description:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
+            <TextBox Text="{Binding WizardDescription,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="40" Margin="15"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="3">
+            <TextBlock  Text="Wizard theme:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <CheckBox Width="50" Height="15" Margin="15" Foreground="White">V5</CheckBox>
+                <CheckBox Width="50" Height="15" Margin="15" Foreground="White">V6</CheckBox>
+                <CheckBox Width="50" Height="15" Margin="15" Foreground="White">V7</CheckBox>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="4">
+            <TextBlock  Text="Wizard type:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <CheckBox Width="75" Height="15" Margin="15" Foreground="White">Static</CheckBox>
+                <CheckBox Width="75" Height="15" Margin="15" Foreground="White">Dynamic</CheckBox>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

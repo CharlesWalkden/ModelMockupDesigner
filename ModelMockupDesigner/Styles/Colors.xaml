@@ -1,28 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Color x:Key="HyperlinkBlue">#3953e5</Color>
-    <SolidColorBrush x:Key="HyperlinkBlueBrush" Color="{StaticResource HyperlinkBlue}"/>
-
-    <Color x:Key="HyperlinkRed">#FF0000</Color>
-    <SolidColorBrush x:Key="HyperlinkRedBrush" Color="{StaticResource HyperlinkRed}"/>
 
     <Color x:Key="TextColor">#696969</Color>
     <SolidColorBrush x:Key="TextColorBrush" Color="{StaticResource TextColor}"/>
 
-    <Color x:Key="Blue">#89afb2</Color>
-    <SolidColorBrush x:Key="BlueBrush" Color="{StaticResource Blue}"/>
-
-    <Color x:Key="ForegroundVeryDark">#000000</Color>
-    <SolidColorBrush x:Key="ForegroundVeryDarkBrush" Color="{StaticResource ForegroundVeryDark}" />
-
-    <Color x:Key="EditorGray">#FF323D49</Color>
-    <SolidColorBrush x:Key="EditorGrayBrush" Color="{StaticResource EditorGray}"/>
-
     <Color x:Key="White">#FFFFFF</Color>
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
 
-    <Color x:Key="Black">#343434</Color>
+    <Color x:Key="Black">#000000</Color>
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
 
     <Color x:Key="LightGrey">#E1E1E1</Color>
@@ -37,14 +23,29 @@
     <Color x:Key="SectionPink">#FFC0CB</Color>
     <SolidColorBrush x:Key="SectionPinkBrush" Color="{StaticResource SectionPink}"/>
 
-    <Color x:Key="ColumnGray">#808080</Color>
-    <SolidColorBrush x:Key="ColumnGrayBrush" Color="{StaticResource ColumnGray}"/>
+    <Color x:Key="HyperlinkBlue">#3953e5</Color>
+    <SolidColorBrush x:Key="HyperlinkBlueBrush" Color="{StaticResource HyperlinkBlue}"/>
+
+    <Color x:Key="HyperlinkRed">#FF0000</Color>
+    <SolidColorBrush x:Key="HyperlinkRedBrush" Color="{StaticResource HyperlinkRed}"/>
 
     <Color x:Key="PanelRed">#FF0000</Color>
     <SolidColorBrush x:Key="PanelRedBrush" Color="{StaticResource PanelRed}"/>
 
+    <Color x:Key="ColumnGray">#808080</Color>
+    <SolidColorBrush x:Key="ColumnGrayBrush" Color="{StaticResource ColumnGray}"/>
+
+    <Color x:Key="EditorLightGray">#768899</Color>
+    <SolidColorBrush x:Key="EditorLightGrayBrush" Color="{StaticResource EditorLightGray}"/>
+
+    <Color x:Key="EditorDarkGray">#323e49</Color>
+    <SolidColorBrush x:Key="EditorDarkGrayBrush" Color="{StaticResource EditorDarkGray}"/>
+
     <Color x:Key="WizardEditorBackground">#F1F1F1</Color>
     <SolidColorBrush x:Key="WizardEditorBackgroundBrush" Color="{StaticResource WizardEditorBackground}"/>
+
+    <Color x:Key="AthenaBlue">#FF24A4C8</Color>
+    <SolidColorBrush x:Key="AthenaBlueBrush" Color="{StaticResource AthenaBlue}"/>
 
 
 </ResourceDictionary>
