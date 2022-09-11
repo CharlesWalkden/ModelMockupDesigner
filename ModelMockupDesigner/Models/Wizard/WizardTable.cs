@@ -1,4 +1,5 @@
-﻿using ModelMockupDesigner.Enums;
+﻿using ModelMockupDesigner.Controls;
+using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,16 @@ namespace ModelMockupDesigner.Models.Wizard
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region Not Used
+
+        public void Delete(EditorCell cell)
+        {
+            throw new NotImplementedException();
+        }
+        public BaseModel? Model => throw new NotImplementedException();
 
         #endregion
     }

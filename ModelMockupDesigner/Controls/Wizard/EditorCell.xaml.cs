@@ -26,14 +26,14 @@ namespace ModelMockupDesigner.Controls
     {
         #region Public Properties
 
-        public BaseModel? Model { get => WizardCell; }
+        public BaseModel? Model { get => CellModel; }
         public ICellParent CellParent { get => cellParent; set => cellParent = value; }
 
         #endregion
 
         #region Private Properties
 
-        private WizardCell? WizardCell { get; set; }
+        private WizardCell? CellModel { get; set; } 
         private ICellParent cellParent { get; set; }
 
         #endregion
@@ -52,7 +52,7 @@ namespace ModelMockupDesigner.Controls
         public async Task LoadModel(WizardCell wizardCell)
         {
             DataContext = wizardCell;
-            WizardCell = wizardCell;
+            CellModel = wizardCell;
 
             // TODO: Create whatever control we need and then add it to UI.
         }
@@ -64,7 +64,16 @@ namespace ModelMockupDesigner.Controls
 
         public void Delete()
         {
-            
+            CellParent.Delete(this);
+        }
+        public void Delete(ICellControl cellControl)
+        {
+            if (CellModel != null && cellControl.Model != null)
+            {
+                _ = CellModel.Control = null;
+                Root.Children.Remove(cellControl as FrameworkElement);
+                overlay.Visibility = Visibility.Visible;
+            }
         }
 
         public async Task AddNewControl(ElementType? elementType)
@@ -73,12 +82,12 @@ namespace ModelMockupDesigner.Controls
             {
                 case ElementType.Table:
                     {
-                        WizardTable wizardTable = new(WizardCell);
+                        WizardTable wizardTable = new(CellModel);
                         wizardTable.CreateNew();
 
-                        if (WizardCell != null)
+                        if (CellModel != null)
                         {
-                            WizardCell.Control = wizardTable;
+                            CellModel.Control = wizardTable;
                         }
 
                         EditorTable editorTable = new(this);
@@ -87,6 +96,7 @@ namespace ModelMockupDesigner.Controls
 
                         Root.Children.Add(editorTable);
                         overlay.Visibility = Visibility.Collapsed;
+                        overlay.Background = Brushes.White;
 
                         break;
                     }
@@ -195,7 +205,7 @@ namespace ModelMockupDesigner.Controls
 
             }
 
-            if (WizardCell?.Parent is not WizardTable)
+            if (CellModel?.Parent is not WizardTable)
             {
                 MenuItem item = new() { Header = "Add Table" };
                 item.Click += MenuItem_Click;

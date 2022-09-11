@@ -1,4 +1,5 @@
-﻿using ModelMockupDesigner.Enums;
+﻿using ModelMockupDesigner.Controls;
+using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,15 @@ namespace ModelMockupDesigner.Models.Wizard
         }
 
         public override XmlNode? ToXml()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Not Used
+
+        public void Delete(EditorCell cell)
         {
             throw new NotImplementedException();
         }

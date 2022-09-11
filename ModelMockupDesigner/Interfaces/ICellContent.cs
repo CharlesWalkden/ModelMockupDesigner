@@ -1,4 +1,5 @@
-﻿using ModelMockupDesigner.Enums;
+﻿using ModelMockupDesigner.Controls;
+using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace ModelMockupDesigner.Interfaces
     public interface ICellParent 
     {
         ElementType ElementType { get; }
+        void Delete(EditorCell cell);
     }
 }

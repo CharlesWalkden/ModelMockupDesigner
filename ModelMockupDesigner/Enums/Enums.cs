@@ -11,6 +11,12 @@ namespace ModelMockupDesigner.Enums
         Static,
         Dynamic
     }
+    public enum WizardTheme
+    {
+        V5,
+        V6,
+        V7
+    }
 
     public enum ElementType
     {

@@ -11,7 +11,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="{StaticResource EditorGrayBrush}">
+        <Grid Grid.Row="0" Background="{StaticResource EditorLightGrayBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>

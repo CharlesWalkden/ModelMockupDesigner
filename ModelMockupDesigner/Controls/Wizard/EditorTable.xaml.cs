@@ -4,6 +4,7 @@ using ModelMockupDesigner.Models;
 using ModelMockupDesigner.Models.Wizard;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace ModelMockupDesigner.Controls
     /// <summary>
     /// Interaction logic for EditorTable.xaml
     /// </summary>
-    public partial class EditorTable : UserControl, IIsSelectable, ICellParent
+    public partial class EditorTable : UserControl, IIsSelectable, ICellParent, ICellControl
     {
         #region Public Properties
 
@@ -53,18 +54,16 @@ namespace ModelMockupDesigner.Controls
             DataContext = tableModel;
             TableModel = tableModel;
 
-            Grid container = new();
-
             if (tableModel.Cells.Count == 0)
                 return;
 
             int maxRow = tableModel.Cells.Max(x => x.Row);
             int maxColumn = tableModel.Cells.Max(x => x.Column);
 
-            for (int r = 0; r < maxRow; r++)
+            for (int r = 0; r <= maxRow; r++)
             {
                 container.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                for (int c = 0; c < maxColumn; c++)
+                for (int c = 0; c <= maxColumn; c++)
                 {
                     container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
                 }
@@ -81,15 +80,21 @@ namespace ModelMockupDesigner.Controls
 
                 await editorCell.LoadModel(cell);
             }
-
-            Root.Children.Add(container);
-
         }
 
         public void Delete()
         {
-
+            tableParent?.Delete(this);
         }
+        public void Delete(EditorCell cell)
+        {
+            if (TableModel != null && cell.Model != null)
+            {
+                _ = TableModel.Cells.Remove((WizardCell)cell.Model);
+                container.Children.Remove(cell);
+            }
+        }
+
         public void Unselect()
         {
             HeaderStackPanel.Background = Brushes.Transparent;
@@ -108,6 +113,74 @@ namespace ModelMockupDesigner.Controls
             newRow.Visibility = Visibility.Collapsed;
             newRow.Background = Brushes.Transparent;
         }
+
+        private async Task AddCell(int column, int row, ElementType? elementType = null)
+        {
+            WizardCell wizardCell = new(TableModel) { Column = column, Row = row };
+
+            TableModel?.Cells.Add(wizardCell);
+
+            EditorCell editorCell = new(this);
+            editorCell.OnSelected += OnSelected;
+            if (elementType != null)
+            {
+                await editorCell.AddNewControl(elementType);
+            }
+
+            container.Children.Add(editorCell);
+            Grid.SetColumn(editorCell, column);
+            Grid.SetRow(editorCell, row);
+
+            await editorCell.LoadModel(wizardCell);
+        }
+        private async Task AddColumn(NewControl? newControl = null)
+        {
+            if (TableModel == null)
+                return;
+
+            container.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 25, Width = new GridLength(1, GridUnitType.Auto) });
+
+            int column = TableModel.Cells.Max(x => x.Column);
+            int row = TableModel.Cells.Max(x => x.Row);
+
+            for (int r = 0; r <= row; r++)
+            {
+                if (newControl != null)
+                {
+                    await AddCell(column + 1, r, newControl.ElementType);
+                    newControl = null;
+                }
+                else
+                {
+                    await AddCell(column + 1, r);
+                }
+            }
+        }
+        private async Task AddRow(NewControl? newControl = null)
+        {
+            if (TableModel == null)
+                return;
+
+            container.RowDefinitions.Add(new RowDefinition() { MinHeight = 25, Height = new GridLength(1, GridUnitType.Auto) });
+
+            int column = TableModel.Cells.Max(x => x.Column);
+            int row = TableModel.Cells.Max(x => x.Row);
+
+            for (int c = 0; c <= column; c++)
+            {
+                if (newControl != null)
+                {
+                    await AddCell(c, row + 1, newControl.ElementType);
+                    newControl = null;
+                }
+                else
+                {
+                    await AddCell(c, row + 1);
+                }
+            }
+
+        }
+
         #endregion
 
         #region Override Events
@@ -211,7 +284,15 @@ namespace ModelMockupDesigner.Controls
         {
             ContextMenu contextMenu = new ContextMenu();
 
-            MenuItem menuItem = new MenuItem() { Header = "Delete all controls" };
+            MenuItem menuItem = new() { Header = "Delete Table" };
+            menuItem.Click += MenuItem_Click;
+            contextMenu.Items.Add(menuItem);
+
+            menuItem = new() { Header = "Add Column to Panel" };
+            menuItem.Click += MenuItem_Click;
+            contextMenu.Items.Add(menuItem);
+
+            menuItem = new() { Header = "Add Row to Panel" };
             menuItem.Click += MenuItem_Click;
             contextMenu.Items.Add(menuItem);
 
@@ -221,9 +302,31 @@ namespace ModelMockupDesigner.Controls
 
             e.Handled = true;
         }
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private async void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            if (sender is MenuItem menuItem)
+            {
+                switch (menuItem.Header)
+                {
+                    case "Delete Table":
+                        {
+                            Delete();
+                            break;
+                        }
+                    case "Add Column to Panel":
+                        {
+                            await AddColumn();
+                            break;
+                        }
+                    case "Add Row to Panel":
+                        {
+                            await AddRow();
+                            break;
+                        }
+                    default:
+                        break;
+                }
+            }
         }
 
 

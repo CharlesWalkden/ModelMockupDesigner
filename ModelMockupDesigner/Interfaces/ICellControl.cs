@@ -1,4 +1,5 @@
 ﻿using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace ModelMockupDesigner.Interfaces
     public interface ICellControl
     {
         ElementType ElementType { get; }
+        BaseModel? Model { get; }
     }
 }

@@ -36,8 +36,7 @@
                        Margin="5,0,0,0"/>
         </StackPanel>
 
-        <Grid x:Name="Root"
-              ShowGridLines="True"                
+        <Grid x:Name="Root"               
               Grid.Row="1" 
               AllowDrop="True"
               Margin="5">
@@ -47,6 +46,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="25" Width="auto"/>
             </Grid.ColumnDefinitions>
+            <Grid x:Name="container" Grid.Column="0" Grid.Row="0" ShowGridLines="True">
+                
+            </Grid>
         </Grid>
         <Grid x:Name="newColumn" Visibility="Collapsed" Grid.Column="1" Grid.RowSpan="3" AllowDrop="True"
               DragEnter="Control_DragEnter"

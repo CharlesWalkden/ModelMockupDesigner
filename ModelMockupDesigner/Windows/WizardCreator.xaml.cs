@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ModelMockupDesigner.ViewModels;
 
 namespace ModelMockupDesigner
 {
@@ -23,6 +24,13 @@ namespace ModelMockupDesigner
         public WizardCreator()
         {
             InitializeComponent();
+
+            WizardCreatorViewModel wizardCreatorViewModel = new()
+            {
+                WizardTheme = Enums.WizardTheme.V6
+            };
+
+            DataContext = wizardCreatorViewModel;
         }
     }
 }

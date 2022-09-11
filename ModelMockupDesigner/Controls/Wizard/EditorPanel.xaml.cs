@@ -89,6 +89,14 @@ namespace ModelMockupDesigner.Controls
         {
             PanelParent.Delete(this);
         }
+        public void Delete(EditorCell cell)
+        {
+            if (PanelModel != null && cell.Model != null)
+            {
+                _ = PanelModel.Cells.Remove((WizardCell)cell.Model);
+                container.Children.Remove(cell);
+            }
+        }
 
         public void Unselect()
         {
@@ -277,7 +285,6 @@ namespace ModelMockupDesigner.Controls
             menuItem = new() { Header = "Add Row to Panel" };
             menuItem.Click += MenuItem_Click;
             contextMenu.Items.Add(menuItem);
-
 
             contextMenu.IsOpen = true;
 

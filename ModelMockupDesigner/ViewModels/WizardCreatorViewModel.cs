@@ -7,7 +7,7 @@ using ModelMockupDesigner.Enums;
 
 namespace ModelMockupDesigner.ViewModels
 {
-    public class WizardModel : BaseViewModel
+    public class WizardCreatorViewModel : BaseViewModel
     {
         public string? WizardName
         {
@@ -45,16 +45,29 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(WizardType));
             }
         }
+        public WizardTheme WizardTheme
+        {
+            get => wizardTheme;
+            set
+            {
+                if (wizardTheme == value)
+                    return;
+
+                wizardTheme = value;
+                OnPropertyChanged(nameof(WizardTheme));
+            }
+        }
 
         #region Private Properties
 
         private string? wizardName { get; set; }
         private string? wizardDescription { get; set; }
         private WizardType wizardType { get; set; }
+        private WizardTheme wizardTheme { get; set; }
 
         #endregion
 
-        public WizardModel()
+        public WizardCreatorViewModel()
         {
 
         }
