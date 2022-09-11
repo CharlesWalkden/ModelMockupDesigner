@@ -31,8 +31,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="4">
             <TextBlock  Text="Wizard type:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <CheckBox Width="75" Height="15" Margin="15" Foreground="White">Static</CheckBox>
-                <CheckBox Width="75" Height="15" Margin="15" Foreground="White">Dynamic</CheckBox>
+                <controls:WizardTypeSelector CurrentType="{Binding WizardType, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5">
