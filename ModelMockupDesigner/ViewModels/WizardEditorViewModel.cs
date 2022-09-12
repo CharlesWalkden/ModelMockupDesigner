@@ -10,39 +10,35 @@ namespace ModelMockupDesigner.ViewModels
 {
     public class WizardEditorViewModel : BaseViewModel
     {
-        public string? WizardName { get; set; }
-        public Wizard? WizardModel
+        public string? WizardName
         {
-            get => wizardModel;
+            get => wizardName;
             set
             {
-                if (wizardModel == value)
+                if (wizardName == value)
                     return;
 
-                wizardModel = value;
-
-                WizardName = wizardModel?.Name;
+                wizardName = value;
+                OnPropertyChanged(nameof(WizardName));
             }
         }
-
+        
         public ComboBoxItem? CurrentPage { get; set; }
 
         public CollectionList<ComboBoxItem> PageList { get; set; }
-
-        #region Private Properties
-
-        private Wizard? wizardModel { get; set; }
-
-        #endregion
 
         public WizardEditorViewModel()
         {
             PageList = new CollectionList<ComboBoxItem>();
         }
 
+        #region Private Properties
+
+        private string? wizardName { get; set; }
+
+        #endregion
+
     }
-
-
 
     /// <summary>
     /// Class to use for combobox items within the page selector control.

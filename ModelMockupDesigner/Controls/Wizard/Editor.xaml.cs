@@ -24,8 +24,9 @@ namespace ModelMockupDesigner
     /// <summary>
     /// Interaction logic for Editor.xaml
     /// </summary>
-    public partial class Editor : UserControl, IDialogClient
+    public partial class Editor : UserControl, IWindowStack
     {
+        public WizardEditorViewModel? ViewModel { get => DataContext as WizardEditorViewModel; }
         public Wizard? WizardModel { get; set; }
 
         public IIsSelectable? CurrentSelection { get; set; }
@@ -36,8 +37,6 @@ namespace ModelMockupDesigner
             DataContext = new WizardEditorViewModel();
         }
 
-        public event EventHandler<DialogEventArgs>? OnClose;
-
         public async Task LoadEditor(WizardCreatorViewModel creatorModel)
         {
             WizardModel = new()
@@ -47,6 +46,9 @@ namespace ModelMockupDesigner
                 WizardType = creatorModel.WizardType,
                 WizardTheme = creatorModel.WizardTheme
             };
+            if (ViewModel != null)
+                ViewModel.WizardName = creatorModel.WizardName;
+
             // Pass in Empty guid as this is a new wizard and we don't currently have one.
             await WizardModel.BuildWizard(Guid.Empty);
 
@@ -103,7 +105,7 @@ namespace ModelMockupDesigner
             CurrentSelection = newSelection;
             
         }
-
+        
         #region Temp new field item drag
 
         private Border? Source { get; set; }
@@ -121,6 +123,23 @@ namespace ModelMockupDesigner
         {
             Source = (Border)sender;
             SelectedControl = new NewControl() {ElementType = ElementType.Table}; 
+        }
+
+        #endregion
+
+        private void Save_Click(object sender, RoutedEventArgs e) 
+        {
+            // Save wizard.
+            WindowControl.CloseTopWindow();
+        }
+
+
+        #region Interface
+
+        public event EventHandler? OnClosed;
+        public void CloseAsync()
+        {
+            OnClosed?.Invoke(this, new EventArgs());
         }
 
         #endregion

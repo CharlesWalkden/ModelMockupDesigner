@@ -19,11 +19,11 @@
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" 
                         Grid.Column="0">
-                <!--<Button Style="{StaticResource FFGButton}"
+                <Button Style="{StaticResource FFGButton}"
                         Content="Save"
                         Margin="10,0,0,0"
                         FontSize="{StaticResource FontSizeRegular}"
-                        ="Save_Click"/> -->
+                        Click="Save_Click" /> 
             </StackPanel>
             <Grid Grid.Column="1">
                 <StackPanel Orientation="Horizontal"
@@ -33,7 +33,7 @@
                                Foreground="White"
                                FontSize="{StaticResource FontSizeXLarge}"/>
                     <TextBox Style="{StaticResource PropertyEditorTextBox}"
-                             Text="{Binding WizardName}"
+                             Text="{Binding WizardName, UpdateSourceTrigger=PropertyChanged}"
                              VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Grid>

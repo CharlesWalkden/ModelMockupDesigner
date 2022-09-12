@@ -48,12 +48,17 @@ namespace ModelMockupDesigner
                 {
                     case WizardType.Dynamic:
                         {
-                            DialogLauncher<Editor> editor = new(this);
-                            if (editor.Control != null)
-                            {
-                                await editor.Control.LoadEditor(wizardCreator.Control.ViewModel);
-                            }
-                            editor.Show();
+                            //DialogLauncher<Editor> editor = new(this);
+                            //if (editor.Control != null)
+                            //{
+                            //    await editor.Control.LoadEditor(wizardCreator.Control.ViewModel);
+                            //}
+                            //editor.Show();
+
+                            Editor editor = new Editor();
+                            await editor.LoadEditor(wizardCreator.Control.ViewModel);
+                            WindowControl.DisplayWindow(editor);
+
                             break;
                         }
                     default:

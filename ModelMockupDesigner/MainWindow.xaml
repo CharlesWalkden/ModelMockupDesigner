@@ -5,9 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ModelMockupDesigner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid x:Name="root">
-
-        <local:LandingPage />
+        Title="Model Mockup Designer" Height="768" Width="1280"
+        ScrollViewer.CanContentScroll="True"
+        WindowStartupLocation="CenterScreen"
+        Background="White" ResizeMode="CanResize"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True">
+    
+    <Grid x:Name="Root">
+        
     </Grid>
 </Window>

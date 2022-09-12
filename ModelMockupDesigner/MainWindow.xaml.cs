@@ -20,9 +20,21 @@ namespace ModelMockupDesigner
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainContainer mainContainer = new MainContainer();
+
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Root.Children.Add(mainContainer);
+            WindowControl.MainWindow = mainContainer.mainWindowStack;
+
+            LandingPage landingPage = new LandingPage();
+            WindowControl.DisplayWindow(landingPage);
         }
     }
 }
