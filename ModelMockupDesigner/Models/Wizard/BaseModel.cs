@@ -22,8 +22,20 @@ namespace ModelMockupDesigner.Models
                 OnPropertyChanged(nameof(Name));
             }
         }
-        private string? name { get; set; }
+        public int OrderId
+        {
+            get => orderId;
+            set
+            {
+                if (orderId == value)
+                    return;
 
+                orderId = value;
+                OnPropertyChanged(nameof(OrderId));
+            }
+        }
+        private int orderId { get; set; } = 0;
+        private string? name { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged = (sender, e) => { };
 

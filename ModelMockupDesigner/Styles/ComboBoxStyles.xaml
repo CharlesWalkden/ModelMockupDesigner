@@ -51,7 +51,7 @@
                         <LinearGradientBrush.GradientStops>
                             <GradientStopCollection>
                                 <GradientStop Color="LightSlateGray" />
-                                <GradientStop Color="{StaticResource EditorGray}" Offset="0.6" />
+                                <GradientStop Color="{StaticResource EditorLightGray}" Offset="0.6" />
                             </GradientStopCollection>
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>

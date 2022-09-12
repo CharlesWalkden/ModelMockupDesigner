@@ -21,7 +21,6 @@ namespace ModelMockupDesigner
     public partial class MainContainer : UserControl
     {
         public static MainContainer? TheMainContainer;
-        private static List<Window> ChildWindows = new();
         public MainContainer()
         {
             InitializeComponent();

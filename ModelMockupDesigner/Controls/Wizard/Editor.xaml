@@ -97,7 +97,7 @@
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-<!--
+
                 <Grid Grid.Row="0" HorizontalAlignment="Center" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -110,30 +110,31 @@
                     <Button x:Name="DeletePageButton"
                             Style="{StaticResource PathButtonDeletePage}"
                             Grid.Column="0" Height="25" Width="25"
-                            Click="DeletePage_Click" 
+                            Click="DeletePageButton_Click" 
                             ToolTip="Delete current page"/>
 
-                    <Button Style="{StaticResource PathButtonAddPage}"
+                    <Button x:Name="NewPageButton"
+                            Style="{StaticResource PathButtonAddPage}"
                             Margin="2,0,0,0" 
                             Grid.Column="1" 
-                            Click="NewPage_Click" 
+                            Click="NewPageButton_Click" 
                             ToolTip="Add a new page"/>
 
                     <Button x:Name="NavPreviousButton"
                             Style="{StaticResource PathButtonNavPrevious}"
                             Margin="2,0,0,0" 
-                            Grid.Column="2" Click="PreviousButton_Click" ToolTip="Previous page"/>
+                            Grid.Column="2" Click="NavPreviousButton_Click" ToolTip="Previous page"/>
                     <Button x:Name="NavNextButton"
                             Style="{StaticResource PathButtonNavNext}" 
                             Margin="2,0,2,0"
-                            Grid.Column="3" Click="NextButton_Click" ToolTip="Next page"/>
+                            Grid.Column="3" Click="NavNextButton_Click" ToolTip="Next page"/>
 
                     <ComboBox x:Name="PageSelector" Grid.Column="4" Margin="5,1,0,0" Width="150"
                               ItemsSource="{Binding PageList}"
                               SelectedItem="{Binding CurrentPage, UpdateSourceTrigger=Explicit}" 
                               SelectionChanged="PageSelector_SelectionChanged"/>
                 </Grid>
--->
+
 
                 <ScrollViewer Grid.Row="1"
                               VerticalScrollBarVisibility="Auto"

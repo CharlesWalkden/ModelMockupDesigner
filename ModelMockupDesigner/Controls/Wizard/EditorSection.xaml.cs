@@ -26,13 +26,15 @@ namespace ModelMockupDesigner.Controls
     {
         #region Public Properties
 
-        public BaseModel? Model => SectionModel;
+        public BaseModel Model => SectionModel;
 
         #endregion
 
         #region Private Properties
 
-        private WizardSection? SectionModel => DataContext as WizardSection;
+#pragma warning disable CS8603 // Will always have a value
+        private WizardSection SectionModel => DataContext as WizardSection;
+#pragma warning restore CS8603
 
 
         #endregion
@@ -77,7 +79,6 @@ namespace ModelMockupDesigner.Controls
             HeaderTextBlock.Background = Brushes.White;
             Border.Fill = Brushes.Transparent;
         }
-
         public void Delete()
         {
 

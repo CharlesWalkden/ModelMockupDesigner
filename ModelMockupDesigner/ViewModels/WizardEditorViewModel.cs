@@ -32,6 +32,37 @@ namespace ModelMockupDesigner.ViewModels
             PageList = new CollectionList<ComboBoxItem>();
         }
 
+        public void SetCurrentPage(int order)
+        {
+            CurrentPage = PageList.FirstOrDefault(x => (int)x.Value == order);
+        }
+        public void DeleteCurrentPage()
+        {
+            if (CurrentPage != null)
+            {
+                PageList.Remove(CurrentPage);
+            }
+        }
+        public void UpdatePageTitle(string title)
+        {
+            if (CurrentPage != null)
+            {
+                ComboBoxItem comboBoxItem = CurrentPage;
+
+                CurrentPage = null;
+
+                comboBoxItem.Text = title;
+
+                CurrentPage = comboBoxItem;
+            }
+        }
+
+        public void OrderPageList()
+        {
+            PageList = new CollectionList<ComboBoxItem>(PageList.OrderBy(x => (int)x.Value));
+        }
+
+
         #region Private Properties
 
         private string? wizardName { get; set; }
@@ -47,7 +78,9 @@ namespace ModelMockupDesigner.ViewModels
     {
         public string? Text { get; set; }
 
-        public object? Value { get; set; }
+#pragma warning disable CS8618 // This object will always have a value when used!.
+        public object Value { get; set; }
+#pragma warning restore CS8618 
 
         public override string ToString()
         {

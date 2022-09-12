@@ -11,13 +11,13 @@ namespace ModelMockupDesigner.Models.Wizard
     {
         public Wizard Parent { get; set; }
 
-        public int OrderId { get; set; }
         public List<WizardColumn> WizardColumns { get; set; }
 
         public WizardSection(Wizard parent)
         {
             Parent = parent;
             WizardColumns = new List<WizardColumn>();
+            CreateNew();
         }
 
         public void CreateNew()
