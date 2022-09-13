@@ -183,7 +183,7 @@ namespace ModelMockupDesigner
             if (WizardModel == null)
                 return;
 
-            EditorSection page = new EditorSection();
+            EditorSection page = new();
             page.OnSelected += UpdateCurrentSelection;
             if (sectionModel != null)
             {
@@ -203,7 +203,7 @@ namespace ModelMockupDesigner
         {
             Pages.Add(page);
 
-            ComboBoxItem comboBoxItem = new ComboBoxItem()
+            ComboBoxItem comboBoxItem = new()
             {
                 Text = page.Model.Name,
                 Value = page.Model.OrderId
@@ -259,24 +259,34 @@ namespace ModelMockupDesigner
         private int GetNextPageOrderNumber()
         {
             if (Pages.Count == 0)
-                return 1;
+                return 0;
 
             return Pages.Max(x => x.Model.OrderId) + 1;
         }
        
-
         private void Save_Click(object sender, RoutedEventArgs e) 
         {
             // Save wizard.
             WindowControl.CloseTopWindow();
         }
 
-
-        
-
         private void DeletePageButton_Click(object sender, RoutedEventArgs e)
         {
-            DeleteCurrentPage();
+            if (CurrentPage != null)
+            {
+                int index = Pages.IndexOf(CurrentPage);
+
+                DeleteCurrentPage();
+
+                if (index == 0)
+                {
+                    LoadPage(0);
+                }
+                else
+                {
+                    LoadPage(index - 1);
+                }
+            }
         }
 
         private void NewPageButton_Click(object sender, RoutedEventArgs e)

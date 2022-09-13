@@ -23,7 +23,19 @@ namespace ModelMockupDesigner.ViewModels
             }
         }
         
-        public ComboBoxItem? CurrentPage { get; set; }
+        public ComboBoxItem? CurrentPage
+        {
+            get => currentPage;
+            set
+            {
+                if (currentPage != null && value != null && currentPage.Value == value.Value)
+                    return;
+
+                currentPage = value;
+                OnPropertyChanged(nameof(CurrentPage));
+            }
+        }
+        private ComboBoxItem? currentPage { get; set; }
 
         public CollectionList<ComboBoxItem> PageList { get; set; }
 
@@ -32,10 +44,7 @@ namespace ModelMockupDesigner.ViewModels
             PageList = new CollectionList<ComboBoxItem>();
         }
 
-        public void SetCurrentPage(int order)
-        {
-            CurrentPage = PageList.FirstOrDefault(x => (int)x.Value == order);
-        }
+        public void SetCurrentPage(int order) => CurrentPage = PageList.FirstOrDefault(x => (int)x.Value == order);
         public void DeleteCurrentPage()
         {
             if (CurrentPage != null)
@@ -86,7 +95,8 @@ namespace ModelMockupDesigner.ViewModels
         {
             if (Text == null || string.IsNullOrEmpty(Text))
             {
-                return "Not Set";
+                //return "Not Set";
+                return Value.ToString();
             }
 
             return Text.ToString();

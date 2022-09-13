@@ -131,7 +131,7 @@
 
                     <ComboBox x:Name="PageSelector" Grid.Column="4" Margin="5,1,0,0" Width="150"
                               ItemsSource="{Binding PageList}"
-                              SelectedItem="{Binding CurrentPage, UpdateSourceTrigger=Explicit}" 
+                              SelectedItem="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged}" 
                               SelectionChanged="PageSelector_SelectionChanged"/>
                 </Grid>
 
