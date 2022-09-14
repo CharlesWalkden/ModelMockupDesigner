@@ -113,7 +113,7 @@
         <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
         <Setter Property="Padding" Value="10"/>
         <Setter Property="Margin" Value="0,5"/>
-        <Setter Property="BorderBrush" Value="{StaticResource LighterGreenBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LightGreyBrush}"/>
         <Setter Property="BorderThickness" Value="0,0,0,1"/>
 
         <Setter Property="Template">

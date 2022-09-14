@@ -47,5 +47,11 @@
     <Color x:Key="AthenaBlue">#FF24A4C8</Color>
     <SolidColorBrush x:Key="AthenaBlueBrush" Color="{StaticResource AthenaBlue}"/>
 
+    <Color x:Key="ButtonBlue">#cae7ef</Color>
+    <SolidColorBrush x:Key="ButtonBlueBrush" Color="{StaticResource ButtonBlue}"/>
+
+    <Color x:Key="ClickedButtonOrange">#e87900</Color>
+    <SolidColorBrush x:Key="ClickedButtonOrangeBrush" Color="{StaticResource ClickedButtonOrange}"/>
+
 
 </ResourceDictionary>
