@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace ModelMockupDesigner.Models.Wizard
+namespace ModelMockupDesigner.Models
 {
     public class WizardTable : BaseModel, ICellParent, ICellControl
     {

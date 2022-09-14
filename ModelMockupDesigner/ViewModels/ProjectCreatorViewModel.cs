@@ -7,7 +7,7 @@ using ModelMockupDesigner.Enums;
 
 namespace ModelMockupDesigner.ViewModels
 {
-    public class ModelCreatorViewModel : BaseViewModel
+    public class ProjectCreatorViewModel : BaseViewModel 
     {
         public string? ProjectName
         {

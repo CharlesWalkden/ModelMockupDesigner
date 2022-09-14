@@ -1,6 +1,5 @@
 ﻿using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
-using ModelMockupDesigner.Models.Wizard;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

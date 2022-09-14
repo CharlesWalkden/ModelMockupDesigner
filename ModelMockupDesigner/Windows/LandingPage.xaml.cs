@@ -1,5 +1,7 @@
 ﻿using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Models;
 using ModelMockupDesigner.ViewModels;
+using ModelMockupDesigner.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,11 +34,11 @@ namespace ModelMockupDesigner
             Application.Current.Shutdown();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void NewProject_Click(object sender, RoutedEventArgs e) 
         {
-            DialogLauncher<WizardCreator> wizardCreator = new(this);
-            wizardCreator.OnClose += WizardCreator_OnClose;
-            wizardCreator.Show();
+            DialogLauncher<ProjectCreator> projectCreator = new(this);
+            projectCreator.OnClose += ProjectCreator_OnClose;
+            projectCreator.Show();
         }
 
         private async void WizardCreator_OnClose(object? sender, DialogEventArgs e)
@@ -48,13 +50,6 @@ namespace ModelMockupDesigner
                 {
                     case WizardType.Dynamic:
                         {
-                            //DialogLauncher<Editor> editor = new(this);
-                            //if (editor.Control != null)
-                            //{
-                            //    await editor.Control.LoadEditor(wizardCreator.Control.ViewModel);
-                            //}
-                            //editor.Show();
-
                             Editor editor = new Editor();
                             await editor.LoadEditor(wizardCreator.Control.ViewModel);
                             WindowControl.DisplayWindow(editor);
@@ -65,6 +60,26 @@ namespace ModelMockupDesigner
                         break;
                 }
             }
+        }
+        private async void ProjectCreator_OnClose(object? sender, DialogEventArgs e)
+        {
+            if (sender is DialogLauncher<ProjectCreator> projectCreator && projectCreator.Control != null && projectCreator.Control.DialogResult == DialogResult.Accept &&
+                projectCreator.Control.ViewModel != null)
+            {
+
+                Project project = new(projectCreator.Control.ViewModel);
+
+                WizardSelector wizardSelector = new WizardSelector(project);
+
+                WindowControl.DisplayWindow(wizardSelector);
+                
+            }
+        }
+
+        private void Load_Click(object sender, RoutedEventArgs e) 
+        {
+            //WizardSelector wizardSelector = new();
+            //WindowControl.DisplayWindow(wizardSelector);
         }
     }
 }

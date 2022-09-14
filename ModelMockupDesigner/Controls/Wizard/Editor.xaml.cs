@@ -2,7 +2,7 @@
 using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
-using ModelMockupDesigner.Models.Wizard;
+using ModelMockupDesigner.Models;
 using ModelMockupDesigner.ViewModels;
 using System;
 using System.Collections.Generic;

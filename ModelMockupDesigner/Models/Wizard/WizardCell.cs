@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
 
-namespace ModelMockupDesigner.Models.Wizard
+namespace ModelMockupDesigner.Models
 {
     public class WizardCell : BaseModel
     {

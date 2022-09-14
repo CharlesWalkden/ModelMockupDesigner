@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ModelMockupDesigner.Interfaces;
+using ModelMockupDesigner.Models;
+using ModelMockupDesigner.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +21,32 @@ namespace ModelMockupDesigner
     /// <summary>
     /// Interaction logic for WizardSelector.xaml
     /// </summary>
-    public partial class WizardSelector : UserControl
+    public partial class WizardSelector : UserControl, IWindowStack
     {
-        public WizardSelector()
+        public WizardSelector(Project project)
         {
             InitializeComponent();
+            WizardSelectorViewModel viewModel = new()
+            {
+                Model = project
+            };
+
+            DataContext = viewModel;
         }
+
+
+
+
+        #region Interface
+
+        public event EventHandler? OnClosed;
+
+        public void CloseAsync()
+        {
+            OnClosed?.Invoke(this, new EventArgs());
+        }
+
+        #endregion
+
     }
 }

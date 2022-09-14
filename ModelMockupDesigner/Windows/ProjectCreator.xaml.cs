@@ -19,9 +19,9 @@ using System.Windows.Shapes;
 namespace ModelMockupDesigner.Windows
 {
     /// <summary>
-    /// Interaction logic for CatergoryCreator.xaml
+    /// Interaction logic for ProjectCreator.xaml
     /// </summary>
-    public partial class CatergoryCreator : UserControl, IDialogClient
+    public partial class ProjectCreator : UserControl, IDialogClient 
     {
         #region Interface
 
@@ -29,12 +29,16 @@ namespace ModelMockupDesigner.Windows
 
         #endregion
 
-        public CatergoryCreatorViewModel? ViewModel { get => DataContext as CatergoryCreatorViewModel; }
+        public ProjectCreatorViewModel? ViewModel { get => DataContext as ProjectCreatorViewModel; }
         public DialogResult DialogResult { get; set; }
 
-        public CatergoryCreator()
+        public ProjectCreator()
         {
             InitializeComponent();
+
+            ProjectCreatorViewModel viewModel = new();
+
+            DataContext = viewModel;
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e) 

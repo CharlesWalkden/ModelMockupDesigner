@@ -30,8 +30,8 @@
             </Grid.ColumnDefinitions>
             <Grid x:Name="buttons" Grid.Column="0"  VerticalAlignment="Center">
                 <StackPanel> 
-                    <Button Content="New"  Width="100" Height="50" Margin="15" Click="Button_Click"/>
-                    <Button Content="Load" Width="100" Height="50" Margin="15"/>
+                    <Button Content="New"  Width="100" Height="50" Margin="15" Click="NewProject_Click"/>
+                    <Button Content="Load" Width="100" Height="50" Margin="15" Click="Load_Click"/>
                     <Button Content="Export" Width="100" Height="50" Margin="15"/>
                     <Button Content="Exit" Width="100" Height="50" Margin="15" Click="ExitApplication_Click"/>
                 </StackPanel>
