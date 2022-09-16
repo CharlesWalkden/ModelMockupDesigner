@@ -54,7 +54,7 @@ namespace ModelMockupDesigner
             SetupTreeView();
         }
 
-        public void SetupTreeView()
+        private void SetupTreeView()
         {
             mainTreeView.Items.Clear();
 
@@ -62,11 +62,16 @@ namespace ModelMockupDesigner
             {
                 foreach (Category category in ViewModel.Model.Categories)
                 {
-                    CategoryTreeViewItem categoryTreeViewItem = new(category);
+                    CategoryTreeViewItem categoryTreeViewItem = new(null, category);
 
                     mainTreeView.Items.Add(categoryTreeViewItem);
                 }
             }
+        }
+
+        public void RefreshTreeView()
+        {
+            SetupTreeView();
         }
 
 
@@ -114,10 +119,12 @@ namespace ModelMockupDesigner
 
     public class CategoryTreeViewItem : TreeViewItem
     {
+        public Category? CategoryParent { get; set; }
         public Category Category { get; private set; }
 
-        public CategoryTreeViewItem(Category category)
+        public CategoryTreeViewItem(Category? parent, Category category)
         {
+            CategoryParent = parent;
             Category = category;
             Header = category.Name;
             Foreground = Brushes.White;
@@ -133,7 +140,7 @@ namespace ModelMockupDesigner
             {
                 foreach (Category subCategory in Category.Categories)
                 {
-                    CategoryTreeViewItem categoryTreeView = new(subCategory);
+                    CategoryTreeViewItem categoryTreeView = new(Category, subCategory);
                     
                     if (subCategory.IsExpanded)
                     {
@@ -169,6 +176,23 @@ namespace ModelMockupDesigner
             if (sender is CategoryTreeViewItem treeViewItem)
             {
                 treeViewItem.Category.IsExpanded = false;
+            }
+        }
+
+        public bool DeleteFromParent()  
+        {
+            if (CategoryParent != null)
+            {
+                if (CategoryParent.Categories != null)
+                {
+                    CategoryParent.Categories.Remove(Category);
+                    return true;
+                }
+                return false;
+            }
+            else
+            {
+                return false;
             }
         }
     }

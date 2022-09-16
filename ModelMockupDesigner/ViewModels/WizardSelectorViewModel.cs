@@ -82,7 +82,28 @@ namespace ModelMockupDesigner.ViewModels
         }
         private void Delete()
         {
+            if (Owner.CurrentSelection != null)
+            {
+                if (Owner.CurrentSelection is CategoryTreeViewItem categoryTreeViewItem)
+                {
+                    if (model != null)
+                    {
+                        if (!categoryTreeViewItem.DeleteFromParent())
+                        {
+                            model.Categories.Remove(categoryTreeViewItem.Category);
+                        }
 
+                        Owner.RefreshTreeView();
+                    }
+                }
+                else if (Owner.CurrentSelection is WizardTreeViewItem wizardTreeViewItem)
+                {
+                    if (model != null)
+                    {
+                        
+                    }
+                }
+            }
         }
         private async void WizardCreator_OnClose(object? sender, DialogEventArgs e)
         {
