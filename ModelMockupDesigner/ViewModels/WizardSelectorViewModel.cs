@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ComboBoxItem = ModelMockupDesigner.Models.ComboBoxItem;
 
 namespace ModelMockupDesigner.ViewModels
 {
@@ -72,6 +73,14 @@ namespace ModelMockupDesigner.ViewModels
         {
             DialogLauncher<WizardCreator> wizardCreator = new(Owner);
             wizardCreator.OnClose += WizardCreator_OnClose;
+            if (wizardCreator.Control.ViewModel != null)
+            {
+                wizardCreator.Control.ViewModel.LoadCategoryList(CreateCategoryList());
+                if (Owner.CurrentSelection != null && Owner.CurrentSelection is CategoryTreeViewItem treeViewItem)
+                {
+                    wizardCreator.Control.ViewModel.SetCategory(treeViewItem.Category.Id);
+                }
+            }
             wizardCreator.Show();
         }
         private void CreateNewCateogry()
@@ -153,5 +162,29 @@ namespace ModelMockupDesigner.ViewModels
             }
         }
 
+        private List<ComboBoxItem> CreateCategoryList()
+        {
+            List<ComboBoxItem> categoryList = new List<ComboBoxItem>();
+
+            if (Model != null)
+            {
+                foreach (Category category in Model.Categories)
+                {
+                    ComboBoxItem comboBox = new()
+                    {
+                        Text = category.Name,
+                        Value = category.Id
+                    };
+                    categoryList.Add(comboBox);
+
+                    if (category.Categories != null && category.Categories.Count > 0)
+                    {
+                        categoryList.AddRange(category.GetCategoryList());
+                    }
+                }
+            }
+
+            return categoryList;
+        }
     }
 }

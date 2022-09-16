@@ -105,7 +105,9 @@ namespace ModelMockupDesigner
             OnClose?.Invoke(this, new DialogEventArgs() { Result = DialogResult });
         }
 
-        public T? Control => ((ScrollViewer)Window.Content).Content as T;
+#pragma warning disable CS8603 // We will always have content here. If we don't something has gone wrong and needs fixing.
+        public T Control => ((ScrollViewer)Window.Content).Content as T;
+#pragma warning restore CS8603 // Possible null reference return.
         private void window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             try

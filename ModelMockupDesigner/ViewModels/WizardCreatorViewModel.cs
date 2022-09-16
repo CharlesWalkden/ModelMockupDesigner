@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Models;
 
 namespace ModelMockupDesigner.ViewModels
 {
     public class WizardCreatorViewModel : BaseViewModel
     {
+        public CollectionList<ComboBoxItem> CategoryList { get; set; }
+        public ComboBoxItem? CurrentCategorySelection { get; set; }
         public string? WizardName
         {
             get => wizardName;
@@ -69,7 +72,16 @@ namespace ModelMockupDesigner.ViewModels
 
         public WizardCreatorViewModel()
         {
+            CategoryList = new();
+        }
 
+        public void LoadCategoryList(List<ComboBoxItem> categoryList)
+        {
+            CategoryList.AddRange(categoryList);
+        }
+        public void SetCategory(Guid categoryId)
+        {
+            CurrentCategorySelection = CategoryList.FirstOrDefault(x => (Guid)x.Value == categoryId);
         }
     }
 }

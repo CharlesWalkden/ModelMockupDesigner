@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using ComboBoxItem = ModelMockupDesigner.Models.ComboBoxItem;
 
 namespace ModelMockupDesigner.ViewModels
 {
@@ -78,28 +79,5 @@ namespace ModelMockupDesigner.ViewModels
 
         #endregion
 
-    }
-
-    /// <summary>
-    /// Class to use for combobox items within the page selector control.
-    /// </summary>
-    public class ComboBoxItem : BaseViewModel
-    {
-        public string? Text { get; set; }
-
-#pragma warning disable CS8618 // This object will always have a value when used!.
-        public object Value { get; set; }
-#pragma warning restore CS8618 
-
-        public override string ToString()
-        {
-            if (Text == null || string.IsNullOrEmpty(Text))
-            {
-                //return "Not Set";
-                return Value.ToString();
-            }
-
-            return Text.ToString();
-        }
     }
 }
