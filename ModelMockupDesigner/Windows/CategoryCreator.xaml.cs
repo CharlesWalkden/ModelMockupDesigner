@@ -21,7 +21,7 @@ namespace ModelMockupDesigner.Windows
     /// <summary>
     /// Interaction logic for CatergoryCreator.xaml
     /// </summary>
-    public partial class CatergoryCreator : UserControl, IDialogClient
+    public partial class CategoryCreator : UserControl, IDialogClient
     {
         #region Interface
 
@@ -29,12 +29,13 @@ namespace ModelMockupDesigner.Windows
 
         #endregion
 
-        public CatergoryCreatorViewModel? ViewModel { get => DataContext as CatergoryCreatorViewModel; }
+        public CategoryCreatorViewModel? ViewModel { get => DataContext as CategoryCreatorViewModel; }
         public DialogResult DialogResult { get; set; }
 
-        public CatergoryCreator()
+        public CategoryCreator()
         {
             InitializeComponent();
+            DataContext = new CategoryCreatorViewModel();
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e) 

@@ -18,9 +18,9 @@ namespace ModelMockupDesigner.Controls.Wizard
     /// <summary>
     /// Interaction logic for BooleanButton.xaml
     /// </summary>
-    public partial class AthenaYesNoControlDynamic : UserControl
+    public partial class AthenaYesNoControl : UserControl
     {
-        public AthenaYesNoControlDynamic()
+        public AthenaYesNoControl()
         {
             InitializeComponent();
         }

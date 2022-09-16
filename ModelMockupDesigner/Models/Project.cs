@@ -1,4 +1,5 @@
-﻿using ModelMockupDesigner.Models;
+﻿using ModelMockupDesigner.Data;
+using ModelMockupDesigner.Models;
 using ModelMockupDesigner.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,11 @@ namespace ModelMockupDesigner.Models
         public string? ProjectName { get; set; }
         public string? ProjectDescription { get; set; }
         public string? CustomerName { get; set; }
-
-        public List<Wizard> Wizards { get; set; }
+        public List<Category> Categories { get; set; }
 
         public Project(ProjectCreatorViewModel creatorModel)
         {
-            Wizards = new List<Wizard>();
+            Categories = DataStore.GetCategories();
             ProjectName = creatorModel.ProjectName;
             ProjectDescription = creatorModel.ProjectDescription;
             CustomerName = creatorModel.CustomerName;

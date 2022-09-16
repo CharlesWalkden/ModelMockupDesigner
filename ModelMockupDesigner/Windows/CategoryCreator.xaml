@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ModelMockupDesigner.Windows.CatergoryCreator"
+﻿<UserControl x:Class="ModelMockupDesigner.Windows.CategoryCreator"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -17,12 +17,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="1" >
-            <TextBlock  Text="Catergory name:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
-            <TextBox Text="{Binding CatergoryName,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="40" Margin="15"/>
+            <TextBlock  Text="Category name:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
+            <TextBox Text="{Binding CategoryName,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="40" Margin="15"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="2">
-            <TextBlock  Text="Catergory description:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
-            <TextBox Text="{Binding CatergoryDescription,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="40" Margin="15"/>
+            <TextBlock  Text="Category description:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
+            <TextBox Text="{Binding CategoryDescription,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="40" Margin="15"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5">
             <Button Content="Accept"  Width="100" Height="50" Margin="15" Click="Accept_Click"/>

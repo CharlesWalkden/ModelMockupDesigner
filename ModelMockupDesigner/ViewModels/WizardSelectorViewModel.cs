@@ -14,6 +14,8 @@ namespace ModelMockupDesigner.ViewModels
 {
     public class WizardSelectorViewModel : BaseViewModel
     {
+        public WizardSelector Owner { get; set; }
+
         public Project? Model
         {
             get => model;
@@ -46,12 +48,19 @@ namespace ModelMockupDesigner.ViewModels
 
 
         public ICommand CreateNewWizardCommand { get; set; }
+        public ICommand CreateNewCategoryCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
         public ICommand CloseWizardSelectorCommand { get; set; }
 
-        public WizardSelectorViewModel()
+        public EventHandler? OnListUpdated;
+
+        public WizardSelectorViewModel(WizardSelector owner)
         {
             CreateNewWizardCommand = new RelayCommand(CreateNewWizard);
+            CreateNewCategoryCommand = new RelayCommand(CreateNewCateogry);
+            DeleteCommand = new RelayCommand(Delete);
             CloseWizardSelectorCommand = new RelayCommand(CloseWizardSelector);
+            Owner = owner;
         }
 
         private void CloseWizardSelector() 
@@ -61,9 +70,19 @@ namespace ModelMockupDesigner.ViewModels
 
         private void CreateNewWizard()
         {
-            DialogLauncher<WizardCreator> wizardCreator = new(this);
+            DialogLauncher<WizardCreator> wizardCreator = new(Owner);
             wizardCreator.OnClose += WizardCreator_OnClose;
             wizardCreator.Show();
+        }
+        private void CreateNewCateogry()
+        {
+            DialogLauncher<CategoryCreator> categoryCreator = new(Owner);
+            categoryCreator.OnClose += CategoryCreator_OnClose;
+            categoryCreator.Show();
+        }
+        private void Delete()
+        {
+
         }
         private async void WizardCreator_OnClose(object? sender, DialogEventArgs e)
         {
@@ -82,6 +101,33 @@ namespace ModelMockupDesigner.ViewModels
                         }
                     default:
                         break;
+                }
+            }
+        }
+
+        private void CategoryCreator_OnClose(object? sender, DialogEventArgs e)
+        {
+            if (sender is DialogLauncher<CategoryCreator> categoryCreator && categoryCreator.Control != null && categoryCreator.Control.DialogResult == DialogResult.Accept &&
+                categoryCreator.Control.ViewModel != null)
+            {
+                Category category = new Category(Guid.Empty)
+                {
+                    Name = categoryCreator.Control.ViewModel.CategoryName,
+                    Description = categoryCreator.Control.ViewModel.CategoryDescription
+                };
+
+                if (Owner.CurrentSelection != null && Owner.CurrentSelection is CategoryTreeViewItem treeViewItem)
+                {
+                    if (treeViewItem.Category.Categories != null)
+                    {
+                        treeViewItem.Category.Categories.Add(category);
+                        OnListUpdated?.Invoke(this, new EventArgs());
+                    }
+                }
+                else if (Model != null)
+                {
+                    Model.Categories.Add(category);
+                    OnListUpdated?.Invoke(this, new EventArgs());
                 }
             }
         }

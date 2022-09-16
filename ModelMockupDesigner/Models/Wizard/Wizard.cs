@@ -14,6 +14,7 @@ namespace ModelMockupDesigner.Models
         public WizardType? WizardType { get; set; }
         public WizardTheme? WizardTheme { get; set; }
         public List<WizardSection> Sections { get; set; }
+        public Guid CateogryId { get; set; }
 
         public Wizard()
         {
