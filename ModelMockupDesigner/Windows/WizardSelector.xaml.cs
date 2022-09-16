@@ -122,11 +122,27 @@ namespace ModelMockupDesigner
             Header = category.Name;
             Foreground = Brushes.White;
 
+            if (category.IsExpanded)
+            {
+                IsExpanded = true;
+            }
+            Expanded += OnExpandedEvent;
+            Collapsed += OnCollapsedEvent;
+
             if (Category.Categories != null)
             {
                 foreach (Category subCategory in Category.Categories)
                 {
                     CategoryTreeViewItem categoryTreeView = new(subCategory);
+                    
+                    if (subCategory.IsExpanded)
+                    {
+                        categoryTreeView.IsExpanded = true;
+                    }
+
+                    categoryTreeView.Expanded += OnExpandedEvent;
+                    categoryTreeView.Collapsed += OnCollapsedEvent;
+
                     this.Items.Add(categoryTreeView);
                 }
             }
@@ -138,6 +154,21 @@ namespace ModelMockupDesigner
                     WizardTreeViewItem treeViewItem = new(wizard);
                     this.Items.Add(treeViewItem);
                 }
+            }
+        }
+
+        public void OnExpandedEvent(object sender, RoutedEventArgs e) 
+        {
+            if (sender is CategoryTreeViewItem treeViewItem)
+            {
+                treeViewItem.Category.IsExpanded = true;
+            }
+        }
+        public void OnCollapsedEvent(object sender, RoutedEventArgs e)
+        {
+            if (sender is CategoryTreeViewItem treeViewItem)
+            {
+                treeViewItem.Category.IsExpanded = false;
             }
         }
     }

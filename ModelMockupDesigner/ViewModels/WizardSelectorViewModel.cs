@@ -110,7 +110,7 @@ namespace ModelMockupDesigner.ViewModels
             if (sender is DialogLauncher<CategoryCreator> categoryCreator && categoryCreator.Control != null && categoryCreator.Control.DialogResult == DialogResult.Accept &&
                 categoryCreator.Control.ViewModel != null)
             {
-                Category category = new Category(Guid.Empty)
+                Category category = new(Guid.Empty)
                 {
                     Name = categoryCreator.Control.ViewModel.CategoryName,
                     Description = categoryCreator.Control.ViewModel.CategoryDescription

@@ -15,6 +15,8 @@ namespace ModelMockupDesigner.Models
         public List<Category>? Categories { get; set; }
         public List<Wizard>? Wizards { get; set; }
 
+        public bool IsExpanded { get; set; } = false;
+
         public Category(Guid id)
         {
             if (id == Guid.Empty)
