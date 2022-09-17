@@ -26,7 +26,7 @@ namespace ModelMockupDesigner.Models
             WizardSection newSection = new(this);
             newSection.CreateNew(); 
 
-            Sections.Add(newSection);
+            //Sections.Add(newSection);
 
             return Task.CompletedTask;
         }

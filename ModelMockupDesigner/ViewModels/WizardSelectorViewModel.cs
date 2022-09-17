@@ -72,12 +72,12 @@ namespace ModelMockupDesigner.ViewModels
             WindowControl.CloseTopWindow();
         }
 
-        private void LoadWizard()
+        private async void LoadWizard()
         {
             if (Owner.CurrentSelection is WizardTreeViewItem wizardTreeViewItem)
             {
                 Editor editor = new Editor();
-                editor.LoadEditor(wizardTreeViewItem.Wizard);
+                await editor.LoadEditor(wizardTreeViewItem.Wizard);
 
                 WindowControl.DisplayWindow(editor);
             }
@@ -193,6 +193,11 @@ namespace ModelMockupDesigner.ViewModels
                     {
                         foreach (Category subCategory in category.Categories)
                         {
+                            if (subCategory.Id == wizard.CateogryId)
+                            {
+                                subCategory.AddWizard(wizard);
+                                break;
+                            }
                             if (subCategory.AddWizardToCategory(wizard))
                             {
                                 break;
