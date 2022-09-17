@@ -2,7 +2,6 @@
 using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
-using ModelMockupDesigner.Models;
 using ModelMockupDesigner.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -45,6 +44,15 @@ namespace ModelMockupDesigner
             Pages = new();
         }
 
+        public async Task LoadEditor(Wizard wizard)
+        {
+            if (ViewModel != null)
+                ViewModel.WizardName = wizard.Name;
+
+            WizardModel = wizard;
+
+            await LoadUI();
+        }
         public async Task LoadEditor(WizardCreatorViewModel creatorModel)
         {
             WizardModel = new()
@@ -54,27 +62,20 @@ namespace ModelMockupDesigner
                 WizardType = creatorModel.WizardType,
                 WizardTheme = creatorModel.WizardTheme
             };
+
+            if (creatorModel.CurrentCategorySelection != null)
+            {
+                WizardModel.CateogryId = (Guid)creatorModel.CurrentCategorySelection.Value;
+            }
+
             if (ViewModel != null)
                 ViewModel.WizardName = creatorModel.WizardName;
 
-            // Pass in Empty guid as this is a new wizard and we don't currently have one.
-            await WizardModel.BuildWizard(Guid.Empty);
+            await WizardModel.CreateNew();
 
             await LoadUI();
         }
-        public async Task LoadEditor(Guid identifier)
-        {
-            await CreateWizardModel(identifier);
-
-            await LoadUI();
-            
-        }
-        private async Task CreateWizardModel(Guid wizardId)
-        {
-            WizardModel = new Wizard();
-
-            await WizardModel.BuildWizard(wizardId);
-        }
+        
         private async Task LoadUI()
         {
             ContentContainer.Children.Clear();
@@ -188,11 +189,14 @@ namespace ModelMockupDesigner
             if (sectionModel != null)
             {
                 await page.LoadModel(sectionModel);
+                WizardModel.Sections.Add(sectionModel);
             }
             else
             {
-                await page.LoadModel(new WizardSection(WizardModel));
+                WizardSection newSectionModel = new(WizardModel);
+                await page.LoadModel(newSectionModel);
             }
+            
             page.Model.OrderId = GetNextPageOrderNumber();
 
             AddPage(page);
@@ -267,6 +271,7 @@ namespace ModelMockupDesigner
         private void Save_Click(object sender, RoutedEventArgs e) 
         {
             // Save wizard.
+            // TODO: Save Xml
             WindowControl.CloseTopWindow();
         }
 

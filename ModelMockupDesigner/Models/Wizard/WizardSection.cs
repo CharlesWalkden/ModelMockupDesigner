@@ -16,6 +16,7 @@ namespace ModelMockupDesigner.Models
         public WizardSection(Wizard parent)
         {
             Parent = parent;
+            Parent.Sections.Add(this);
             WizardColumns = new List<WizardColumn>();
             CreateNew();
         }

@@ -21,22 +21,7 @@ namespace ModelMockupDesigner.Models
             Sections = new List<WizardSection>();
         }
 
-        public async Task BuildWizard(Guid Id)
-        {
-            if (Id != Guid.Empty)
-            {
-                await LoadExistingWizard(Id);
-            }
-            else
-            {
-                await CreateNewWizard();
-            }
-        }
-        private async Task LoadExistingWizard(Guid id)
-        {
-            // Load wizard from cache when we have one.
-        }
-        private Task CreateNewWizard()
+        public Task CreateNew() 
         {
             WizardSection newSection = new(this);
             newSection.CreateNew(); 

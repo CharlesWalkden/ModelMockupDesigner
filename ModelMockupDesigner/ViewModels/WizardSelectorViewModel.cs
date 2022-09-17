@@ -4,6 +4,7 @@ using ModelMockupDesigner.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -48,6 +49,7 @@ namespace ModelMockupDesigner.ViewModels
         private string? projectName { get; set; }
 
 
+        public ICommand LoadWizardCommand { get; set; }
         public ICommand CreateNewWizardCommand { get; set; }
         public ICommand CreateNewCategoryCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
@@ -57,6 +59,7 @@ namespace ModelMockupDesigner.ViewModels
 
         public WizardSelectorViewModel(WizardSelector owner)
         {
+            LoadWizardCommand = new RelayCommand(LoadWizard);
             CreateNewWizardCommand = new RelayCommand(CreateNewWizard);
             CreateNewCategoryCommand = new RelayCommand(CreateNewCateogry);
             DeleteCommand = new RelayCommand(Delete);
@@ -69,6 +72,16 @@ namespace ModelMockupDesigner.ViewModels
             WindowControl.CloseTopWindow();
         }
 
+        private void LoadWizard()
+        {
+            if (Owner.CurrentSelection is WizardTreeViewItem wizardTreeViewItem)
+            {
+                Editor editor = new Editor();
+                editor.LoadEditor(wizardTreeViewItem.Wizard);
+
+                WindowControl.DisplayWindow(editor);
+            }
+        }
         private void CreateNewWizard()
         {
             DialogLauncher<WizardCreator> wizardCreator = new(Owner);
@@ -125,6 +138,10 @@ namespace ModelMockupDesigner.ViewModels
                         {
                             Editor editor = new Editor();
                             await editor.LoadEditor(wizardCreator.Control.ViewModel);
+
+                            AddWizardToCategory(editor.WizardModel);
+                            Owner.RefreshTreeView();
+
                             WindowControl.DisplayWindow(editor);
 
                             break;
@@ -161,7 +178,30 @@ namespace ModelMockupDesigner.ViewModels
                 }
             }
         }
-
+        private void AddWizardToCategory(Wizard? wizard)
+        {
+            if (Model != null && wizard != null)
+            {
+                foreach (Category category in Model.Categories)
+                {
+                    if (category.Id == wizard.CateogryId)
+                    {
+                        category.AddWizard(wizard);
+                        break;
+                    }
+                    if (category.Categories != null)
+                    {
+                        foreach (Category subCategory in category.Categories)
+                        {
+                            if (subCategory.AddWizardToCategory(wizard))
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         private List<ComboBoxItem> CreateCategoryList()
         {
             List<ComboBoxItem> categoryList = new List<ComboBoxItem>();

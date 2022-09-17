@@ -37,7 +37,37 @@ namespace ModelMockupDesigner.Models
             Wizards = wizards;
             Categories = categories;
         }
+        public void AddWizard(Wizard wizard)
+        {
+            if (Wizards != null)
+            {
+                Wizards.Add(wizard);
+            }
+        }
+        public bool AddWizardToCategory(Wizard wizard)
+        {
+            bool added = false;
+            if (Categories != null)
+            {
+                foreach(Category category in Categories)
+                {
+                    if (category.Id == wizard.CateogryId)
+                    {
+                        category.AddWizard(wizard);
+                        break;
+                    }
+                    if (category.Categories != null)
+                    {
+                        if (category.AddWizardToCategory(wizard))
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
 
+            return added;
+        }
         public List<ComboBoxItem> GetCategoryList()
         {
             List<ComboBoxItem> categoryList = new List<ComboBoxItem>();

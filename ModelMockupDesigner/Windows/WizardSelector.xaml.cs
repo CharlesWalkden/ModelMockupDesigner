@@ -204,7 +204,14 @@ namespace ModelMockupDesigner
         public WizardTreeViewItem(Wizard wizard)
         {
             Wizard = wizard;
-            Header = wizard.Name;
+            if (string.IsNullOrWhiteSpace(wizard.Name))
+            {
+                Header = "Wizard name not set";
+            }
+            else
+            {
+                Header = wizard.Name;
+            }
             Foreground = Brushes.White;
         }
     }
