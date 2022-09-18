@@ -8,11 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\GuardianSmall.png" />
+    <None Remove="Images\treeviewfolder.png" />
     <None Remove="Windows\Small - 200px - White.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\GuardianSmall.png" />
     <Resource Include="Images\K2 Logo White.png" />
+    <Resource Include="Images\treeviewfolder.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
