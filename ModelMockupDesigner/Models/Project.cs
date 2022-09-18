@@ -1,6 +1,7 @@
 ﻿using ModelMockupDesigner.Data;
 using ModelMockupDesigner.Models;
 using ModelMockupDesigner.ViewModels;
+using ModelMockupDesigner.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,29 @@ namespace ModelMockupDesigner.Models
         public string? ProjectName { get; set; }
         public string? ProjectDescription { get; set; }
         public string? CustomerName { get; set; }
+        public ProjectTemplate ProjectTemplate { get; set; }
         public List<Category> Categories { get; set; }
 
         public Project(ProjectCreatorViewModel creatorModel)
         {
-            Categories = DataStore.GetAntenatalCategories();
+            ProjectTemplate = creatorModel.ProjectTemplate;
+
+            switch (ProjectTemplate)
+            {
+                case ProjectTemplate.FullAntenatal:
+                    {
+                        Categories = DataStore.GetAntenatalCategories();
+                        break;
+                    }
+                case ProjectTemplate.IntrapartumOnly:
+                    {
+                        Categories = DataStore.GetIntrapartumCategories();
+                        break;
+                    }
+                default:
+                    break;
+            }
+
             ProjectName = creatorModel.ProjectName;
             ProjectDescription = creatorModel.ProjectDescription;
             CustomerName = creatorModel.CustomerName;

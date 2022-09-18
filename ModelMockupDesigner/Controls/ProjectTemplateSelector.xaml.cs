@@ -54,7 +54,7 @@ namespace ModelMockupDesigner.Controls
         private void Checkbox_Unchecked(object sender, RoutedEventArgs e)
         {
             CheckBox? checkBox = sender as CheckBox;
-            ProjectTemplate template = ProjectTemplate.IntrapartumOnly; //Default for now
+            ProjectTemplate template = ProjectTemplate.FullAntenatal; //Default for now
 
             if (checkBox != null)
             {
