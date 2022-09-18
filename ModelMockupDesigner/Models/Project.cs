@@ -19,7 +19,7 @@ namespace ModelMockupDesigner.Models
 
         public Project(ProjectCreatorViewModel creatorModel)
         {
-            Categories = DataStore.GetCategories();
+            Categories = DataStore.GetAntenatalCategories();
             ProjectName = creatorModel.ProjectName;
             ProjectDescription = creatorModel.ProjectDescription;
             CustomerName = creatorModel.CustomerName;

@@ -9,7 +9,13 @@ namespace ModelMockupDesigner.Data
 {
     public static class DataStore
     {
-        public static List<Category> GetCategories()
+        public static List<Category> GetIntrapartumCategories()
+        {
+            List<Category> categories = new List<Category>();
+
+            return categories;
+        }
+        public static List<Category> GetAntenatalCategories()
         {
             List<Category> categories = new()
             {

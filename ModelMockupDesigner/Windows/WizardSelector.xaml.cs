@@ -127,6 +127,7 @@ namespace ModelMockupDesigner
             CategoryParent = parent;
             Category = category;
             Header = category.Name;
+            HeaderTemplate = Application.Current.Resources["treeFolder"] as DataTemplate;
             Foreground = Brushes.White;
 
             if (category.IsExpanded)
@@ -212,6 +213,8 @@ namespace ModelMockupDesigner
             {
                 Header = wizard.Name;
             }
+
+            HeaderTemplate = Application.Current.Resources["GuardianSmall"] as DataTemplate;
             Foreground = Brushes.White;
         }
     }
