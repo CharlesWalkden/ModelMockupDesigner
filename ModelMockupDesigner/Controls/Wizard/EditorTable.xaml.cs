@@ -62,10 +62,10 @@ namespace ModelMockupDesigner.Controls
             for (int r = 0; r <= maxRow; r++)
             {
                 container.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                for (int c = 0; c <= maxColumn; c++)
-                {
-                    container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
-                }
+            }
+            for (int c = 0; c <= maxColumn; c++)
+            {
+                container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             }
 
             foreach (WizardCell cell in tableModel.Cells)
@@ -121,6 +121,8 @@ namespace ModelMockupDesigner.Controls
 
             EditorCell editorCell = new(this);
             editorCell.OnSelected += OnSelected;
+            await editorCell.LoadModel(wizardCell);
+
             if (elementType != null)
             {
                 await editorCell.AddNewControl(elementType);
@@ -130,7 +132,6 @@ namespace ModelMockupDesigner.Controls
             Grid.SetColumn(editorCell, column);
             Grid.SetRow(editorCell, row);
 
-            await editorCell.LoadModel(wizardCell);
         }
         private async Task AddColumn(NewControl? newControl = null)
         {
@@ -142,7 +143,7 @@ namespace ModelMockupDesigner.Controls
             int column = TableModel.Cells.Max(x => x.Column);
             int row = TableModel.Cells.Max(x => x.Row);
 
-            for (int r = 0; r <= row; r++)
+            for (int r = 0; r < row + 1; r++)
             {
                 if (newControl != null)
                 {
@@ -165,7 +166,7 @@ namespace ModelMockupDesigner.Controls
             int column = TableModel.Cells.Max(x => x.Column);
             int row = TableModel.Cells.Max(x => x.Row);
 
-            for (int c = 0; c <= column; c++)
+            for (int c = 0; c < column + 1; c++)
             {
                 if (newControl != null)
                 {
@@ -243,41 +244,27 @@ namespace ModelMockupDesigner.Controls
                 e.Effects = DragDropEffects.None;
             }
         }
-        private void Control_Drop(object sender, DragEventArgs e)
+        private async void Control_Drop(object sender, DragEventArgs e)
         {
-            //int column = 0;
-            //int row = 0;
-            //NewControl newControl = e.Data.GetData(typeof(NewControl)) as NewControl;
+            NewControl? newControl = e.Data.GetData(typeof(NewControl)) as NewControl;
 
-            //if (sender == newColumn)
-            //{
-            //    column = Root.ColumnDefinitions.Count;
+            if (sender == newColumn)
+            {
+                if (newControl != null)
+                {
+                    await AddColumn(newControl);
+                }
 
-            //    if (newControl != null)
-            //    {
-            //        AddNewColumn(column, newControl);
-            //    }
-            //    else
-            //    {
-            //        AddNewColumn(column);
-            //    }
-
-            //}
-            //if (sender == newRow)
-            //{
-            //    row = Root.RowDefinitions.Count;
-
-            //    if (newControl != null)
-            //    {
-            //        AddNewRow(row, newControl);
-            //    }
-            //    else
-            //    {
-            //        AddNewRow(row);
-            //    }
-            //}
-            //newColumn.Visibility = Visibility.Collapsed;
-            //newRow.Visibility = Visibility.Collapsed;
+            }
+            if (sender == newRow)
+            {
+                if (newControl != null)
+                {
+                    await AddRow(newControl);
+                }
+            }
+            newColumn.Visibility = Visibility.Collapsed;
+            newRow.Visibility = Visibility.Collapsed;
         }
         private void HeaderStackPanel_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {

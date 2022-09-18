@@ -23,7 +23,7 @@ namespace ModelMockupDesigner.Models
         public void CreateNew()
         {
             if (Parent != null)
-                Order = Parent.WizardColumns.Count + 1;
+                Order = Parent.WizardColumns.Count;
 
             WizardPanel wizardPanel = new(this);
             wizardPanel.CreateNew();

@@ -65,11 +65,11 @@ namespace ModelMockupDesigner.Controls
 
             for (int r = 0; r <= maxRow; r++)
             {
-                container.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
-                for (int c = 0; c <= maxColumn; c++)
-                {
-                    container.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Auto) });
-                }
+                container.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            }
+            for (int c = 0; c <= maxColumn; c++)
+            {
+                container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             }
 
             foreach (WizardCell cellContent in panelModel.Cells)
@@ -126,7 +126,7 @@ namespace ModelMockupDesigner.Controls
             EditorCell editorCell = new(this);
             editorCell.OnSelected += OnSelected;
 
-            await editorCell.LoadModel(wizardCell, true);
+            await editorCell.LoadModel(wizardCell);
 
             if (elementType != null)
             {
@@ -136,15 +136,13 @@ namespace ModelMockupDesigner.Controls
             container.Children.Add(editorCell);
             Grid.SetColumn(editorCell,column);
             Grid.SetRow(editorCell, row);
-
-            
         }
         private async Task AddColumn(NewControl? newControl = null)
          {
             if (PanelModel == null)
                 return;
 
-            container.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 25, Width = new GridLength(1, GridUnitType.Auto) });
+            container.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 25, Width = GridLength.Auto });
 
             int column = PanelModel.Cells.Max(x => x.Column);
             int row = PanelModel.Cells.Max(x => x.Row);
@@ -167,12 +165,12 @@ namespace ModelMockupDesigner.Controls
             if (PanelModel == null)
                 return;
 
-            container.RowDefinitions.Add(new RowDefinition() { MinHeight = 25, Height = new GridLength(1, GridUnitType.Auto) });
+            container.RowDefinitions.Add(new RowDefinition() { MinHeight = 25, Height = GridLength.Auto });
 
             int column = PanelModel.Cells.Max(x => x.Column);
             int row = PanelModel.Cells.Max(x => x.Row);
 
-            for (int c = 0; c <= column; c++)
+            for (int c = 0; c < column + 1; c++)
             {
                 if (newControl != null)
                 {

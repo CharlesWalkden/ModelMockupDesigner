@@ -69,7 +69,7 @@ namespace ModelMockupDesigner.Controls
         #endregion
 
 
-        public async Task LoadModel(WizardCell wizardCell, bool alreadyLoaded = false)
+        public async Task LoadModel(WizardCell wizardCell)
         {
             DataContext = wizardCell;
             CellModel = wizardCell;

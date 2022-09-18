@@ -21,7 +21,7 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
                     <TextBlock Text="Project Overview"  FontSize="12" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Top" />
                     <Button Content="Save"  Width="50" Height="25" Margin="5" />
-                    <Button Content="Load"  Width="50" Height="25" Margin="5" Command="{Binding LoadWizardCommand}"/>
+                    <Button Content="Load"  Width="50" Height="25" Margin="5" />
                     <Button Content="Close"  Width="50" Height="25" Margin="5" Command="{Binding CloseWizardSelectorCommand}"/>
                 </StackPanel>
             </Border>
@@ -88,7 +88,7 @@
 
                     <Grid Grid.Row="1">
                         <!-- Edit button -->
-                        <Button Content="Edit"  Width="50" Height="25" Margin="5" Command="{Binding DeleteCommand}" HorizontalAlignment="Right"/>
+                        <Button Content="Edit"  Width="50" Height="25" Margin="5" Command="{Binding EditWizardCommand}" HorizontalAlignment="Right"/>
                     </Grid>
 
                 </Grid>

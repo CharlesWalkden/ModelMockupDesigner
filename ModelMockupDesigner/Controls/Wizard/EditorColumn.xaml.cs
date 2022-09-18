@@ -54,7 +54,7 @@ namespace ModelMockupDesigner.Controls
         {
             DataContext = columnModel;
 
-            for (int i = 0; i <= columnModel.WizardPanels.Count; i++)
+            for (int i = 0; i < columnModel.WizardPanels.Count; i++)
             {
                 container.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             }

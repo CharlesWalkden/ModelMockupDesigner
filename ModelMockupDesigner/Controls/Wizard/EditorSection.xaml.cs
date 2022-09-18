@@ -53,7 +53,7 @@ namespace ModelMockupDesigner.Controls
         {
             DataContext = sectionModel;
 
-            for (int i = 0; i <= sectionModel.WizardColumns.Count; i++)
+            for (int i = 0; i < sectionModel.WizardColumns.Count; i++)
             {
                 container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             }

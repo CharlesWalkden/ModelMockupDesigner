@@ -90,7 +90,7 @@ namespace ModelMockupDesigner.ViewModels
         private string? customerName { get; set; }
 
 
-        public ICommand LoadWizardCommand { get; set; }
+        public ICommand EditWizardCommand { get; set; }
         public ICommand CreateNewWizardCommand { get; set; }
         public ICommand CreateNewCategoryCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
@@ -100,7 +100,7 @@ namespace ModelMockupDesigner.ViewModels
 
         public WizardSelectorViewModel(WizardSelector owner)
         {
-            LoadWizardCommand = new RelayCommand(LoadWizard);
+            EditWizardCommand = new RelayCommand(LoadWizard);
             CreateNewWizardCommand = new RelayCommand(CreateNewWizard);
             CreateNewCategoryCommand = new RelayCommand(CreateNewCateogry);
             DeleteCommand = new RelayCommand(Delete);
