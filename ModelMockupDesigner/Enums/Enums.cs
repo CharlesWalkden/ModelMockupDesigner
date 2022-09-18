@@ -17,6 +17,11 @@ namespace ModelMockupDesigner.Enums
         V6,
         V7
     }
+    public enum ProjectTemplate
+    {
+        FullAntenatal,
+        IntrapartumOnly
+    }
 
     public enum ElementType
     {

@@ -47,11 +47,25 @@ namespace ModelMockupDesigner.ViewModels
             }
         }
 
+        public ProjectTemplate ProjectTemplate
+        {
+            get => projectTemplate;
+            set
+            {
+                if (projectTemplate == value)
+                    return;
+
+                projectTemplate = value;
+                OnPropertyChanged(nameof(ProjectTemplate));
+            }
+        }
+
         #region Private Properties
 
         private string? projectName { get; set; }
         private string? projectDescription { get; set; }
         private string? customerName { get; set; }
+        private ProjectTemplate projectTemplate { get; set; }
         #endregion
     }
 }

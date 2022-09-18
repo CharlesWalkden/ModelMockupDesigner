@@ -28,6 +28,10 @@
             <TextBlock  Text="Customer name:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
             <TextBox Text="{Binding CustomerName,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="40" Margin="15"/>
         </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="4">
+            <TextBlock  Text="Project template:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
+            <controls:ProjectTemplateSelector CurrentTemplate="{Binding ProjectTemplate, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+        </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5">
             <Button Content="Accept"  Width="100" Height="50" Margin="15" Click="Accept_Click"/>
             <Button Content="Close"  Width="100" Height="50" Margin="15"  Click="Cancel_Click"/>
