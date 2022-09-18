@@ -28,6 +28,16 @@ namespace ModelMockupDesigner.ViewModels
                 else
                     projectName = "Not Set";
 
+                if (value != null)
+                    ProjectDescription = value.ProjectDescription;
+                else
+                    projecDescription = "Not Set";
+
+                if (value != null)
+                    CustomerName = value.CustomerName;
+                else
+                    customerName = "Not Set";
+
                 model = value;
             }
         }
@@ -46,7 +56,38 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(ProjectName));
             }
         }
+
+        public string? ProjectDescription
+        {
+            get => projecDescription;
+            set
+            {
+                if (projecDescription == value)
+                    return;
+
+                projecDescription = value;
+                OnPropertyChanged(nameof(ProjectDescription));
+            }
+        }
+
+        public string? CustomerName
+        {
+            get => customerName;
+            set
+            {
+                if (customerName == value)
+                    return;
+
+                customerName = value;
+                OnPropertyChanged(nameof(CustomerName));
+            }
+        }
+
         private string? projectName { get; set; }
+
+        private string? projecDescription { get; set; }
+
+        private string? customerName { get; set; }
 
 
         public ICommand LoadWizardCommand { get; set; }

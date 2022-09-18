@@ -11,7 +11,12 @@ namespace ModelMockupDesigner.Data
     {
         public static List<Category> GetIntrapartumCategories()
         {
-            List<Category> categories = new List<Category>();
+            List<Category> categories = new()
+            {
+                new Category(Guid.Empty){Name = "Intrapartum" },
+                new Category(Guid.Empty){Name = "Baby"},
+                new Category(Guid.Empty){Name = "Postnatal"},
+            };
 
             return categories;
         }
@@ -20,10 +25,11 @@ namespace ModelMockupDesigner.Data
             List<Category> categories = new()
             {
                 new Category(Guid.Empty){Name = "Profile", Categories = GetSubCategoriesProfile()},
-                new Category(Guid.Empty){Name = "Consultations & Admissions"},
-                new Category(Guid.Empty){Name = "Antenatal"},
-                new Category(Guid.Empty){Name = "Intrapartum"},
-                new Category(Guid.Empty){Name = "Postnatal"}
+                new Category(Guid.Empty){Name = "Consultations & Admissions", Categories = GetSubCategoriesConsultations()},
+                new Category(Guid.Empty){Name = "Antenatal", Categories = GetSubCategoriesAntenatal()},
+                new Category(Guid.Empty){Name = "Intrapartum", Categories = GetSubCategoriesIntrapartum()},
+                new Category(Guid.Empty){Name = "Postnatal", Categories = GetSubCategoriesPostnatal()},
+                new Category(Guid.Empty){Name = "Baby(s)"}
             };
 
             return categories;
@@ -40,6 +46,63 @@ namespace ModelMockupDesigner.Data
                 new Category(Guid.Empty){Name = "Plan of Care"},
                 new Category(Guid.Empty){Name = "Communications"},
                 new Category(Guid.Empty){Name = "Pregnancy Outcome"}
+            };
+
+            return categories;
+        }
+
+        public static List<Category> GetSubCategoriesConsultations()
+        {
+            List<Category> categories = new()
+            {
+                new Category(Guid.Empty){Name = "Helpline Contacts"},
+                new Category(Guid.Empty){Name = "Antenatal Consultations"},
+                new Category(Guid.Empty){Name = "Hospital Stays & Visits"},
+                new Category(Guid.Empty){Name = "Postnatal Consultations"},
+            };
+
+            return categories;
+        }
+
+        public static List<Category> GetSubCategoriesAntenatal()
+        {
+            List<Category> categories = new()
+            {
+                new Category(Guid.Empty){Name = "Plan of Care"},
+                new Category(Guid.Empty){Name = "Observations"},
+                new Category(Guid.Empty){Name = "Specialisms"},
+                new Category(Guid.Empty){Name = "Procedures"},
+                new Category(Guid.Empty){Name = "Investigations"},
+                new Category(Guid.Empty){Name = "Fetal Assessment"},
+                new Category(Guid.Empty){Name = "Pregnancy Outcome"},
+            };
+
+            return categories;
+        }
+
+        public static List<Category> GetSubCategoriesIntrapartum()
+        {
+            List<Category> categories = new()
+            {
+                new Category(Guid.Empty){Name = "Woman"},
+                new Category(Guid.Empty){Name = "Baby"},
+                new Category(Guid.Empty){Name = "Reporting"},
+            };
+
+            return categories;
+        }
+
+        public static List<Category> GetSubCategoriesPostnatal()
+        {
+            List<Category> categories = new()
+            {
+                new Category(Guid.Empty){Name = "Postnatal Summary"},
+                new Category(Guid.Empty){Name = "Observations"},
+                new Category(Guid.Empty){Name = "Investigations"},
+                new Category(Guid.Empty){Name = "Baby Checks"},
+                new Category(Guid.Empty){Name = "Plan of Care"},
+                new Category(Guid.Empty){Name = "Checklists"},
+                new Category(Guid.Empty){Name = "Discharge From Care"},
             };
 
             return categories;
