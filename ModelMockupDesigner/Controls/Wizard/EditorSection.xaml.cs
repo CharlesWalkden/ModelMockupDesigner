@@ -78,7 +78,7 @@ namespace ModelMockupDesigner.Controls
             HeaderTextBlock.Background = Brushes.White;
             Border.Fill = Brushes.Transparent;
         }
-        public void Delete()
+        public void DeleteControl()
         {
 
         }

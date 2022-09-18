@@ -81,7 +81,7 @@ namespace ModelMockupDesigner.Controls
             }
         }
 
-        public void Delete()
+        public void DeleteControl()
         {
             tableParent?.Delete(this);
         }
@@ -309,7 +309,7 @@ namespace ModelMockupDesigner.Controls
                 {
                     case "Delete Table":
                         {
-                            Delete();
+                            DeleteControl();
                             break;
                         }
                     case "Add Column to Panel":

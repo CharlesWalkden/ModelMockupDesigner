@@ -38,7 +38,8 @@ namespace ModelMockupDesigner.Enums
         Table,
         Panel,
         Column,
-        Section
+        Section,
+        YesNo
     }
     public enum DialogResult
     {

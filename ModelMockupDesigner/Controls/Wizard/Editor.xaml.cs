@@ -347,9 +347,34 @@ namespace ModelMockupDesigner
         private void Border_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             Source = (Border)sender;
-            SelectedControl = new NewControl() { ElementType = ElementType.Table };
+            TextBlock? child = null;
+            if (Source != null)
+            {
+                child = Source.Child as TextBlock;
+            }
+
+            ElementType selectedType = ElementType.Table;
+            if (child != null)
+            {
+                switch (child.Text)
+                {
+                    case "Table":
+                        {
+                            selectedType = ElementType.Table;
+                            break;
+                        }
+                    case "YesNo":
+                        {
+                            selectedType = ElementType.YesNo;
+                            break;
+                        }
+                }
+            }
+
+            SelectedControl = new NewControl() { ElementType = selectedType };
         }
 
         #endregion
+
     }
 }

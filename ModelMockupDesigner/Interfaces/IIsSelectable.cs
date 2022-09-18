@@ -12,6 +12,6 @@ namespace ModelMockupDesigner.Interfaces
     {
         BaseModel? Model { get; }
         void Unselect();
-        void Delete();
+        void DeleteControl();
     }
 }

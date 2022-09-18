@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Windows.Markup.Localizer;
 
 namespace ModelMockupDesigner.Models
 {
@@ -18,7 +19,6 @@ namespace ModelMockupDesigner.Models
         public string? CustomerName { get; set; }
         public ProjectTemplate ProjectTemplate { get; set; }
         public List<Category> Categories { get; set; }
-
         public Project(ProjectCreatorViewModel creatorModel)
         {
             ProjectTemplate = creatorModel.ProjectTemplate;
@@ -36,6 +36,7 @@ namespace ModelMockupDesigner.Models
                         break;
                     }
                 default:
+                    Categories = new();
                     break;
             }
 

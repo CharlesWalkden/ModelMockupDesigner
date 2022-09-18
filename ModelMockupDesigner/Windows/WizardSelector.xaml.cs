@@ -214,7 +214,7 @@ namespace ModelMockupDesigner
                 Header = wizard.Name;
             }
 
-            HeaderTemplate = Application.Current.Resources["GuardianSmall"] as DataTemplate;
+            HeaderTemplate = Application.Current.Resources["treeWizardAthena"] as DataTemplate;
             Foreground = Brushes.White;
         }
     }
