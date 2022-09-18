@@ -1,6 +1,6 @@
-﻿using ModelMockupDesigner.Enums;
+﻿using ModelMockupDesigner.Controls.Wizard;
+using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
-using ModelMockupDesigner.Models;
 using ModelMockupDesigner.Models;
 using System;
 using System.Collections.Generic;
@@ -28,6 +28,25 @@ namespace ModelMockupDesigner.Controls
 
         public BaseModel? Model { get => CellModel; }
         public ICellParent CellParent { get => cellParent; set => cellParent = value; }
+        public ICellControl? CellControl
+        {
+            get => cellControl;
+            set
+            {
+                cellControl = value;
+
+                if (value == null)
+                {
+                    CellModel.Control = value;
+
+                }
+                else
+                {
+                    CellModel.Control = (ICellControl?)value.Model;
+
+                }
+            }
+        }
 
         #endregion
 
@@ -35,6 +54,7 @@ namespace ModelMockupDesigner.Controls
 
         private WizardCell? CellModel { get; set; } 
         private ICellParent cellParent { get; set; }
+        private ICellControl? cellControl { get; set; }
 
         #endregion
 
@@ -49,12 +69,15 @@ namespace ModelMockupDesigner.Controls
         #endregion
 
 
-        public async Task LoadModel(WizardCell wizardCell)
+        public async Task LoadModel(WizardCell wizardCell, bool alreadyLoaded = false)
         {
             DataContext = wizardCell;
             CellModel = wizardCell;
 
-            // TODO: Create whatever control we need and then add it to UI.
+            if (CellModel.Control != null)
+            {
+                await AddNewControl(CellModel.Control.ElementType, CellModel.Control);
+            }
         }
 
         public void Unselect()
@@ -62,9 +85,13 @@ namespace ModelMockupDesigner.Controls
             Container.Background = Brushes.Transparent;
         }
 
-        public void Delete()
+        public void DeleteControl() 
         {
-            CellParent.Delete(this);
+            //CellParent.Delete(this);
+            if (CellControl != null)
+            {
+                Delete(CellControl);
+            }
         }
         public void Delete(ICellControl cellControl)
         {
@@ -72,18 +99,33 @@ namespace ModelMockupDesigner.Controls
             {
                 _ = CellModel.Control = null;
                 Root.Children.Remove(cellControl as FrameworkElement);
+                CellControl = null;
                 overlay.Visibility = Visibility.Visible;
+                overlay.Background = Brushes.White;
             }
         }
-
-        public async Task AddNewControl(ElementType? elementType)
+        private void AddCellControl(ICellControl control)
+        {
+            Root.Children.Add(control as FrameworkElement);
+            CellControl = control;
+        }
+        
+        public async Task AddNewControl(ElementType? elementType, ICellControl? controlModel = null)
         {
             switch (elementType)
             {
                 case ElementType.Table:
                     {
-                        WizardTable wizardTable = new(CellModel);
-                        wizardTable.CreateNew();
+                        WizardTable wizardTable;
+                        if (controlModel == null)
+                        {
+                            wizardTable = new(CellModel);
+                            wizardTable.CreateNew();
+                        }
+                        else
+                        {
+                            wizardTable = controlModel as WizardTable;
+                        }
 
                         if (CellModel != null)
                         {
@@ -94,9 +136,32 @@ namespace ModelMockupDesigner.Controls
                         editorTable.OnSelected += OnSelected;
                         await editorTable.LoadModel(wizardTable);
 
-                        Root.Children.Add(editorTable);
+                        AddCellControl(editorTable);
+
                         overlay.Visibility = Visibility.Collapsed;
                         overlay.Background = Brushes.White;
+
+                        break;
+                    }
+                case ElementType.YesNo:
+                    {
+                        CustomControl customControl;
+
+                        if (controlModel == null)
+                        {
+                            customControl = new(ElementType.YesNo);
+                        }
+                        else
+                        {
+                            customControl = controlModel as CustomControl;
+                        }
+
+                        AthenaYesNoControl athenaYesNoControl = new(customControl);
+
+                        AddCellControl(athenaYesNoControl);
+                        
+                        overlay.Visibility = Visibility.Visible;
+                        overlay.Background = Brushes.Transparent;
 
                         break;
                     }
@@ -156,11 +221,11 @@ namespace ModelMockupDesigner.Controls
                         return;
                     }
 
-                    if (Root.Children.Count > 1)
+                    if (CellControl != null)
                     {
                         if (MessageBox.Show("Are you sure you want to replace this control?", "Occupied", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
                         {
-                            Delete();
+                            DeleteControl();
                             await AddNewControl(newControl.ElementType);
                         }
                     }
@@ -235,7 +300,7 @@ namespace ModelMockupDesigner.Controls
                         }
                     case "Delete":
                         {
-                            Delete();
+                            DeleteControl();
                             break;
                         }
                     default:

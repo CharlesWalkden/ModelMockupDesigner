@@ -47,14 +47,20 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Column="0" Width="100">
+            <StackPanel Grid.Column="0" Width="100">
                 <Border BorderBrush="Black" BorderThickness="2" Margin="2" Height="20" 
                         VerticalAlignment="Top"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
                     <TextBlock Text="Table"/>
                 </Border>
-            </Grid>
+                <Border BorderBrush="black" BorderThickness="2" Margin="2" Height="20"
+                        VerticalAlignment="Top" 
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                    <TextBlock Text="YesNo"/>
+                </Border>
+            </StackPanel>
             
             <!-- Grid for left side panel
             <Grid Grid.Column="0" Background="{StaticResource EditorGrayBrush}">

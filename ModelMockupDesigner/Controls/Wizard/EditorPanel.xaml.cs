@@ -84,7 +84,7 @@ namespace ModelMockupDesigner.Controls
                 await editorCell.LoadModel(cellContent);
             }
         }
-        public void Delete()
+        public void DeleteControl()
         {
             PanelParent.Delete(this);
         }
@@ -125,6 +125,9 @@ namespace ModelMockupDesigner.Controls
 
             EditorCell editorCell = new(this);
             editorCell.OnSelected += OnSelected;
+
+            await editorCell.LoadModel(wizardCell, true);
+
             if (elementType != null)
             {
                 await editorCell.AddNewControl(elementType);
@@ -134,7 +137,7 @@ namespace ModelMockupDesigner.Controls
             Grid.SetColumn(editorCell,column);
             Grid.SetRow(editorCell, row);
 
-            await editorCell.LoadModel(wizardCell);
+            
         }
         private async Task AddColumn(NewControl? newControl = null)
          {
@@ -299,7 +302,7 @@ namespace ModelMockupDesigner.Controls
                 {
                     case "Delete Panel":
                         {
-                            Delete();
+                            DeleteControl();
                             break;
                         }
                     case "Add Column to Panel":

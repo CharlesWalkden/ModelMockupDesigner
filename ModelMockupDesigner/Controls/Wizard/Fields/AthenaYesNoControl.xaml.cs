@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Interfaces;
+using ModelMockupDesigner.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +21,17 @@ namespace ModelMockupDesigner.Controls.Wizard
     /// <summary>
     /// Interaction logic for BooleanButton.xaml
     /// </summary>
-    public partial class AthenaYesNoControl : UserControl
+    public partial class AthenaYesNoControl : UserControl, ICellControl
     {
-        public AthenaYesNoControl()
+        public BaseModel? Model { get => DataContext as CustomControl; }
+
+        public ElementType ElementType => ElementType.YesNo;
+
+
+        public AthenaYesNoControl(CustomControl customControlModel)
         {
             InitializeComponent();
+            DataContext = customControlModel;
         }
     }
 }

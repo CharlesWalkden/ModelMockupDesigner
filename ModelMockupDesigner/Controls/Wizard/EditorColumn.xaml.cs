@@ -78,7 +78,7 @@ namespace ModelMockupDesigner.Controls
             Border.Fill = Brushes.Transparent;
         }
 
-        public void Delete()
+        public void DeleteControl()
         {
             ColumnParent.Delete(this);
         }
@@ -155,7 +155,7 @@ namespace ModelMockupDesigner.Controls
                 {
                     case "Delete Column":
                         {
-                            Delete();
+                            DeleteControl();
                             break;
                         }
                     case "Add New Panel":
