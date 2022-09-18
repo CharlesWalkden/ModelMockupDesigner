@@ -30,15 +30,16 @@
             <TextBox Text="{Binding WizardDescription,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="40" Margin="15"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="4">
-            <TextBlock  Text="Wizard theme:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
-            <controls:WizardThemeSelector CurrentTheme="{Binding WizardTheme, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="5">
             <TextBlock  Text="Wizard type:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <controls:WizardTypeSelector CurrentType="{Binding WizardType, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
             </StackPanel>
         </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="5">
+            <TextBlock  Text="Wizard theme:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
+            <controls:WizardThemeSelector CurrentTheme="{Binding WizardTheme, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+        </StackPanel>
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="6">
             <Button Content="Accept"  Width="100" Height="50" Margin="15" Click="Accept_Click"/>
             <Button Content="Close"  Width="100" Height="50" Margin="15"  Click="Close_Click" />

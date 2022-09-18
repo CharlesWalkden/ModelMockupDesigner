@@ -35,12 +35,12 @@ namespace ModelMockupDesigner.Controls
             {
                 switch (checkbox.Name)
                 {
-                    case "Full Antenatal":
+                    case "FullAntenatal":
                         {
                             ChangeCheckStatus(ProjectTemplate.FullAntenatal);
                             break;
                         }
-                    case "Intrapartum Only":
+                    case "IntrapartumOnly":
                         {
                             ChangeCheckStatus(ProjectTemplate.IntrapartumOnly);
                             break;
@@ -60,13 +60,13 @@ namespace ModelMockupDesigner.Controls
             {
                 switch (checkBox.Name)
                 {
-                    case "Full Antenatal":
+                    case "FullAntenatal":
                         {
                             template = ProjectTemplate.FullAntenatal;
                             break;
                         }
 
-                    case "Intrapartum Only":
+                    case "IntrapartumOnly":
                         {
                             template = ProjectTemplate.IntrapartumOnly;
                             break;
