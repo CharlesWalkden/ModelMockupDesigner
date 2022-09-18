@@ -13,9 +13,7 @@ namespace ModelMockupDesigner.Data
         {
             List<Category> categories = new()
             {
-                new Category(Guid.Empty){Name = "Intrapartum" },
-                new Category(Guid.Empty){Name = "Baby"},
-                new Category(Guid.Empty){Name = "Postnatal"},
+                new Category(Guid.Empty){Name = "Intrapartum", Categories = GetSubCategoriesIntrapartum()},
             };
 
             return categories;

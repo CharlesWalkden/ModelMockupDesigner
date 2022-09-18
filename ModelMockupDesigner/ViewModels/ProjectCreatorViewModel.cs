@@ -60,6 +60,23 @@ namespace ModelMockupDesigner.ViewModels
             }
         }
 
+        public List<string> ValidateData()
+        {
+            List<string> remaining = new ();
+
+            if (string.IsNullOrWhiteSpace(ProjectName))
+            {
+                remaining.Add(nameof(ProjectName));
+            }
+
+            if (string.IsNullOrWhiteSpace(CustomerName))
+            {
+                remaining.Add(nameof(CustomerName));
+            }
+
+            return remaining;
+        }
+
         #region Private Properties
 
         private string? projectName { get; set; }
