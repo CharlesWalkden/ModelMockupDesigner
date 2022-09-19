@@ -22,6 +22,8 @@ namespace ModelMockupDesigner
     /// </summary>
     public partial class WizardDesignPreview : UserControl, IDialogClient
     {
+        public DynamicWizardLayout DynamicWizardLayout;
+
         public WizardDesignPreview()
         {
             InitializeComponent();
@@ -29,7 +31,10 @@ namespace ModelMockupDesigner
 
         public async void LoadWizard(DynamicWizard wizard)
         {
+            DynamicWizardLayout = new();
+            await DynamicWizardLayout.LoadWizard(wizard);
 
+            root.Children.Add(DynamicWizardLayout);
         }
 
         #region Interface

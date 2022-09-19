@@ -78,16 +78,17 @@ namespace ModelMockupDesigner
         
         private async Task LoadUI()
         {
+            if (WizardModel == null)
+                return;
+
             // When loading UI, open up Preview window also.
             DialogLauncher<WizardDesignPreview> designPreview = new(this);
+            designPreview.Control.LoadWizard(WizardModel);
             designPreview.Show();
 
             DesignPreview = designPreview.Control;
 
             ContentContainer.Children.Clear();
-
-            if (WizardModel == null)
-                return;
 
             foreach (DynamicWizardSection wizardSection in WizardModel.Sections)
             {

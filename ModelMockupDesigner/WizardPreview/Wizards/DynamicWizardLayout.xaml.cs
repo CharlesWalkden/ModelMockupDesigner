@@ -29,16 +29,58 @@ namespace ModelMockupDesigner
         public DynamicWizardLayout()
         {
             InitializeComponent();
+            Manager = new DynamicWizardManager(this);
         }
 
-        public async void LoadWizard(DynamicWizard wizard)
+        public async Task LoadWizard(DynamicWizard wizard)
         {
             Manager.LoadWizard(wizard);
         }
 
-        public async void DisplayPage(DynamicWizardSection page)
+        public async Task<DynamicWizardPageLayout> DisplayPage(DynamicWizardSection pageModel)
         {
+            DynamicWizardPageLayout? newPage = null;
+            container.Children.Clear();
 
+            if (pageModel != null)
+            {
+                newPage = new(pageModel);
+                await newPage.Build();
+
+                container.Children.Add(newPage);
+            }
+
+            return newPage;
+        }
+
+        public void ShowNavButtons(bool showPrevious, bool showNext, bool showFinished)
+        {
+            if (showPrevious)
+            {
+                previousButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                previousButton.Visibility = Visibility.Collapsed;
+            }
+
+            if (showNext)
+            {
+                nextButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                nextButton.Visibility = Visibility.Collapsed;
+            }
+
+            if (showFinished)
+            {
+                finishButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                finishButton.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
