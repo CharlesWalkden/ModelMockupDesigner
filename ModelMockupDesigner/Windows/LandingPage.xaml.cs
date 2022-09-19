@@ -38,7 +38,7 @@ namespace ModelMockupDesigner
         {
             DialogLauncher<ProjectCreator> projectCreator = new(this);
             projectCreator.OnClose += ProjectCreator_OnClose;
-            projectCreator.Show();
+            projectCreator.ShowDialog();
         }
 
         private async void WizardCreator_OnClose(object? sender, DialogEventArgs e)

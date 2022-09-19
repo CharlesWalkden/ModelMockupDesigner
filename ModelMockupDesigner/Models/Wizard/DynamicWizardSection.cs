@@ -7,28 +7,26 @@ using System.Xml;
 
 namespace ModelMockupDesigner.Models
 {
-    public class WizardColumn : BaseModel
+    public class DynamicWizardSection : BaseModel
     {
-        public WizardSection? Parent { get; set; }
+        public DynamicWizard Parent { get; set; }
 
-        public int Order { get; set; } = 0;
-        public List<WizardPanel> WizardPanels { get; set; }  
+        public List<DynamicWizardColumn> WizardColumns { get; set; }
 
-        public WizardColumn(WizardSection? parent)
+        public DynamicWizardSection(DynamicWizard parent)
         {
             Parent = parent;
-            WizardPanels = new List<WizardPanel>();
+            Parent.Sections.Add(this);
+            WizardColumns = new List<DynamicWizardColumn>();
+            CreateNew();
         }
 
         public void CreateNew()
         {
-            if (Parent != null)
-                Order = Parent.WizardColumns.Count;
+            DynamicWizardColumn wizardColumn = new(this);
+            wizardColumn.CreateNew();
 
-            WizardPanel wizardPanel = new(this);
-            wizardPanel.CreateNew();
-
-            WizardPanels.Add(wizardPanel);
+            WizardColumns.Add(wizardColumn);
         }
 
 

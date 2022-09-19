@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace ModelMockupDesigner.Models
 {
-    public class WizardCell : BaseModel
+    public class DynamicWizardCell : BaseModel 
     {
         public ICellParent? Parent { get; set; }
 
@@ -18,7 +18,7 @@ namespace ModelMockupDesigner.Models
 
         public ICellControl? Control { get; set; }
 
-        public WizardCell(ICellParent? parent)
+        public DynamicWizardCell(ICellParent? parent)
         {
             Parent = parent;
         }

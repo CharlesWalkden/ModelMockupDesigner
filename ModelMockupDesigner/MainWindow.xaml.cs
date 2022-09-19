@@ -30,6 +30,7 @@ namespace ModelMockupDesigner
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            mainContainer.Owner = this;
             Root.Children.Add(mainContainer);
             WindowControl.MainWindow = mainContainer.mainWindowStack;
 

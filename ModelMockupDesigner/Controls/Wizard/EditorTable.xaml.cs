@@ -34,7 +34,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Private Properties
 
-        private WizardTable? TableModel { get; set; }
+        private DynamicWizardTable? TableModel { get; set; }
         private EditorCell tableParent { get; set; }
         
 
@@ -48,7 +48,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Methods
 
-        public async Task LoadModel(WizardTable tableModel) 
+        public async Task LoadModel(DynamicWizardTable tableModel) 
         {
             DataContext = tableModel;
             TableModel = tableModel;
@@ -68,7 +68,7 @@ namespace ModelMockupDesigner.Controls
                 container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             }
 
-            foreach (WizardCell cell in tableModel.Cells)
+            foreach (DynamicWizardCell cell in tableModel.Cells)
             {
                 EditorCell editorCell = new(this);
                 editorCell.OnSelected += OnSelected;
@@ -89,7 +89,7 @@ namespace ModelMockupDesigner.Controls
         {
             if (TableModel != null && cell.Model != null)
             {
-                _ = TableModel.Cells.Remove((WizardCell)cell.Model);
+                _ = TableModel.Cells.Remove((DynamicWizardCell)cell.Model);
                 container.Children.Remove(cell);
             }
         }
@@ -115,7 +115,7 @@ namespace ModelMockupDesigner.Controls
 
         private async Task AddCell(int column, int row, ElementType? elementType = null)
         {
-            WizardCell wizardCell = new(TableModel) { Column = column, Row = row };
+            DynamicWizardCell wizardCell = new(TableModel) { Column = column, Row = row };
 
             TableModel?.Cells.Add(wizardCell);
 

@@ -157,7 +157,7 @@ namespace ModelMockupDesigner
 
             if (Category.Wizards != null)
             {
-                foreach (Wizard wizard in Category.Wizards)
+                foreach (DynamicWizard wizard in Category.Wizards)
                 {
                     WizardTreeViewItem treeViewItem = new(wizard);
                     this.Items.Add(treeViewItem);
@@ -200,9 +200,9 @@ namespace ModelMockupDesigner
 
     public class WizardTreeViewItem : TreeViewItem
     {
-        public Wizard Wizard { get; private set; }
+        public DynamicWizard Wizard { get; private set; }
 
-        public WizardTreeViewItem(Wizard wizard)
+        public WizardTreeViewItem(DynamicWizard wizard)
         {
             Wizard = wizard;
             if (string.IsNullOrWhiteSpace(wizard.Name))

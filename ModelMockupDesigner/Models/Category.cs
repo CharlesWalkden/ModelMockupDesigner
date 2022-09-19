@@ -13,7 +13,7 @@ namespace ModelMockupDesigner.Models
         public string? Description { get; set; }
 
         public List<Category>? Categories { get; set; }
-        public List<Wizard>? Wizards { get; set; }
+        public List<DynamicWizard>? Wizards { get; set; }
 
         public bool IsExpanded { get; set; } = false;
 
@@ -32,19 +32,19 @@ namespace ModelMockupDesigner.Models
             Wizards = new();
 
         }
-        public void Load(List<Wizard> wizards, List<Category>? categories = null)
+        public void Load(List<DynamicWizard> wizards, List<Category>? categories = null)
         {
             Wizards = wizards;
             Categories = categories;
         }
-        public void AddWizard(Wizard wizard)
+        public void AddWizard(DynamicWizard wizard)
         {
             if (Wizards != null)
             {
                 Wizards.Add(wizard);
             }
         }
-        public bool AddWizardToCategory(Wizard wizard)
+        public bool AddWizardToCategory(DynamicWizard wizard)
         {
             bool added = false;
             if (Categories != null)

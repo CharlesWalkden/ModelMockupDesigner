@@ -52,7 +52,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Private Properties
 
-        private WizardCell? CellModel { get; set; } 
+        private DynamicWizardCell? CellModel { get; set; } 
         private ICellParent cellParent { get; set; }
         private ICellControl? cellControl { get; set; }
 
@@ -69,7 +69,7 @@ namespace ModelMockupDesigner.Controls
         #endregion
 
 
-        public async Task LoadModel(WizardCell wizardCell)
+        public async Task LoadModel(DynamicWizardCell wizardCell)
         {
             DataContext = wizardCell;
             CellModel = wizardCell;
@@ -116,7 +116,7 @@ namespace ModelMockupDesigner.Controls
             {
                 case ElementType.Table:
                     {
-                        WizardTable wizardTable;
+                        DynamicWizardTable wizardTable;
                         if (controlModel == null)
                         {
                             wizardTable = new(CellModel);
@@ -124,7 +124,7 @@ namespace ModelMockupDesigner.Controls
                         }
                         else
                         {
-                            wizardTable = controlModel as WizardTable;
+                            wizardTable = controlModel as DynamicWizardTable;
                         }
 
                         if (CellModel != null)
@@ -270,7 +270,7 @@ namespace ModelMockupDesigner.Controls
 
             }
 
-            if (CellModel?.Parent is not WizardTable)
+            if (CellModel?.Parent is not DynamicWizardTable)
             {
                 MenuItem item = new() { Header = "Add Table" };
                 item.Click += MenuItem_Click;

@@ -32,7 +32,7 @@ namespace ModelMockupDesigner.Controls
         #region Private Properties
 
 #pragma warning disable CS8603 // Will always have a value
-        private WizardSection SectionModel => DataContext as WizardSection;
+        private DynamicWizardSection SectionModel => DataContext as DynamicWizardSection;
 #pragma warning restore CS8603
 
 
@@ -49,7 +49,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Methods
 
-        public async Task LoadModel(WizardSection sectionModel)
+        public async Task LoadModel(DynamicWizardSection sectionModel)
         {
             DataContext = sectionModel;
 
@@ -58,7 +58,7 @@ namespace ModelMockupDesigner.Controls
                 container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             }
 
-            foreach (WizardColumn wizardColumn in sectionModel.WizardColumns)
+            foreach (DynamicWizardColumn wizardColumn in sectionModel.WizardColumns)
             {
                 EditorColumn editorColumn = new(this);
                 editorColumn.OnSelected += OnSelected;
@@ -86,7 +86,7 @@ namespace ModelMockupDesigner.Controls
         {
             if (SectionModel != null && child.Model != null)
             {
-                _ = SectionModel.WizardColumns.Remove((WizardColumn)child.Model);
+                _ = SectionModel.WizardColumns.Remove((DynamicWizardColumn)child.Model);
                 container.Children.Remove(child);
             }
         }
@@ -98,7 +98,7 @@ namespace ModelMockupDesigner.Controls
 
             container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
 
-            WizardColumn wizardColumn = new(SectionModel);
+            DynamicWizardColumn wizardColumn = new(SectionModel);
             wizardColumn.CreateNew();
 
             SectionModel.WizardColumns.Add(wizardColumn);

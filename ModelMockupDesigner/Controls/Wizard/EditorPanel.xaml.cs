@@ -35,7 +35,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Private Properties
 
-        private WizardPanel? PanelModel { get; set; } 
+        private DynamicWizardPanel? PanelModel { get; set; } 
         private EditorColumn panelParent { get; set; }
 
         #endregion
@@ -52,7 +52,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Methods
 
-        public async Task LoadModel(WizardPanel panelModel)
+        public async Task LoadModel(DynamicWizardPanel panelModel)
         {
             DataContext = panelModel;
             PanelModel = panelModel;
@@ -72,7 +72,7 @@ namespace ModelMockupDesigner.Controls
                 container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             }
 
-            foreach (WizardCell cellContent in panelModel.Cells)
+            foreach (DynamicWizardCell cellContent in panelModel.Cells)
             {
                 EditorCell editorCell = new(this);
                 editorCell.OnSelected += OnSelected;
@@ -92,7 +92,7 @@ namespace ModelMockupDesigner.Controls
         {
             if (PanelModel != null && cell.Model != null)
             {
-                _ = PanelModel.Cells.Remove((WizardCell)cell.Model);
+                _ = PanelModel.Cells.Remove((DynamicWizardCell)cell.Model);
                 container.Children.Remove(cell);
             }
         }
@@ -119,7 +119,7 @@ namespace ModelMockupDesigner.Controls
         
         private async Task AddCell(int column, int row, ElementType? elementType = null)
         {
-            WizardCell wizardCell = new(PanelModel) { Column = column, Row = row};
+            DynamicWizardCell wizardCell = new(PanelModel) { Column = column, Row = row};
 
             PanelModel?.Cells.Add(wizardCell);
 

@@ -135,13 +135,13 @@ namespace ModelMockupDesigner.ViewModels
                     wizardCreator.Control.ViewModel.SetCategory(treeViewItem.Category.Id);
                 }
             }
-            wizardCreator.Show();
+            wizardCreator.ShowDialog();
         }
         private void CreateNewCateogry()
         {
             DialogLauncher<CategoryCreator> categoryCreator = new(Owner);
             categoryCreator.OnClose += CategoryCreator_OnClose;
-            categoryCreator.Show();
+            categoryCreator.ShowDialog();
         }
         private void Delete()
         {
@@ -219,7 +219,7 @@ namespace ModelMockupDesigner.ViewModels
                 }
             }
         }
-        private void AddWizardToCategory(Wizard? wizard)
+        private void AddWizardToCategory(DynamicWizard? wizard)
         {
             if (Model != null && wizard != null)
             {

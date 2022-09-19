@@ -10,25 +10,29 @@ using System.Xml;
 
 namespace ModelMockupDesigner.Models
 {
-    public class WizardTable : BaseModel, ICellParent, ICellControl
+    public class DynamicWizardPanel : BaseModel, ICellParent 
     {
-        public WizardCell? Parent { get; set; }
+        public DynamicWizardColumn Parent { get; set; }
 
-        public List<WizardCell> Cells { get; set; }
+        public int Order { get; set; } = 0;
+        public List<DynamicWizardCell> Cells { get; set; }
 
-        public WizardTable(WizardCell? parent)
+        public DynamicWizardPanel(DynamicWizardColumn parent)
         {
             Parent = parent;
-            Cells = new List<WizardCell>();
+            Cells = new List<DynamicWizardCell>();
         }
 
         public void CreateNew()
         {
-            WizardCell wizardCell = new(this);
+            Order = Parent.WizardPanels.Count + 1;
+
+            DynamicWizardCell wizardCell = new(this);
 
             Cells.Add(wizardCell);
         }
-        public ElementType ElementType { get => ElementType.Table; }
+
+        public ElementType ElementType { get => ElementType.Panel; }
 
         #region Xml
 
@@ -50,7 +54,6 @@ namespace ModelMockupDesigner.Models
         {
             throw new NotImplementedException();
         }
-        public BaseModel? Model => throw new NotImplementedException();
 
         #endregion
     }

@@ -30,13 +30,13 @@ namespace ModelMockupDesigner
 #pragma warning disable CS8603 // Will never be null as we create a new viewmodel in constructor.
         public WizardEditorViewModel ViewModel { get => DataContext as WizardEditorViewModel; }
 #pragma warning restore CS8603 
-        public Wizard? WizardModel { get; set; }
+        public DynamicWizard? WizardModel { get; set; }
 
         public IIsSelectable? CurrentSelection { get; set; }
 
         public List<EditorSection> Pages { get; set; }
         public EditorSection? CurrentPage { get; set; }
-
+        public WizardDesignPreview DesignPreview;
         public Editor()
         {
             InitializeComponent();
@@ -44,7 +44,7 @@ namespace ModelMockupDesigner
             Pages = new();
         }
 
-        public async Task LoadEditor(Wizard wizard)
+        public async Task LoadEditor(DynamicWizard wizard)
         {
             if (ViewModel != null)
                 ViewModel.WizardName = wizard.Name;
@@ -78,12 +78,18 @@ namespace ModelMockupDesigner
         
         private async Task LoadUI()
         {
+            // When loading UI, open up Preview window also.
+            DialogLauncher<WizardDesignPreview> designPreview = new(this);
+            designPreview.Show();
+
+            DesignPreview = designPreview.Control;
+
             ContentContainer.Children.Clear();
 
             if (WizardModel == null)
                 return;
 
-            foreach (WizardSection wizardSection in WizardModel.Sections)
+            foreach (DynamicWizardSection wizardSection in WizardModel.Sections)
             {
                 EditorSection editorSection = new();
                 editorSection.OnSelected += UpdateCurrentSelection;
@@ -108,7 +114,7 @@ namespace ModelMockupDesigner
 
             PageSelector.SelectionChanged -= PageSelector_SelectionChanged;
 
-            if (CurrentPage.Model is WizardSection wizardSection)
+            if (CurrentPage.Model is DynamicWizardSection wizardSection)
             {
                 ViewModel.SetCurrentPage(wizardSection.OrderId);
             }
@@ -179,7 +185,7 @@ namespace ModelMockupDesigner
             CurrentSelection = newSelection;
             
         }
-        private async void CreateNewPage(WizardSection? sectionModel = null)
+        private async void CreateNewPage(DynamicWizardSection? sectionModel = null)
         {
             if (WizardModel == null)
                 return;
@@ -193,7 +199,7 @@ namespace ModelMockupDesigner
             }
             else
             {
-                WizardSection newSectionModel = new(WizardModel);
+                DynamicWizardSection newSectionModel = new(WizardModel);
                 await page.LoadModel(newSectionModel);
             }
             
@@ -272,6 +278,7 @@ namespace ModelMockupDesigner
         {
             // Save wizard.
             // TODO: Save Xml
+            DesignPreview.Close();
             WindowControl.CloseTopWindow();
         }
 

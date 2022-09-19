@@ -33,7 +33,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Private Properties
 
-        private WizardColumn? ColumnModel => DataContext as WizardColumn;
+        private DynamicWizardColumn? ColumnModel => DataContext as DynamicWizardColumn;
         private EditorSection columnParent { get; set; } 
  
         #endregion
@@ -50,7 +50,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Methods
 
-        public async Task LoadModel(WizardColumn columnModel)
+        public async Task LoadModel(DynamicWizardColumn columnModel)
         {
             DataContext = columnModel;
 
@@ -59,7 +59,7 @@ namespace ModelMockupDesigner.Controls
                 container.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             }
 
-            foreach (WizardPanel wizardPanel in columnModel.WizardPanels)
+            foreach (DynamicWizardPanel wizardPanel in columnModel.WizardPanels)
             {
                 EditorPanel editorPanel = new(this);
                 editorPanel.OnSelected += OnSelected;
@@ -86,7 +86,7 @@ namespace ModelMockupDesigner.Controls
         {
             if (ColumnModel != null && child.Model != null)
             {
-                _ = ColumnModel.WizardPanels.Remove((WizardPanel)child.Model);
+                _ = ColumnModel.WizardPanels.Remove((DynamicWizardPanel)child.Model);
                 container.Children.Remove(child);
             }
         }
@@ -98,7 +98,7 @@ namespace ModelMockupDesigner.Controls
 
             container.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
-            WizardPanel wizardPanel = new(ColumnModel);
+            DynamicWizardPanel wizardPanel = new(ColumnModel);
             wizardPanel.CreateNew();
 
             ColumnModel.WizardPanels.Add(wizardPanel);

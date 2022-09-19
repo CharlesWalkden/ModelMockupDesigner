@@ -84,14 +84,21 @@ namespace ModelMockupDesigner
             Close();
 
         }
-        public void Show()
+        public void ShowDialog()
         {
             Window.ShowDialog();
         }
+        public void Show()
+        {
+            Window.Show();
+        }
         private void Close()
         {
-            if (Window.DialogResult == null)
-                Window.DialogResult = false;
+            if (DialogResult != Enums.DialogResult.None)
+            {
+                if (Window.DialogResult == null)
+                    Window.DialogResult = false;
+            }
 
             try
             {
