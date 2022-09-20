@@ -22,7 +22,7 @@ namespace ModelMockupDesigner
     /// </summary>
     public partial class WizardDesignPreview : UserControl, IDialogClient
     {
-        public PreviewWizardLayout? DynamicWizardLayout;
+        public PreviewWizardLayout? PreviewWizardLayout; 
 
         public WizardDesignPreview()
         {
@@ -31,20 +31,20 @@ namespace ModelMockupDesigner
 
         public async void WizardDesignPreview_OnWizardUpdated(object? sender, DynamicWizard e)
         {
-            if (DynamicWizardLayout == null)
+            if (PreviewWizardLayout == null)
                 await LoadWizard(e);
             else
             {
-                await DynamicWizardLayout.Reload();
+                await PreviewWizardLayout.Reload();
             }
         }
 
         public async Task LoadWizard(IWizardModel wizard)
         {
-            DynamicWizardLayout = new(wizard.WizardType);
-            await DynamicWizardLayout.LoadWizard(wizard);
+            PreviewWizardLayout = new(wizard.WizardType);
+            await PreviewWizardLayout.LoadWizard(wizard);
 
-            root.Children.Add(DynamicWizardLayout);
+            root.Children.Add(PreviewWizardLayout);
         }
 
         #region Interface
