@@ -1,55 +1,69 @@
-﻿using ModelMockupDesigner.Models;
+﻿using ModelMockupDesigner.Interfaces;
+using ModelMockupDesigner.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ModelMockupDesigner.WizardPreview
 {
-    public class DynamicWizardManager
+    public class DynamicWizardManager : IWizardManager
     {
-        private readonly DynamicWizardLayout Ui;
+        private readonly PreviewWizardLayout Ui;
 
         private DynamicWizard? DynamicWizard;
 
-        private DynamicWizardPageLayout? CurrentPage = null;
+        private DynamicWizardPageLayout? CurrentPage;
 
         private List<DynamicWizardSection> Pages { get; set; }
 
-        public DynamicWizardManager(DynamicWizardLayout ui)
+        public DynamicWizardManager(PreviewWizardLayout ui)
         {
             Pages = new List<DynamicWizardSection>();
             Ui = ui;
             Ui.OnNextPressed += Ui_OnNextPressed;
             Ui.OnPreviousPressed += Ui_OnPreviousPressed; 
         }
-
-        public async void LoadWizard(DynamicWizard wizard)
+        public async Task Reload()
         {
-            DynamicWizard = wizard;
-
-            Pages.Clear();
-            Pages = wizard.Sections;
-
             await DisplayPage(0);
+        }
+        public async Task LoadWizard(IWizardModel wizard)
+        {
+            if (wizard is DynamicWizard dynamicWizard)
+            {
+                DynamicWizard = dynamicWizard;
+
+                Pages = dynamicWizard.Sections;
+
+                await DisplayPage(0);
+            }
         }
         private async Task DisplayPage(int index)
         {
             DynamicWizardSection page = Pages[index];
 
-            CurrentPage = await Ui.DisplayPage(page);
+            DynamicWizardPageLayout pageLayout = new DynamicWizardPageLayout(page);
+
+            CurrentPage = pageLayout;
+
+            await Ui.DisplayPage(pageLayout);
 
             UpdateNavButtons();
         }
-        private void Ui_OnPreviousPressed(object? sender, EventArgs e)
+        private async void Ui_OnPreviousPressed(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
-        }
+            int index = Pages.IndexOf(CurrentPage.Template) - 1;
 
-        private void Ui_OnNextPressed(object? sender, EventArgs e)
+            await DisplayPage(index);
+        }
+        private async void Ui_OnNextPressed(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            int index = Pages.IndexOf(CurrentPage.Template) + 1;
+
+            await DisplayPage(index);
         }
         private void UpdateNavButtons()
         {
@@ -76,5 +90,6 @@ namespace ModelMockupDesigner.WizardPreview
 
             Ui.ShowNavButtons(showPrevious, showNext, showFinished);
         }
+
     }
 }

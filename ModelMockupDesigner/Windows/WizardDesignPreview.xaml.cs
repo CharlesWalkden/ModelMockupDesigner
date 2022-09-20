@@ -22,16 +22,26 @@ namespace ModelMockupDesigner
     /// </summary>
     public partial class WizardDesignPreview : UserControl, IDialogClient
     {
-        public DynamicWizardLayout DynamicWizardLayout;
+        public PreviewWizardLayout? DynamicWizardLayout;
 
         public WizardDesignPreview()
         {
             InitializeComponent();
         }
 
-        public async void LoadWizard(DynamicWizard wizard)
+        public async void WizardDesignPreview_OnWizardUpdated(object? sender, DynamicWizard e)
         {
-            DynamicWizardLayout = new();
+            if (DynamicWizardLayout == null)
+                await LoadWizard(e);
+            else
+            {
+                await DynamicWizardLayout.Reload();
+            }
+        }
+
+        public async Task LoadWizard(IWizardModel wizard)
+        {
+            DynamicWizardLayout = new(wizard.WizardType);
             await DynamicWizardLayout.LoadWizard(wizard);
 
             root.Children.Add(DynamicWizardLayout);

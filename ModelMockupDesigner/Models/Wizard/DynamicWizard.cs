@@ -1,4 +1,5 @@
 ﻿using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Xml;
 
 namespace ModelMockupDesigner.Models
 {
-    public class DynamicWizard : BaseModel 
+    public class DynamicWizard : BaseModel, IWizardModel
     {
         public string? Description { get; set; }
         public WizardType? WizardType { get; set; }

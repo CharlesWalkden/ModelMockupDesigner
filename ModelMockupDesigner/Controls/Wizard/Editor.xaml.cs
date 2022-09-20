@@ -34,9 +34,13 @@ namespace ModelMockupDesigner
 
         public IIsSelectable? CurrentSelection { get; set; }
 
-        public List<EditorSection> Pages { get; set; }
+        public List<EditorSection>? Pages { get; set; }
         public EditorSection? CurrentPage { get; set; }
-        public WizardDesignPreview DesignPreview;
+        public WizardDesignPreview? DesignPreview;
+
+        public bool WizardLoaded = false;
+
+        public event EventHandler<DynamicWizard>? OnWizardUpdated;
         public Editor()
         {
             InitializeComponent();
@@ -52,6 +56,7 @@ namespace ModelMockupDesigner
             WizardModel = wizard;
 
             await LoadUI();
+
         }
         public async Task LoadEditor(WizardCreatorViewModel creatorModel)
         {
@@ -83,7 +88,8 @@ namespace ModelMockupDesigner
 
             // When loading UI, open up Preview window also.
             DialogLauncher<WizardDesignPreview> designPreview = new(this);
-            designPreview.Control.LoadWizard(WizardModel);
+            await designPreview.Control.LoadWizard(WizardModel);
+            OnWizardUpdated += designPreview.Control.WizardDesignPreview_OnWizardUpdated;
             designPreview.Show();
 
             DesignPreview = designPreview.Control;
@@ -101,6 +107,8 @@ namespace ModelMockupDesigner
             }
 
             LoadPage(0);
+
+            WizardLoaded = true;
         }
 
         public void LoadPage(int pageIndex)
@@ -186,32 +194,31 @@ namespace ModelMockupDesigner
             CurrentSelection = newSelection;
             
         }
-        private async void CreateNewPage(DynamicWizardSection? sectionModel = null)
+        private async void CreateNewPage()
         {
             if (WizardModel == null)
                 return;
 
             EditorSection page = new();
             page.OnSelected += UpdateCurrentSelection;
-            if (sectionModel != null)
-            {
-                await page.LoadModel(sectionModel);
-                WizardModel.Sections.Add(sectionModel);
-            }
-            else
-            {
-                DynamicWizardSection newSectionModel = new(WizardModel);
-                await page.LoadModel(newSectionModel);
-            }
+            
+            DynamicWizardSection newSectionModel = new(WizardModel);
+            await page.LoadModel(newSectionModel);
             
             page.Model.OrderId = GetNextPageOrderNumber();
 
             AddPage(page);
 
             LoadPage(page.Model.OrderId);
+
+            // New page created, 
+            OnWizardUpdated?.Invoke(this, WizardModel);
         }
         private void AddPage(EditorSection page)
         {
+            if (Pages == null)
+                Pages = new List<EditorSection>();
+
             Pages.Add(page);
 
             ComboBoxItem comboBoxItem = new()
@@ -265,6 +272,10 @@ namespace ModelMockupDesigner
             {
                 Pages.Remove(CurrentPage);
                 ViewModel.DeleteCurrentPage();
+                WizardModel.Sections.Remove(CurrentPage.Model as DynamicWizardSection);
+
+                // Wizard Section/Page has been deleted. Update Preview.
+                OnWizardUpdated?.Invoke(this, WizardModel);
             }
         }
         private int GetNextPageOrderNumber()
@@ -274,7 +285,6 @@ namespace ModelMockupDesigner
 
             return Pages.Max(x => x.Model.OrderId) + 1;
         }
-       
         private void Save_Click(object sender, RoutedEventArgs e) 
         {
             // Save wizard.
@@ -282,7 +292,6 @@ namespace ModelMockupDesigner
             DesignPreview.Close();
             WindowControl.CloseTopWindow();
         }
-
         private void DeletePageButton_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentPage != null)
@@ -301,22 +310,18 @@ namespace ModelMockupDesigner
                 }
             }
         }
-
         private void NewPageButton_Click(object sender, RoutedEventArgs e)
         {
             CreateNewPage();
         }
-
         private void NavPreviousButton_Click(object sender, RoutedEventArgs e)
         {
             LoadPreviousPage();
         }
-
         private void NavNextButton_Click(object sender, RoutedEventArgs e)
         {
             LoadNextPage();
         }
-
         private void PageSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0)
@@ -328,6 +333,13 @@ namespace ModelMockupDesigner
                 LoadPage(index);
             }
         }
+        private void UpdateWizardDesignPreview()
+        {
+            if (WizardModel != null)
+            {
+                OnWizardUpdated?.Invoke(this, WizardModel);
+            }
+        } 
 
         #region Interface
 

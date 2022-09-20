@@ -1,4 +1,5 @@
-﻿using ModelMockupDesigner.Models;
+﻿using ModelMockupDesigner.Interfaces;
+using ModelMockupDesigner.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Windows.Controls;
 
 namespace ModelMockupDesigner.WizardPreview
 {
-    public class DynamicWizardPageLayout : StackPanel
+    public class DynamicWizardPageLayout : StackPanel, IWizardPageLayout
     {
         public DynamicWizardSection Template { get; set; }
 
