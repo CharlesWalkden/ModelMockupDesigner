@@ -1,4 +1,5 @@
-﻿using ModelMockupDesigner.Models;
+﻿using ModelMockupDesigner.Interfaces;
+using ModelMockupDesigner.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,17 @@ namespace ModelMockupDesigner.ViewModels
 
         public CollectionList<ComboBoxItem> PageList { get; set; }
 
+        public IPropertyEditor? CurrentSelection
+        {
+            get => currentSelection;
+            set
+            {
+                currentSelection = value;
+
+                OnPropertyChanged(nameof(CurrentSelection));
+            }
+        }
+        private IPropertyEditor? currentSelection { get; set; }
         public WizardEditorViewModel()
         {
             PageList = new CollectionList<ComboBoxItem>();

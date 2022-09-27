@@ -35,7 +35,7 @@ namespace ModelMockupDesigner
         public IIsSelectable? CurrentSelection { get; set; }
 
         public List<EditorSection>? Pages { get; set; }
-        public EditorSection? CurrentPage { get; set; }
+        public EditorSection CurrentPage { get; set; }
         public WizardDesignPreview? DesignPreview;
 
         public bool WizardLoaded = false;
@@ -192,7 +192,12 @@ namespace ModelMockupDesigner
             }
 
             CurrentSelection = newSelection;
-            
+
+            // Assign this for property editor binding.
+            if (newSelection != null)
+                ViewModel.CurrentSelection = newSelection.Model as IPropertyEditor;
+            else
+                ViewModel.CurrentSelection = null;
         }
         private async void CreateNewPage()
         {
@@ -216,8 +221,7 @@ namespace ModelMockupDesigner
         }
         private void AddPage(EditorSection page)
         {
-            if (Pages == null)
-                Pages = new List<EditorSection>();
+            Pages ??= new List<EditorSection>();
 
             Pages.Add(page);
 
@@ -268,11 +272,11 @@ namespace ModelMockupDesigner
         }
         private void DeleteCurrentPage()
         {
-            if (CurrentPage != null)
+            if (CurrentPage != null && Pages != null && WizardModel != null)
             {
-                Pages.Remove(CurrentPage);
+                _ = Pages.Remove(CurrentPage);
                 ViewModel.DeleteCurrentPage();
-                WizardModel.Sections.Remove(CurrentPage.Model as DynamicWizardSection);
+                _ = WizardModel.Sections.Remove(CurrentPage.Model as DynamicWizardSection);
 
                 // Wizard Section/Page has been deleted. Update Preview.
                 OnWizardUpdated?.Invoke(this, WizardModel);
@@ -289,24 +293,29 @@ namespace ModelMockupDesigner
         {
             // Save wizard.
             // TODO: Save Xml
-            DesignPreview.Close();
+            if (DesignPreview != null)
+                DesignPreview.Close();
+                
             WindowControl.CloseTopWindow();
         }
         private void DeletePageButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentPage != null)
+            if (CurrentPage != null && Pages != null)
             {
                 int index = Pages.IndexOf(CurrentPage);
 
-                DeleteCurrentPage();
+                if (index > -1)
+                {
+                    DeleteCurrentPage();
 
-                if (index == 0)
-                {
-                    LoadPage(0);
-                }
-                else
-                {
-                    LoadPage(index - 1);
+                    if (index == 0)
+                    {
+                        LoadPage(0);
+                    }
+                    else
+                    {
+                        LoadPage(index - 1);
+                    }
                 }
             }
         }

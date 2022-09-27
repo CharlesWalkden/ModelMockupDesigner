@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace ModelMockupDesigner.Models
 {
-    public class DynamicWizardPanel : BaseModel, ICellParent 
+    public class DynamicWizardPanel : BaseModel, ICellParent, IPropertyEditor
     {
         public DynamicWizardColumn Parent { get; set; }
 
@@ -32,7 +32,18 @@ namespace ModelMockupDesigner.Models
             Cells.Add(wizardCell);
         }
 
-        public ElementType ElementType { get => ElementType.Panel; }
+        public ElementType ElementType => ElementType.Panel;
+
+        public string HeaderName => "Panel";
+        public List<string> GetEditableProperties()
+        {
+            List<string> properties = new()
+            {
+                new string("Name")
+            };
+
+            return properties;
+        }
 
         #region Xml
 

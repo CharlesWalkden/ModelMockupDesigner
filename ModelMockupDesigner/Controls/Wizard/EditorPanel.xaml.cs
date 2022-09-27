@@ -96,7 +96,6 @@ namespace ModelMockupDesigner.Controls
                 container.Children.Remove(cell);
             }
         }
-
         public void Unselect()
         {
             HeaderStackPanel.Background = Brushes.Transparent;
@@ -104,7 +103,6 @@ namespace ModelMockupDesigner.Controls
             HeaderTextBlock.Background = Brushes.White;
             Border.Fill = Brushes.Transparent;
         }
-
         public void HideNewRowColumn()
         {
             //Hide new column text and make background transparent
@@ -115,8 +113,6 @@ namespace ModelMockupDesigner.Controls
             newRow.Visibility = Visibility.Collapsed;
             newRow.Background = Brushes.Transparent;
         }
-
-        
         private async Task AddCell(int column, int row, ElementType? elementType = null)
         {
             DynamicWizardCell wizardCell = new(PanelModel) { Column = column, Row = row};
@@ -184,7 +180,7 @@ namespace ModelMockupDesigner.Controls
             }
             
         }
-
+        
         #endregion
 
         #region Override Events
@@ -318,6 +314,8 @@ namespace ModelMockupDesigner.Controls
                 }
             }
         }
+
+        
 
         #endregion
 

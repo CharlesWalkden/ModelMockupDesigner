@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace ModelMockupDesigner.Models
 {
-    public class DynamicWizardTable : BaseModel, ICellParent, ICellControl 
+    public class DynamicWizardTable : BaseModel, ICellParent, ICellControl, IPropertyEditor
     {
         public DynamicWizardCell? Parent { get; set; }
 
@@ -28,7 +28,18 @@ namespace ModelMockupDesigner.Models
 
             Cells.Add(wizardCell);
         }
-        public ElementType ElementType { get => ElementType.Table; }
+        public ElementType ElementType => ElementType.Table;
+        public string HeaderName => "Table";
+
+        public List<string> GetEditableProperties()
+        {
+            List<string> properties = new()
+            {
+                new string("Name")
+            };
+
+            return properties;
+        }
 
         #region Xml
 
@@ -50,6 +61,8 @@ namespace ModelMockupDesigner.Models
         {
             throw new NotImplementedException();
         }
+
+
         public BaseModel? Model => throw new NotImplementedException();
 
         #endregion

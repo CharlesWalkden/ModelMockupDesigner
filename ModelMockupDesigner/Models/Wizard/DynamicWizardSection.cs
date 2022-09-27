@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,11 +9,15 @@ using System.Xml;
 
 namespace ModelMockupDesigner.Models
 {
-    public class DynamicWizardSection : BaseModel
+    public class DynamicWizardSection : BaseModel, IPropertyEditor
     {
         public DynamicWizard Parent { get; set; }
 
         public List<DynamicWizardColumn> WizardColumns { get; set; }
+
+        public string HeaderName => "Section";
+
+        public ElementType ElementType => ElementType.Section;
 
         public DynamicWizardSection(DynamicWizard parent)
         {
@@ -28,7 +34,15 @@ namespace ModelMockupDesigner.Models
 
             WizardColumns.Add(wizardColumn);
         }
+        public List<string> GetEditableProperties()
+        {
+            List<string> properties = new()
+            {
+                new string("Name")
+            };
 
+            return properties;
+        }
 
         #region Xml
 
@@ -41,6 +55,8 @@ namespace ModelMockupDesigner.Models
         {
             throw new NotImplementedException();
         }
+
+        
 
         #endregion
     }

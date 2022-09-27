@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ModelMockupDesigner"
+             xmlns:control="clr-namespace:ModelMockupDesigner.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              MinHeight="600" MinWidth="1000" >
@@ -40,63 +41,33 @@
         </Grid>
         <Grid Grid.Row="1" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition MinWidth="100" Width="260"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="0" Width="100">
-                <Border BorderBrush="Black" BorderThickness="2" Margin="2" Height="20" 
+            <StackPanel Grid.Column="0" >
+                <Border BorderBrush="Black" BorderThickness="2" Margin="2" Height="20" Width="100"
                         VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
                     <TextBlock Text="Table"/>
                 </Border>
-                <Border BorderBrush="black" BorderThickness="2" Margin="2" Height="20"
+                <Border BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
                         VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
                     <TextBlock Text="YesNo"/>
                 </Border>
+
+                <control:PropertyEditor CurrentSelection="{Binding CurrentSelection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </StackPanel>
-            
-            <!-- Grid for left side panel
-            <Grid Grid.Column="0" Background="{StaticResource EditorGrayBrush}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Border BorderBrush="White" 
-                        BorderThickness="0,0,1,0" Opacity="0.25"/>
-                <Grid Grid.Row="0">
-                    <TextBlock Text="Property Editor" 
-                               Foreground="White"
-                               HorizontalAlignment="Center"
-                               FontSize="{StaticResource FontSizeXXLarge}"/>
-                    <Border BorderBrush="White" 
-                            BorderThickness="0,1,1,1"
-                            Opacity="0.25"/>
 
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Border BorderBrush="White" 
-                        BorderThickness="0,0,1,1" Opacity="0.25"/>
-
-                    <ScrollViewer Grid.Row="1" Margin="0,0,1,1">
-                        <Grid x:Name="PropertyEditor"/>
-                    </ScrollViewer>
-                </Grid>
-
-                <Grid Grid.Row="2" 
-                      Background="White"
-                      Margin="20">
-                    <Border BorderBrush="White" 
-                        BorderThickness="0,0,1,0" Opacity="0.25"/>
-                </Grid>
-            </Grid>-->
+            <GridSplitter Grid.Column="0" Width="5" HorizontalAlignment="right" Background="Gray" />
 
             <Grid Grid.Column="1" Margin="0,5,0,0">
                 <Grid.RowDefinitions>
