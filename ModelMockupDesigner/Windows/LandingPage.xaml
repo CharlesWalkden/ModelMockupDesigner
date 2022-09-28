@@ -16,12 +16,12 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="0" >
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ItemsControl x:Name="buttons" Grid.Column="0">
+            <ItemsControl x:Name="buttons" Grid.Column="0" Margin="3,0,5,0">
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
