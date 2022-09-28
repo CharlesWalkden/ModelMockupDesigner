@@ -115,6 +115,18 @@ namespace ModelMockupDesigner
                 button.ContextMenu.IsOpen = true;
             }
         }
+
+        public WindowParameters GetWindowParameters()
+        {
+            WindowParameters windowParameters = new WindowParameters()
+            {
+                CanResize = true,
+                MinHeight = 800,
+                MinWidth = 1280
+            };
+
+            return windowParameters;
+        }
     }
 
     public class CategoryTreeViewItem : TreeViewItem

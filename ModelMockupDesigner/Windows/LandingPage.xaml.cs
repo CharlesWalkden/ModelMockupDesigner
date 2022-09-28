@@ -1,4 +1,5 @@
 ﻿using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
 using ModelMockupDesigner.ViewModels;
 using ModelMockupDesigner.Windows;
@@ -22,7 +23,7 @@ namespace ModelMockupDesigner
     /// <summary>
     /// Interaction logic for LandingPage.xaml
     /// </summary>
-    public partial class LandingPage : UserControl
+    public partial class LandingPage : UserControl, IWindowStack
     {
         public LandingPage()
         {
@@ -81,5 +82,27 @@ namespace ModelMockupDesigner
             //WizardSelector wizardSelector = new();
             //WindowControl.DisplayWindow(wizardSelector);
         }
+
+        public WindowParameters GetWindowParameters()
+        {
+            WindowParameters windowParameters = new WindowParameters()
+            {
+                CanResize = false,
+                MinWidth = 1080,
+                MinHeight = 595
+            };
+
+            return windowParameters;
+        }
+
+        #region Not used, needed for interface
+
+        public event EventHandler OnClosed;
+        public void CloseAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

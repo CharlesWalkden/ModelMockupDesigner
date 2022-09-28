@@ -369,7 +369,8 @@ namespace ModelMockupDesigner
             {
                 OnWizardUpdated?.Invoke(this, WizardModel);
             }
-        } 
+        }
+        
 
         #region Interface
 
@@ -377,6 +378,17 @@ namespace ModelMockupDesigner
         public void CloseAsync()
         {
             OnClosed?.Invoke(this, new EventArgs());
+        }
+        public WindowParameters GetWindowParameters()
+        {
+            WindowParameters windowParameters = new WindowParameters()
+            {
+                CanResize = true,
+                MinHeight = 800,
+                MinWidth = 1280
+            };
+
+            return windowParameters;
         }
 
         #endregion
@@ -424,6 +436,7 @@ namespace ModelMockupDesigner
             SelectedControl = new NewControl() { ElementType = selectedType };
         }
 
+        
         #endregion
 
     }

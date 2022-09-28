@@ -11,6 +11,10 @@ namespace ModelMockupDesigner
 {
     public class WindowControl
     {
+        public void SetParameters(double minHeight, double minWidth, bool canResize)
+        {
+        }
+        public static event EventHandler<WindowParameters>? OnWindowDisplay;
         public static Grid? MainWindow
         {
             get => mainWindow;
@@ -37,6 +41,8 @@ namespace ModelMockupDesigner
                 UserControl control = windowStack[^1];
                 MainWindow.Children.Add(control);
                 MainWindow.Children[0].Visibility = System.Windows.Visibility.Visible;
+
+                OnWindowDisplay?.Invoke(null, ((IWindowStack)control).GetWindowParameters());
             }
         }
 

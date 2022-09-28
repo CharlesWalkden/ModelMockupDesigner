@@ -10,5 +10,6 @@ namespace ModelMockupDesigner.Interfaces
     {
         event EventHandler OnClosed;
         void CloseAsync();
+        WindowParameters GetWindowParameters();
     }
 }
