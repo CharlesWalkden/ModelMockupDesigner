@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ModelMockupDesigner"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="{StaticResource EditorLightGrayBrush}">
+             d:DesignHeight="600" d:DesignWidth="1200"
+             MinHeight="560" MaxHeight="560">
+    <Grid Background="Transparent" Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -16,38 +16,62 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="Model Mockup Designer" FontSize="25" HorizontalAlignment="Right" Foreground="White" Padding="10" VerticalAlignment="Center" />
-                <!--<Image Source="/Images/K2 Logo White.png" Width="auto" Height="auto"/>-->
-            </StackPanel>
-        </Grid>
-
-        <Grid Grid.Row="1" >
+        <Grid Grid.Row="0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid x:Name="buttons" Grid.Column="0"  VerticalAlignment="Center">
-                <StackPanel> 
-                    <Button Content="New"  Width="100" Height="50" Margin="15" Click="NewProject_Click"/>
-                    <Button Content="Load" Width="100" Height="50" Margin="15" Click="Load_Click"/>
-                    <Button Content="Export" Width="100" Height="50" Margin="15"/>
-                    <Button Content="Exit" Width="100" Height="50" Margin="15" Click="ExitApplication_Click"/>
-                </StackPanel>
-            </Grid>
+            <ItemsControl x:Name="buttons" Grid.Column="0">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="5"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <Grid Grid.Row="0" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Button Margin="15" Click="NewProject_Click" Style="{StaticResource HomeButton}"/>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="1" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Button Margin="15" Click="Load_Click" Style="{StaticResource OpenButton}"/>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="2" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Button Margin="15" Style="{StaticResource ExportButton}"/>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="3" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Button Margin="15" Style="{StaticResource SettingsButton}"/>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="4" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Button Margin="15" Click="ExitApplication_Click" Style="{StaticResource ExitButton}"/>
+                    </Border>
+                </Grid>
+
+            </ItemsControl>
             <Grid x:Name="recentProjects" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="Recent Projects:" FontSize="25" HorizontalAlignment="Left" Foreground="White" />
-                <Border Grid.Row="1" BorderBrush="White" BorderThickness="2" Margin="10">
+                <!--<TextBlock Grid.Row="0" Text="Recent Projects:" FontSize="25" HorizontalAlignment="Left" Foreground="White" />-->
+                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="5" Background="{StaticResource EditorDarkGrayBrush}">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="21*"/>
-                            <ColumnDefinition Width="13*"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Recent Projects:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Margin="5,0,0,0" />
                         <!-- List of recent projects to be displayed here -->
                     </Grid>
                 </Border>

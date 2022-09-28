@@ -10,6 +10,26 @@
   <ItemGroup>
     <None Remove="Images\AthenaSmall.png" />
     <None Remove="Images\GuardianSmall.png" />
+    <None Remove="Images\Icons\arrow-down.png" />
+    <None Remove="Images\Icons\arrow-up.png" />
+    <None Remove="Images\Icons\chevron-left.png" />
+    <None Remove="Images\Icons\chevron-right.png" />
+    <None Remove="Images\Icons\content-save-.png" />
+    <None Remove="Images\Icons\delete.png" />
+    <None Remove="Images\Icons\exit-run.png" />
+    <None Remove="Images\Icons\file-document-edit.png" />
+    <None Remove="Images\Icons\file-document-minus-outline.png" />
+    <None Remove="Images\Icons\file-document-plus-outline.png" />
+    <None Remove="Images\Icons\file-export.png" />
+    <None Remove="Images\Icons\file-plus.png" />
+    <None Remove="Images\Icons\folder-open.png" />
+    <None Remove="Images\Icons\format-list-bulleted.png" />
+    <None Remove="Images\Icons\home.png" />
+    <None Remove="Images\Icons\page-first.png" />
+    <None Remove="Images\Icons\page-last.png" />
+    <None Remove="Images\Icons\pencil.png" />
+    <None Remove="Images\Icons\text-box-minus-outline.png" />
+    <None Remove="Images\Icons\tools.png" />
     <None Remove="Images\treeviewfolder.png" />
     <None Remove="Windows\Small - 200px - White.png" />
   </ItemGroup>
@@ -17,6 +37,26 @@
   <ItemGroup>
     <Resource Include="Images\AthenaSmall.png" />
     <Resource Include="Images\GuardianSmall.png" />
+    <Resource Include="Images\Icons\arrow-down.png" />
+    <Resource Include="Images\Icons\arrow-up.png" />
+    <Resource Include="Images\Icons\chevron-left.png" />
+    <Resource Include="Images\Icons\chevron-right.png" />
+    <Resource Include="Images\Icons\content-save-.png" />
+    <Resource Include="Images\Icons\delete.png" />
+    <Resource Include="Images\Icons\exit-run.png" />
+    <Resource Include="Images\Icons\file-document-edit.png" />
+    <Resource Include="Images\Icons\file-document-minus-outline.png" />
+    <Resource Include="Images\Icons\file-document-plus-outline.png" />
+    <Resource Include="Images\Icons\file-export.png" />
+    <Resource Include="Images\Icons\file-plus.png" />
+    <Resource Include="Images\Icons\folder-open.png" />
+    <Resource Include="Images\Icons\format-list-bulleted.png" />
+    <Resource Include="Images\Icons\home.png" />
+    <Resource Include="Images\Icons\page-first.png" />
+    <Resource Include="Images\Icons\page-last.png" />
+    <Resource Include="Images\Icons\pencil.png" />
+    <Resource Include="Images\Icons\text-box-minus-outline.png" />
+    <Resource Include="Images\Icons\tools.png" />
     <Resource Include="Images\K2 Logo White.png" />
     <Resource Include="Images\treeviewfolder.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

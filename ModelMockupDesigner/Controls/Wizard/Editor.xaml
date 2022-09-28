@@ -19,12 +19,19 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" 
-                        Grid.Column="0">
-                <Button Style="{StaticResource FFGButton}"
-                        Content="Save"
-                        Margin="10,0,0,0"
-                        FontSize="{StaticResource FontSizeRegular}"
-                        Click="Save_Click" /> 
+                        Grid.Column="0" Margin="5">
+                <Button Style="{StaticResource IconButton}"
+                        Click="Save_Click">
+                    <Image Source="/Images/Icons/content-save-.png" />
+                </Button>
+
+                <Button Style="{StaticResource IconButton}" Click="NewPageButton_Click" x:Name="NewPageButton">
+                    <Image Source="/Images/Icons/file-document-plus-outline.png" />
+                </Button>
+                <Button Style="{StaticResource IconButton}" Click="DeletePageButton_Click" x:Name="DeletePageButton">
+                    <Image Source="/Images/Icons/file-document-minus-outline.png" />
+                </Button>
+                
             </StackPanel>
             <Grid Grid.Column="1">
                 <StackPanel Orientation="Horizontal"
@@ -69,53 +76,56 @@
 
             <GridSplitter Grid.Column="0" Width="5" HorizontalAlignment="right" Background="Gray" />
 
-            <Grid Grid.Column="1" Margin="0,5,0,0">
+            <Grid Grid.Column="1" Margin="0,0,0,0" Background="{StaticResource EditorLightGrayBrush}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="35"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0" HorizontalAlignment="Center" Grid.ColumnSpan="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Button x:Name="DeletePageButton"
-                            Style="{StaticResource PathButtonDeletePage}"
-                            Grid.Column="0" Height="25" Width="25"
-                            Click="DeletePageButton_Click" 
-                            ToolTip="Delete current page"/>
-
-                    <Button x:Name="NewPageButton"
-                            Style="{StaticResource PathButtonAddPage}"
-                            Margin="2,0,0,0" 
-                            Grid.Column="1" 
-                            Click="NewPageButton_Click" 
-                            ToolTip="Add a new page"/>
+                <StackPanel Margin="0,5,0,5" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="NavFirstPageButton"
+                            Style="{StaticResource IconButton}"
+                            Margin="2,0,2,0" 
+                            Click="NavFirstPageButton_Click" 
+                            ToolTip="First Page">
+                        <Image Source="/Images/Icons/page-first.png"/>
+                    </Button>
 
                     <Button x:Name="NavPreviousButton"
-                            Style="{StaticResource PathButtonNavPrevious}"
-                            Margin="2,0,0,0" 
-                            Grid.Column="2" Click="NavPreviousButton_Click" ToolTip="Previous page"/>
-                    <Button x:Name="NavNextButton"
-                            Style="{StaticResource PathButtonNavNext}" 
-                            Margin="2,0,2,0"
-                            Grid.Column="3" Click="NavNextButton_Click" ToolTip="Next page"/>
-
-                    <ComboBox x:Name="PageSelector" Grid.Column="4" Margin="5,1,0,0" Width="150"
+                            Style="{StaticResource IconButton}"
+                            Margin="2,0,2,0" 
+                            Click="NavPreviousButton_Click" 
+                            ToolTip="Previous page">
+                        <Image Source="/Images/Icons/chevron-left.png"/>
+                    </Button>
+                    
+                    <ComboBox x:Name="PageSelector" Grid.Column="3" Margin="5,1,5,0" Width="150"
                               ItemsSource="{Binding PageList}"
                               SelectedItem="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged}" 
                               SelectionChanged="PageSelector_SelectionChanged"/>
-                </Grid>
 
+                    <Button x:Name="NavNextButton"
+                            Style="{StaticResource IconButton}" 
+                            Margin="2,0,2,0"
+                            Click="NavNextButton_Click" 
+                            ToolTip="Next Page">
+                        <Image Source="/Images/Icons/chevron-right.png"/>
+                    </Button>
+
+                    <Button x:Name="NavLastPageButton"
+                            Style="{StaticResource IconButton}" 
+                            Margin="2,0,2,0"
+                            Click="NavLastPageButton_Click"
+                            ToolTip="Last Page">
+                        <Image Source="/Images/Icons/page-last.png"/>
+                    </Button>
+                    
+                </StackPanel>
 
                 <ScrollViewer Grid.Row="1"
                               VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
+                              HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2"
+                              Background="{StaticResource WizardEditorBackgroundBrush}">
 
                     <Grid x:Name="ContentContainer" 
                           HorizontalAlignment="Stretch" 

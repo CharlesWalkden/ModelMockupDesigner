@@ -139,28 +139,40 @@ namespace ModelMockupDesigner
             // Check to see if we are on the first page.
             if (pageIndex == 0)
             {
-                // If the index is 0, we know that we are on the first page so disable the navPrevious button.
+                // If the index is 0, we know that we are on the first page so disable the navPrevious button. & First page button
                 NavPreviousButton.IsEnabled = false;
                 NavPreviousButton.Opacity = 0.25;
+
+                NavFirstPageButton.IsEnabled = false;
+                NavFirstPageButton.Opacity = 0.25;
             }
             else
             {
-                // If we are not on the first page, enable the navPrevious button.
+                // If we are not on the first page, enable the navPrevious button. & First page button
                 NavPreviousButton.IsEnabled = true;
                 NavPreviousButton.Opacity = 1;
+
+                NavFirstPageButton.IsEnabled = true;
+                NavFirstPageButton.Opacity = 1;
             }
             // Check to see if we are on the last page.
             if (pageIndex == Pages.Count - 1)
             {
-                // If we are on the last page, disable the navNext button.
+                // If we are on the last page, disable the navNext button. & Last page button
                 NavNextButton.IsEnabled = false;
                 NavNextButton.Opacity = 0.25;
+
+                NavLastPageButton.IsEnabled = false;
+                NavLastPageButton.Opacity = 0.25;
             }
             else
             {
-                // If we are not on the last page, enable the navNext button.
+                // If we are not on the last page, enable the navNext button. & Last page button
                 NavNextButton.IsEnabled = true;
                 NavNextButton.Opacity = 1;
+
+                NavLastPageButton.IsEnabled = true;
+                NavLastPageButton.Opacity = 1;
             }
             // Check to see we only have one page left.
             if (Pages.Count == 1)
@@ -235,7 +247,7 @@ namespace ModelMockupDesigner
         }
         private void LoadNextPage()
         {
-            if (CurrentPage != null)
+            if (CurrentPage != null && Pages != null)
             {
                 int pageIndex = Pages.IndexOf(CurrentPage);
 
@@ -254,7 +266,7 @@ namespace ModelMockupDesigner
         }
         private void LoadPreviousPage()
         {
-            if (CurrentPage != null)
+            if (CurrentPage != null && Pages != null)
             {
                 int pageIndex = Pages.IndexOf(CurrentPage);
 
@@ -323,6 +335,10 @@ namespace ModelMockupDesigner
         {
             CreateNewPage();
         }
+        private void NavFirstPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoadPage(0);
+        }
         private void NavPreviousButton_Click(object sender, RoutedEventArgs e)
         {
             LoadPreviousPage();
@@ -330,6 +346,11 @@ namespace ModelMockupDesigner
         private void NavNextButton_Click(object sender, RoutedEventArgs e)
         {
             LoadNextPage();
+        }
+        private void NavLastPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Pages != null)
+                LoadPage(Pages.Count - 1);
         }
         private void PageSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
