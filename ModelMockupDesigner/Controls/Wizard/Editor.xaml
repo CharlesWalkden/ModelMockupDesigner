@@ -18,18 +18,19 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" 
-                        Grid.Column="0" Margin="5">
-                <Button Style="{StaticResource IconButton}"
-                        Click="Save_Click">
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="5" >
+                
+                <Button Style="{StaticResource IconButton}" Click="Save_Click">
                     <Image Source="/Images/Icons/content-save-.png" />
                 </Button>
-
                 <Button Style="{StaticResource IconButton}" Click="NewPageButton_Click" x:Name="NewPageButton">
                     <Image Source="/Images/Icons/file-document-plus-outline.png" />
                 </Button>
                 <Button Style="{StaticResource IconButton}" Click="DeletePageButton_Click" x:Name="DeletePageButton">
                     <Image Source="/Images/Icons/file-document-minus-outline.png" />
+                </Button>
+                <Button Style="{StaticResource IconButton}" Click="EditProperties_Click" x:Name="EditProperties">
+                    <Image Source="/Images/Icons/file-document-edit.png" />
                 </Button>
                 
             </StackPanel>

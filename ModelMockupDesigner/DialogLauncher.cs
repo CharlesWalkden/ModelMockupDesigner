@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Management;
 
 namespace ModelMockupDesigner
 {
@@ -41,9 +42,10 @@ namespace ModelMockupDesigner
         public ScrollViewer? ScrollViewer = null;
 
         public DialogResult? DialogResult;
-
-        public DialogLauncher(object owner)
+        private bool DisplayOnSameScreen;
+        public DialogLauncher(object owner, bool sameScreen = true)
         {
+            DisplayOnSameScreen = sameScreen;
             Window.SnapsToDevicePixels = true;
             Window.UseLayoutRounding = true;
 
@@ -86,11 +88,14 @@ namespace ModelMockupDesigner
         }
         public void ShowDialog()
         {
+            
             Window.ShowDialog();
         }
         public void Show()
         {
+            
             Window.Show();
+            
         }
         private void Close()
         {
@@ -111,6 +116,28 @@ namespace ModelMockupDesigner
 
             OnClose?.Invoke(this, new DialogEventArgs() { Result = DialogResult });
         }
+
+        //private int MonitorCount()
+        //{
+        //    ManagementObjectCollection collection = GetManagementCollection("root\\WMI", "Select * from WMIMonitorID");
+
+        //    return collection.Count;
+        //}
+        //private ManagementObjectCollection GetManagementCollection(string scope,string query)
+        //{
+        //    ManagementObjectSearcher s = new ManagementObjectSearcher(query);
+
+        //    return s.Get();
+        //}
+        //private void SetWindowLocation()
+        //{
+        //    ManagementObjectCollection monitors = GetManagementCollection("root\\WMI", "Select * from WmiMonitorBasicDisplayParams ");
+
+        //    foreach (ManagementObject monitor in monitors)
+        //    {
+
+        //    }
+        //}
 
 #pragma warning disable CS8603 // We will always have content here. If we don't something has gone wrong and needs fixing.
         public T Control => ((ScrollViewer)Window.Content).Content as T;

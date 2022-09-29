@@ -42,13 +42,13 @@
 
                 <Grid Grid.Row="2" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Style="{StaticResource ExportButton}"/>
+                        <Button Margin="15" Click="Export_Click" Style="{StaticResource ExportButton}"/>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Row="3" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Style="{StaticResource SettingsButton}"/>
+                        <Button Margin="15" Click="Settings_Click" Style="{StaticResource SettingsButton}"/>
                     </Border>
                 </Grid>
 

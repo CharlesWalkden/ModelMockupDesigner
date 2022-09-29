@@ -1,5 +1,6 @@
 ﻿using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
+using ModelMockupDesigner.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace ModelMockupDesigner.Models
         public WizardTheme? WizardTheme { get; set; }
         public List<DynamicWizardSection> Sections { get; set; }
         public Guid CateogryId { get; set; }
+        public Project? Project { get; set; }
 
         public DynamicWizard()
         {
@@ -27,9 +29,19 @@ namespace ModelMockupDesigner.Models
             DynamicWizardSection newSection = new(this);
             newSection.CreateNew(); 
 
-            //Sections.Add(newSection);
-
             return Task.CompletedTask;
+        }
+        public void LoadFromWizardCreator(WizardCreatorViewModel vm)
+        {
+            Name = vm.WizardName;
+            Description = vm.WizardDescription;
+            WizardType = vm.WizardType;
+            WizardTheme = vm.WizardTheme;
+
+            if (vm.CurrentCategorySelection != null)
+                CateogryId = (Guid)vm.CurrentCategorySelection.Value;
+
+            Project ??= vm.Project;
         }
 
         #region Xml

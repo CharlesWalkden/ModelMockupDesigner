@@ -48,7 +48,6 @@ namespace ModelMockupDesigner
                 ResizeMode = ResizeMode.NoResize;
         }
 
-
         public MainWindow()
         {
             InitializeComponent();

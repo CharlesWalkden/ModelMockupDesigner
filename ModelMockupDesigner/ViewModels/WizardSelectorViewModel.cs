@@ -43,7 +43,6 @@ namespace ModelMockupDesigner.ViewModels
         }
         private Project? model { get; set; }
 
-
         public string? ProjectName
         {
             get => projectName;
@@ -89,7 +88,6 @@ namespace ModelMockupDesigner.ViewModels
 
         private string? customerName { get; set; }
 
-
         public ICommand EditWizardCommand { get; set; }
         public ICommand CreateNewWizardCommand { get; set; }
         public ICommand CreateNewCategoryCommand { get; set; }
@@ -129,7 +127,8 @@ namespace ModelMockupDesigner.ViewModels
             wizardCreator.OnClose += WizardCreator_OnClose;
             if (wizardCreator.Control.ViewModel != null)
             {
-                wizardCreator.Control.ViewModel.LoadCategoryList(CreateCategoryList());
+                wizardCreator.Control.ViewModel.Project = model;
+                wizardCreator.Control.ViewModel.LoadCategoryList(Model?.CreateCategoryList());
                 if (Owner.CurrentSelection != null && Owner.CurrentSelection is CategoryTreeViewItem treeViewItem)
                 {
                     wizardCreator.Control.ViewModel.SetCategory(treeViewItem.Category.Id);
@@ -247,30 +246,6 @@ namespace ModelMockupDesigner.ViewModels
                     }
                 }
             }
-        }
-        private List<ComboBoxItem> CreateCategoryList()
-        {
-            List<ComboBoxItem> categoryList = new List<ComboBoxItem>();
-
-            if (Model != null)
-            {
-                foreach (Category category in Model.Categories)
-                {
-                    ComboBoxItem comboBox = new()
-                    {
-                        Text = category.Name,
-                        Value = category.Id
-                    };
-                    categoryList.Add(comboBox);
-
-                    if (category.Categories != null && category.Categories.Count > 0)
-                    {
-                        categoryList.AddRange(category.GetCategoryList());
-                    }
-                }
-            }
-
-            return categoryList;
         }
     }
 }

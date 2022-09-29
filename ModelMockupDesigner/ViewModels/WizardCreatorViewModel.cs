@@ -10,6 +10,7 @@ namespace ModelMockupDesigner.ViewModels
 {
     public class WizardCreatorViewModel : BaseViewModel
     {
+        public Project? Project { get; set; }
         public CollectionList<ComboBoxItem> CategoryList { get; set; }
         public ComboBoxItem? CurrentCategorySelection { get; set; }
         public string? WizardName
@@ -36,7 +37,7 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(WizardDescription));
             }
         }
-        public WizardType WizardType
+        public WizardType? WizardType
         {
             get => wizardType;
             set
@@ -48,7 +49,7 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(WizardType));
             }
         }
-        public WizardTheme WizardTheme
+        public WizardTheme? WizardTheme
         {
             get => wizardTheme;
             set
@@ -65,8 +66,8 @@ namespace ModelMockupDesigner.ViewModels
 
         private string? wizardName { get; set; }
         private string? wizardDescription { get; set; }
-        private WizardType wizardType { get; set; }
-        private WizardTheme wizardTheme { get; set; }
+        private WizardType? wizardType { get; set; }
+        private WizardTheme? wizardTheme { get; set; }
 
         #endregion
 
@@ -75,9 +76,10 @@ namespace ModelMockupDesigner.ViewModels
             CategoryList = new();
         }
 
-        public void LoadCategoryList(List<ComboBoxItem> categoryList)
+        public void LoadCategoryList(List<ComboBoxItem>? categoryList)
         {
-            CategoryList.AddRange(categoryList);
+            if (categoryList != null)
+                CategoryList.AddRange(categoryList);
         }
         public void SetCategory(Guid categoryId)
         {

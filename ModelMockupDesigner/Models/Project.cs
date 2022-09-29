@@ -45,6 +45,31 @@ namespace ModelMockupDesigner.Models
             CustomerName = creatorModel.CustomerName;
         }
 
+        public List<ComboBoxItem> CreateCategoryList()
+        {
+            List<ComboBoxItem> categoryList = new List<ComboBoxItem>();
+
+            if (Categories != null)
+            {
+                foreach (Category category in Categories)
+                {
+                    ComboBoxItem comboBox = new()
+                    {
+                        Text = category.Name,
+                        Value = category.Id
+                    };
+                    categoryList.Add(comboBox);
+
+                    if (category.Categories != null && category.Categories.Count > 0)
+                    {
+                        categoryList.AddRange(category.GetCategoryList());
+                    }
+                }
+            }
+
+            return categoryList;
+        }
+
         #region XML
 
         public override void LoadFromXml(XmlNode node)

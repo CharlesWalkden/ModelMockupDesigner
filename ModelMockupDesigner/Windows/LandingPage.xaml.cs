@@ -4,8 +4,10 @@ using ModelMockupDesigner.Models;
 using ModelMockupDesigner.ViewModels;
 using ModelMockupDesigner.Windows;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -62,7 +64,7 @@ namespace ModelMockupDesigner
                 }
             }
         }
-        private async void ProjectCreator_OnClose(object? sender, DialogEventArgs e)
+        private void ProjectCreator_OnClose(object? sender, DialogEventArgs e)
         {
             if (sender is DialogLauncher<ProjectCreator> projectCreator && projectCreator.Control != null && projectCreator.Control.DialogResult == DialogResult.Accept &&
                 projectCreator.Control.ViewModel != null)
@@ -82,6 +84,15 @@ namespace ModelMockupDesigner
             //WizardSelector wizardSelector = new();
             //WindowControl.DisplayWindow(wizardSelector);
         }
+        private void Export_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         public WindowParameters GetWindowParameters()
         {
@@ -97,7 +108,7 @@ namespace ModelMockupDesigner
 
         #region Not used, needed for interface
 
-        public event EventHandler OnClosed;
+        public event EventHandler? OnClosed;
         public void CloseAsync()
         {
             throw new NotImplementedException();

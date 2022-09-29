@@ -39,6 +39,10 @@ namespace ModelMockupDesigner
 
             DataContext = wizardCreatorViewModel;
         }
+        public void LoadExistingData(WizardCreatorViewModel existingWizardData)
+        {
+            DataContext = existingWizardData;
+        }
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {

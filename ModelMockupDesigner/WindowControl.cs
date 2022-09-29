@@ -11,9 +11,6 @@ namespace ModelMockupDesigner
 {
     public class WindowControl
     {
-        public void SetParameters(double minHeight, double minWidth, bool canResize)
-        {
-        }
         public static event EventHandler<WindowParameters>? OnWindowDisplay;
         public static Grid? MainWindow
         {

@@ -35,6 +35,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Management" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\AthenaSmall.png" />
     <Resource Include="Images\GuardianSmall.png" />
     <Resource Include="Images\Icons\arrow-down.png" />

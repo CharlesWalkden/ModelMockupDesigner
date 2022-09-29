@@ -514,7 +514,21 @@
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <!-- The ExitActions StoryBoard reverses the made changes -->
+                                        <DoubleAnimation
+                                                Duration="0:0:0"
+                                                To="2"
+                                                Storyboard.TargetName="shadow"
+                                                Storyboard.TargetProperty="(DropShadowEffect.ShadowDepth)"/>
+                                        <DoubleAnimation
+                                                Duration="0:0:0"
+                                                To="-1"
+                                                Storyboard.TargetName="translation"
+                                                Storyboard.TargetProperty="(TranslateTransform.X)"/>
+                                        <DoubleAnimation
+                                                Duration="0:0:0"
+                                                To="-1"
+                                                Storyboard.TargetName="translation"
+                                                Storyboard.TargetProperty="(TranslateTransform.Y)"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>

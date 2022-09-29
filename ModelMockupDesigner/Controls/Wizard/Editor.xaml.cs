@@ -3,6 +3,7 @@ using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
 using ModelMockupDesigner.ViewModels;
+using ModelMockupDesigner.WizardPreview.Wizards;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
@@ -30,17 +31,18 @@ namespace ModelMockupDesigner
 #pragma warning disable CS8603 // Will never be null as we create a new viewmodel in constructor.
         public WizardEditorViewModel ViewModel { get => DataContext as WizardEditorViewModel; }
 #pragma warning restore CS8603 
+
         public DynamicWizard? WizardModel { get; set; }
 
         public IIsSelectable? CurrentSelection { get; set; }
 
         public List<EditorSection>? Pages { get; set; }
-        public EditorSection CurrentPage { get; set; }
+        public EditorSection? CurrentPage { get; set; }
+
         public WizardDesignPreview? DesignPreview;
 
-        public bool WizardLoaded = false;
-
         public event EventHandler<DynamicWizard>? OnWizardUpdated;
+
         public Editor()
         {
             InitializeComponent();
@@ -65,7 +67,8 @@ namespace ModelMockupDesigner
                 Name = creatorModel.WizardName,
                 Description = creatorModel.WizardDescription,
                 WizardType = creatorModel.WizardType,
-                WizardTheme = creatorModel.WizardTheme
+                WizardTheme = creatorModel.WizardTheme,
+                Project = creatorModel.Project
             };
 
             if (creatorModel.CurrentCategorySelection != null)
@@ -107,8 +110,6 @@ namespace ModelMockupDesigner
             }
 
             LoadPage(0);
-
-            WizardLoaded = true;
         }
 
         public void LoadPage(int pageIndex)
@@ -370,7 +371,39 @@ namespace ModelMockupDesigner
                 OnWizardUpdated?.Invoke(this, WizardModel);
             }
         }
-        
+        private void EditProperties_Click(object sender, RoutedEventArgs e)
+        {
+            if (WizardModel != null)
+            {
+                WizardCreatorViewModel vm = new()
+                {
+                    WizardName = WizardModel.Name,
+                    WizardDescription = WizardModel.Description,
+                    WizardTheme = WizardModel.WizardTheme,
+                    WizardType = WizardModel.WizardType
+                };
+
+                DialogLauncher<WizardCreator> wizardCreator = new(this);
+                wizardCreator.Control.LoadExistingData(vm);
+                wizardCreator.OnClose += WizardCreator_OnClose;
+                if (wizardCreator.Control.ViewModel != null)
+                {
+                    wizardCreator.Control.ViewModel.LoadCategoryList(WizardModel?.Project?.CreateCategoryList());
+                    wizardCreator.Control.ViewModel.SetCategory(WizardModel.CateogryId);
+                }
+
+                wizardCreator.ShowDialog();
+            }
+        }
+        private void WizardCreator_OnClose(object? sender, DialogEventArgs e)
+        {
+            if (sender is DialogLauncher<WizardCreator> wizardCreator && wizardCreator.Control != null && wizardCreator.Control.DialogResult == DialogResult.Accept &&
+                wizardCreator.Control.ViewModel != null)
+            {
+                if (WizardModel != null)
+                    WizardModel.LoadFromWizardCreator(wizardCreator.Control.ViewModel);
+            }
+        }
 
         #region Interface
 
@@ -436,8 +469,9 @@ namespace ModelMockupDesigner
             SelectedControl = new NewControl() { ElementType = selectedType };
         }
 
-        
+
         #endregion
 
+        
     }
 }
