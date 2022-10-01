@@ -49,7 +49,6 @@ namespace ModelMockupDesigner
             DataContext = new WizardEditorViewModel();
             Pages = new();
         }
-
         public async Task LoadEditor(DynamicWizard wizard)
         {
             if (ViewModel != null)
@@ -73,7 +72,12 @@ namespace ModelMockupDesigner
 
             if (creatorModel.CurrentCategorySelection != null)
             {
-                WizardModel.CateogryId = (Guid)creatorModel.CurrentCategorySelection.Value;
+                WizardModel.Category = (Category)creatorModel.CurrentCategorySelection.Value;
+            }
+            else
+            {
+                // Set this to null so it will run through and add this to the lonewizard list.
+                WizardModel.Category = null;
             }
 
             if (ViewModel != null)
@@ -83,7 +87,6 @@ namespace ModelMockupDesigner
 
             await LoadUI();
         }
-        
         private async Task LoadUI()
         {
             if (WizardModel == null)
@@ -111,7 +114,6 @@ namespace ModelMockupDesigner
 
             LoadPage(0);
         }
-
         public void LoadPage(int pageIndex)
         {
             ContentContainer.Children.Clear();
@@ -389,7 +391,10 @@ namespace ModelMockupDesigner
                 if (wizardCreator.Control.ViewModel != null)
                 {
                     wizardCreator.Control.ViewModel.LoadCategoryList(WizardModel?.Project?.CreateCategoryList());
-                    wizardCreator.Control.ViewModel.SetCategory(WizardModel.CateogryId);
+                    if (WizardModel?.Category != null)
+                    {
+                        wizardCreator.Control.ViewModel.SetCategory(WizardModel.Category.Id);
+                    }
                 }
 
                 wizardCreator.ShowDialog();
@@ -401,7 +406,9 @@ namespace ModelMockupDesigner
                 wizardCreator.Control.ViewModel != null)
             {
                 if (WizardModel != null)
+                {
                     WizardModel.LoadFromWizardCreator(wizardCreator.Control.ViewModel);
+                }
             }
         }
 

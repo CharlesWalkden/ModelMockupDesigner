@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelMockupDesigner.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace ModelMockupDesigner.Models
         public string? Description { get; set; }
 
         public List<Category>? Categories { get; set; }
-        public List<DynamicWizard>? Wizards { get; set; }
+        public List<IWizardModel>? Wizards { get; set; }
 
         public bool IsExpanded { get; set; } = false;
 
@@ -32,45 +33,31 @@ namespace ModelMockupDesigner.Models
             Wizards = new();
 
         }
-        public void Load(List<DynamicWizard> wizards, List<Category>? categories = null)
+        public void Load(List<IWizardModel> wizards, List<Category>? categories = null)
         {
             Wizards = wizards;
             Categories = categories;
         }
-        public void AddWizard(DynamicWizard wizard)
+        public void AddWizard(IWizardModel wizard)
         {
             if (Wizards != null)
             {
                 Wizards.Add(wizard);
             }
         }
-        public bool AddWizardToCategory(DynamicWizard wizard)
+        public void DeleteWizard(IWizardModel wizard)
         {
-            bool added = false;
-            if (Categories != null)
+            if (wizard != null && Wizards != null && Wizards.Contains(wizard))
             {
-                foreach(Category category in Categories)
-                {
-                    if (category.Id == wizard.CateogryId)
-                    {
-                        category.AddWizard(wizard);
-                        break;
-                    }
-                    if (category.Categories != null)
-                    {
-                        if (category.AddWizardToCategory(wizard))
-                        {
-                            break;
-                        }
-                    }
-                }
+                Wizards.Remove(wizard);
             }
-
-            return added;
         }
         public List<ComboBoxItem> GetCategoryList()
         {
-            List<ComboBoxItem> categoryList = new List<ComboBoxItem>();
+            List<ComboBoxItem> categoryList = new List<ComboBoxItem>()
+            {
+                new ComboBoxItem(){Text = "", Value = null}
+            };
             if (Categories != null)
             {
                 foreach (Category category in Categories)
@@ -78,7 +65,7 @@ namespace ModelMockupDesigner.Models
                     ComboBoxItem comboBoxItem = new()
                     {
                         Text = category.Name,
-                        Value = category.Id
+                        Value = category
                     };
                     categoryList.Add(comboBoxItem);
 

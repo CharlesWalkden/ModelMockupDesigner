@@ -3,6 +3,7 @@ using ModelMockupDesigner.Models;
 using ModelMockupDesigner.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,14 +44,18 @@ namespace ModelMockupDesigner
         public WizardSelector(Project project)
         {
             InitializeComponent();
+            Loaded += WizardSelector_Loaded;
             WizardSelectorViewModel viewModel = new(this)
             {
-                Model = project
+                ProjectModel = project
             };
             viewModel.OnListUpdated += OnListUpdated_RefreshTreeView;
 
             DataContext = viewModel;
+        }
 
+        private void WizardSelector_Loaded(object sender, RoutedEventArgs e)
+        {
             SetupTreeView();
         }
 
@@ -58,13 +63,19 @@ namespace ModelMockupDesigner
         {
             mainTreeView.Items.Clear();
 
-            if (ViewModel != null && ViewModel.Model != null)
+            if (ViewModel != null && ViewModel.ProjectModel != null)
             {
-                foreach (Category category in ViewModel.Model.Categories)
+                foreach (Category category in ViewModel.ProjectModel.Categories)
                 {
                     CategoryTreeViewItem categoryTreeViewItem = new(null, category);
 
                     mainTreeView.Items.Add(categoryTreeViewItem);
+                }
+                foreach (IWizardModel wizard in ViewModel.ProjectModel.LoneWizards)
+                {
+                    WizardTreeViewItem wizardTreeViewItem = new(wizard);
+
+                    mainTreeView.Items.Add(wizardTreeViewItem);
                 }
             }
         }
@@ -212,9 +223,9 @@ namespace ModelMockupDesigner
 
     public class WizardTreeViewItem : TreeViewItem
     {
-        public DynamicWizard Wizard { get; private set; }
+        public IWizardModel Wizard { get; private set; }
 
-        public WizardTreeViewItem(DynamicWizard wizard)
+        public WizardTreeViewItem(IWizardModel wizard)
         {
             Wizard = wizard;
             if (string.IsNullOrWhiteSpace(wizard.Name))

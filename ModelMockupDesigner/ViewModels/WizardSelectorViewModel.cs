@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Markup.Localizer;
 using ComboBoxItem = ModelMockupDesigner.Models.ComboBoxItem;
 
 namespace ModelMockupDesigner.ViewModels
@@ -18,9 +19,9 @@ namespace ModelMockupDesigner.ViewModels
     {
         public WizardSelector Owner { get; set; }
 
-        public Project? Model
+        public Project? ProjectModel
         {
-            get => model;
+            get => projectModel;
             set
             {
                 if (value != null)
@@ -38,10 +39,10 @@ namespace ModelMockupDesigner.ViewModels
                 else
                     customerName = "Not Set";
 
-                model = value;
+                projectModel = value;
             }
         }
-        private Project? model { get; set; }
+        private Project? projectModel { get; set; }
 
         public string? ProjectName
         {
@@ -115,10 +116,22 @@ namespace ModelMockupDesigner.ViewModels
         {
             if (Owner.CurrentSelection is WizardTreeViewItem wizardTreeViewItem)
             {
-                Editor editor = new Editor();
-                await editor.LoadEditor(wizardTreeViewItem.Wizard);
+                switch (wizardTreeViewItem.Wizard.WizardType)
+                {
+                    case WizardType.Dynamic:
+                        {
+                            if (wizardTreeViewItem.Wizard is DynamicWizard dynamicWizard)
+                            {
+                                Editor editor = new Editor();
+                                await editor.LoadEditor(dynamicWizard);
+                                WindowControl.DisplayWindow(editor);
+                            }
 
-                WindowControl.DisplayWindow(editor);
+                            break;
+                        }
+                    default:
+                        break;
+                }
             }
         }
         private void CreateNewWizard()
@@ -127,8 +140,8 @@ namespace ModelMockupDesigner.ViewModels
             wizardCreator.OnClose += WizardCreator_OnClose;
             if (wizardCreator.Control.ViewModel != null)
             {
-                wizardCreator.Control.ViewModel.Project = model;
-                wizardCreator.Control.ViewModel.LoadCategoryList(Model?.CreateCategoryList());
+                wizardCreator.Control.ViewModel.Project = projectModel;
+                wizardCreator.Control.ViewModel.LoadCategoryList(ProjectModel?.CreateCategoryList());
                 if (Owner.CurrentSelection != null && Owner.CurrentSelection is CategoryTreeViewItem treeViewItem)
                 {
                     wizardCreator.Control.ViewModel.SetCategory(treeViewItem.Category.Id);
@@ -148,11 +161,11 @@ namespace ModelMockupDesigner.ViewModels
             {
                 if (Owner.CurrentSelection is CategoryTreeViewItem categoryTreeViewItem)
                 {
-                    if (model != null)
+                    if (projectModel != null)
                     {
                         if (!categoryTreeViewItem.DeleteFromParent())
                         {
-                            model.Categories.Remove(categoryTreeViewItem.Category);
+                            projectModel.Categories.Remove(categoryTreeViewItem.Category);
                         }
 
                         Owner.RefreshTreeView();
@@ -160,9 +173,19 @@ namespace ModelMockupDesigner.ViewModels
                 }
                 else if (Owner.CurrentSelection is WizardTreeViewItem wizardTreeViewItem)
                 {
-                    if (model != null)
+                    if (projectModel != null)
                     {
-                        
+                        if (wizardTreeViewItem.Wizard.Category != null)
+                        {
+                            wizardTreeViewItem.Wizard.Category = null;
+                        }
+                        else
+                        {
+                            projectModel.LoneWizards.Remove(wizardTreeViewItem.Wizard);
+                        }
+                        projectModel.AllWizards.Remove(wizardTreeViewItem.Wizard);
+
+                        Owner.RefreshTreeView();
                     }
                 }
             }
@@ -178,10 +201,6 @@ namespace ModelMockupDesigner.ViewModels
                         {
                             Editor editor = new Editor();
                             await editor.LoadEditor(wizardCreator.Control.ViewModel);
-
-                            AddWizardToCategory(editor.WizardModel);
-                            Owner.RefreshTreeView();
-
                             WindowControl.DisplayWindow(editor);
 
                             break;
@@ -211,41 +230,13 @@ namespace ModelMockupDesigner.ViewModels
                         OnListUpdated?.Invoke(this, new EventArgs());
                     }
                 }
-                else if (Model != null)
+                else if (ProjectModel != null)
                 {
-                    Model.Categories.Add(category);
+                    ProjectModel.Categories.Add(category);
                     OnListUpdated?.Invoke(this, new EventArgs());
                 }
             }
         }
-        private void AddWizardToCategory(DynamicWizard? wizard)
-        {
-            if (Model != null && wizard != null)
-            {
-                foreach (Category category in Model.Categories)
-                {
-                    if (category.Id == wizard.CateogryId)
-                    {
-                        category.AddWizard(wizard);
-                        break;
-                    }
-                    if (category.Categories != null)
-                    {
-                        foreach (Category subCategory in category.Categories)
-                        {
-                            if (subCategory.Id == wizard.CateogryId)
-                            {
-                                subCategory.AddWizard(wizard);
-                                break;
-                            }
-                            if (subCategory.AddWizardToCategory(wizard))
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        
     }
 }

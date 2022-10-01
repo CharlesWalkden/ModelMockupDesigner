@@ -83,7 +83,7 @@ namespace ModelMockupDesigner.ViewModels
         }
         public void SetCategory(Guid categoryId)
         {
-            CurrentCategorySelection = CategoryList.FirstOrDefault(x => (Guid)x.Value == categoryId);
+            CurrentCategorySelection = CategoryList.FirstOrDefault(x => ((Category)x.Value)?.Id == categoryId);
         }
     }
 }

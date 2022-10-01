@@ -20,7 +20,7 @@ namespace ModelMockupDesigner.Models
             if (Text == null || string.IsNullOrEmpty(Text))
             {
                 //return "Not Set";
-                return Value.ToString();
+                return Value?.ToString();
             }
 
             return Text.ToString();

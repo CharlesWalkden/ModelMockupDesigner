@@ -16,7 +16,27 @@ namespace ModelMockupDesigner.Models
         public WizardType? WizardType { get; set; }
         public WizardTheme? WizardTheme { get; set; }
         public List<DynamicWizardSection> Sections { get; set; }
-        public Guid CateogryId { get; set; }
+        public Category? Category
+        {
+            get => category;
+            set
+            {
+                if (category != null)
+                {
+                    category.DeleteWizard(this);
+                }
+                category = value;
+                if (category != null)
+                {
+                    category?.AddWizard(this);
+                }
+                else
+                {
+                    Project?.LoneWizards.Add(this);
+                }
+            }
+        }
+        private Category? category { get; set; }
         public Project? Project { get; set; }
 
         public DynamicWizard()
@@ -39,7 +59,7 @@ namespace ModelMockupDesigner.Models
             WizardTheme = vm.WizardTheme;
 
             if (vm.CurrentCategorySelection != null)
-                CateogryId = (Guid)vm.CurrentCategorySelection.Value;
+                Category = (Category)vm.CurrentCategorySelection.Value;
 
             Project ??= vm.Project;
         }
