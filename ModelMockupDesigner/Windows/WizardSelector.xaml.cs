@@ -138,6 +138,16 @@ namespace ModelMockupDesigner
 
             return windowParameters;
         }
+
+        private void mainTreeView_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!(e.Source is TreeViewItem))
+            {
+                TreeViewItem item = mainTreeView.SelectedItem as TreeViewItem;
+                if (item != null)
+                    item.IsSelected = false;
+            }
+        }
     }
 
     public class CategoryTreeViewItem : TreeViewItem

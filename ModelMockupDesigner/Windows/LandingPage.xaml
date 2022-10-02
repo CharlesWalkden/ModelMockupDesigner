@@ -31,7 +31,7 @@
                 </ItemsControl.ItemsPanel>
                 <Grid Grid.Row="0" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Command="{Binding NewProjectCommand}" Style="{StaticResource HomeButton}"/>
+                        <Button Margin="15" Command="{Binding NewProjectCommand}" Style="{StaticResource CreateNewButton}"/>
                     </Border>
                 </Grid>
 
@@ -65,7 +65,6 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <!--<TextBlock Grid.Row="0" Text="Recent Projects:" FontSize="25" HorizontalAlignment="Left" Foreground="White" />-->
                 <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="5" Background="{StaticResource EditorDarkGrayBrush}">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -73,7 +72,6 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="Recent Projects:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Margin="5,0,0,0" />
-                        <!-- List of recent projects to be displayed here -->
                         <ItemsControl x:Name="recentProjectView" Grid.Row="1" Background="Transparent" ItemsSource="{Binding RecentProjects}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
