@@ -21,8 +21,10 @@ namespace ModelMockupDesigner.Models
         public string? CustomerName { get; set; }
         public ProjectTemplate ProjectTemplate { get; set; }
         public List<IWizardModel> AllWizards { get; set; }
+        public int WizardCount { get => AllWizards.Count; }
         public List<Category> Categories { get; set; }
         public List<IWizardModel> LoneWizards { get; set; }   
+        public DateTime LastAccess { get; set; }
         public Project(ProjectCreatorViewModel creatorModel)
         {
             AllWizards = new List<IWizardModel>();
@@ -49,6 +51,7 @@ namespace ModelMockupDesigner.Models
             ProjectName = creatorModel.ProjectName;
             ProjectDescription = creatorModel.ProjectDescription;
             CustomerName = creatorModel.CustomerName;
+            LastAccess = DateTime.Now;
         }
         public List<ComboBoxItem> CreateCategoryList()
         {

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ModelMockupDesigner"
+             xmlns:control="clr-namespace:ModelMockupDesigner.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1200"
              MinHeight="560" MaxHeight="560">
@@ -30,31 +31,31 @@
                 </ItemsControl.ItemsPanel>
                 <Grid Grid.Row="0" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Click="NewProject_Click" Style="{StaticResource HomeButton}"/>
+                        <Button Margin="15" Command="{Binding NewProjectCommand}" Style="{StaticResource HomeButton}"/>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Row="1" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Click="Load_Click" Style="{StaticResource OpenButton}"/>
+                        <Button Margin="15" Command="{Binding LoadProjectCommand}" Style="{StaticResource OpenButton}"/>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Row="2" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Click="Export_Click" Style="{StaticResource ExportButton}"/>
+                        <Button Margin="15" Command="{Binding ExportProjectCommand}" Style="{StaticResource ExportButton}"/>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Row="3" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Click="Settings_Click" Style="{StaticResource SettingsButton}"/>
+                        <Button Margin="15" Command="{Binding OpenSettingsCommand}" Style="{StaticResource SettingsButton}"/>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Row="4" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Click="ExitApplication_Click" Style="{StaticResource ExitButton}"/>
+                        <Button Margin="15" Command="{Binding ExitApplicationCommand}" Style="{StaticResource ExitButton}"/>
                     </Border>
                 </Grid>
 
@@ -73,6 +74,18 @@
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="Recent Projects:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Margin="5,0,0,0" />
                         <!-- List of recent projects to be displayed here -->
+                        <ItemsControl x:Name="recentProjectView" Grid.Row="1" Background="Transparent" ItemsSource="{Binding RecentProjects}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <control:RecentProjectListItem />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </Grid>
                 </Border>
             </Grid>

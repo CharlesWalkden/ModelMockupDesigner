@@ -27,71 +27,11 @@ namespace ModelMockupDesigner
     /// </summary>
     public partial class LandingPage : UserControl, IWindowStack
     {
+        private LandingPageViewModel? ViewModel { get => DataContext as LandingPageViewModel; }
         public LandingPage()
         {
             InitializeComponent();
-        }
-
-        private void ExitApplication_Click(object sender, RoutedEventArgs e) 
-        {
-            Application.Current.Shutdown();
-        }
-
-        private void NewProject_Click(object sender, RoutedEventArgs e) 
-        {
-            DialogLauncher<ProjectCreator> projectCreator = new(this);
-            projectCreator.OnClose += ProjectCreator_OnClose;
-            projectCreator.ShowDialog();
-        }
-
-        private async void WizardCreator_OnClose(object? sender, DialogEventArgs e)
-        {
-            if (sender is DialogLauncher<WizardCreator> wizardCreator && wizardCreator.Control != null && wizardCreator.Control.DialogResult == DialogResult.Accept && 
-                wizardCreator.Control.ViewModel != null)
-            {
-                switch (wizardCreator.Control.ViewModel.WizardType)
-                {
-                    case WizardType.Dynamic:
-                        {
-                            Editor editor = new Editor();
-                            await editor.LoadEditor(wizardCreator.Control.ViewModel);
-                            WindowControl.DisplayWindow(editor);
-
-                            break;
-                        }
-                    default:
-                        break;
-                }
-            }
-        }
-        private void ProjectCreator_OnClose(object? sender, DialogEventArgs e)
-        {
-            if (sender is DialogLauncher<ProjectCreator> projectCreator && projectCreator.Control != null && projectCreator.Control.DialogResult == DialogResult.Accept &&
-                projectCreator.Control.ViewModel != null)
-            {
-
-                Project project = new(projectCreator.Control.ViewModel);
-
-                WizardSelector wizardSelector = new WizardSelector(project);
-
-                WindowControl.DisplayWindow(wizardSelector);
-                
-            }
-        }
-
-        private void Load_Click(object sender, RoutedEventArgs e) 
-        {
-            //WizardSelector wizardSelector = new();
-            //WindowControl.DisplayWindow(wizardSelector);
-        }
-        private void Export_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
-
+            DataContext = new LandingPageViewModel(this);
         }
 
         public WindowParameters GetWindowParameters()
@@ -99,7 +39,7 @@ namespace ModelMockupDesigner
             WindowParameters windowParameters = new WindowParameters()
             {
                 CanResize = false,
-                MinWidth = 1080,
+                MinWidth = 1280,
                 MinHeight = 595
             };
 
@@ -115,5 +55,7 @@ namespace ModelMockupDesigner
         }
 
         #endregion
+
+        
     }
 }

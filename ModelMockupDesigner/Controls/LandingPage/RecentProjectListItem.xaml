@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="ModelMockupDesigner.Controls.RecentProjectListItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ModelMockupDesigner.Controls"
+             xmlns:converters="clr-namespace:ModelMockupDesigner.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="1080">
+    <Grid>
+        <Border x:Name="mainBorder" CornerRadius="3" Background="{StaticResource EditorLightGrayBrush}"
+                Padding="5" HorizontalAlignment="Stretch" Margin="10,5,10,0" MinHeight="50" MouseEnter="mainBorder_MouseEnter" MouseLeave="mainBorder_MouseLeave">
+            <Border.InputBindings>
+                <MouseBinding Gesture="LeftClick" Command="{Binding SelectCommand}" />
+            </Border.InputBindings>
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="mainGrid" 
+                                              Background="{Binding Selected, Converter={converters:BoolToBackgroundColorConverter}}">
+                <Grid Margin="5,0,0,0" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="260"/>
+                        <ColumnDefinition Width="350"/>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,0,10,0" Width="260">
+                        <TextBlock Text="Name: " FontSize="12" Foreground="White"/>
+                        <TextBlock Text="{Binding ProjectModel.ProjectName}" FontSize="12" VerticalAlignment="Center" Foreground="White" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,0,10,0" Width="350">
+                        <TextBlock Text="Desc: " FontSize="12" Foreground="White"/>
+                        <TextBlock Text="{Binding ProjectModel.ProjectDescription}" FontSize="12" VerticalAlignment="Center" Foreground="White" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="0,0,10,0" Width="250">
+                        <TextBlock Text="Customer: " FontSize="12" Foreground="White"/>
+                        <TextBlock Text="{Binding ProjectModel.CustomerName}" FontSize="12" VerticalAlignment="Center" Foreground="White" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
+                        <TextBlock Text="Last Accessed: " FontSize="12" Foreground="White"/>
+                        <TextBlock Text="{Binding ProjectModel.LastAccess}" FontSize="12"  Foreground="White" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
