@@ -41,9 +41,9 @@
               Grid.Row="1" 
               AllowDrop="True"
               Margin="5">
-            <Grid x:Name="container">
+            <StackPanel x:Name="container" Orientation="Vertical">
                 
-            </Grid>
+            </StackPanel>
         </Grid>
         
     </Grid>

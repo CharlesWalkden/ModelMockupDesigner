@@ -14,7 +14,6 @@ namespace ModelMockupDesigner.Models
     {
         public DynamicWizardColumn Parent { get; set; }
 
-        public int Order { get; set; } = 0;
         public List<DynamicWizardCell> Cells { get; set; }
 
         public DynamicWizardPanel(DynamicWizardColumn parent)
@@ -25,7 +24,7 @@ namespace ModelMockupDesigner.Models
 
         public void CreateNew()
         {
-            Order = Parent.WizardPanels.Count + 1;
+            OrderId = Parent.WizardPanels.Count;
 
             DynamicWizardCell wizardCell = new(this);
 

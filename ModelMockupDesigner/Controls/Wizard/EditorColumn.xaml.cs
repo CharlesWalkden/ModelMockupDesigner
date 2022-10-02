@@ -54,10 +54,6 @@ namespace ModelMockupDesigner.Controls
         {
             DataContext = columnModel;
 
-            for (int i = 0; i < columnModel.WizardPanels.Count; i++)
-            {
-                container.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-            }
 
             foreach (DynamicWizardPanel wizardPanel in columnModel.WizardPanels)
             {
@@ -65,7 +61,6 @@ namespace ModelMockupDesigner.Controls
                 editorPanel.OnSelected += OnSelected;
 
                 container.Children.Add(editorPanel);
-                Grid.SetRow(editorPanel, wizardPanel.Order);
 
                 await editorPanel.LoadModel(wizardPanel);
             }
@@ -88,6 +83,8 @@ namespace ModelMockupDesigner.Controls
             {
                 _ = ColumnModel.WizardPanels.Remove((DynamicWizardPanel)child.Model);
                 container.Children.Remove(child);
+                child.PanelParent = null;
+                UpdatePanelOrderIDs();
             }
         }
 
@@ -95,8 +92,6 @@ namespace ModelMockupDesigner.Controls
         {
             if (ColumnModel == null)
                 return;
-
-            container.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
             DynamicWizardPanel wizardPanel = new(ColumnModel);
             wizardPanel.CreateNew();
@@ -107,12 +102,47 @@ namespace ModelMockupDesigner.Controls
             editorPanel.OnSelected += OnSelected;
 
             container.Children.Add(editorPanel);
-            Grid.SetRow(editorPanel, wizardPanel.Order);
 
             await editorPanel.LoadModel(wizardPanel);
-
         }
-
+        private void AddPanel(int index, EditorPanel panel)
+        {
+            if (ColumnModel != null)
+            {
+                ColumnModel.WizardPanels.Add(panel.Model as DynamicWizardPanel);
+                panel.SetNewParent(this);
+                panel.OnSelected += OnSelected;
+            }
+            if (container.Children.Count == index)
+            {
+                container.Children.Insert(index -1, panel);
+            }
+            else
+            {
+                container.Children.Insert(index,panel);
+            }
+        }
+        public void AddPanelAtIndex(int index, EditorPanel panel)
+        {
+            AddPanel(index, panel);
+            UpdatePanelOrderIDs();
+        }
+        public int FindIndex(EditorPanel panel)
+        {
+            return container.Children.IndexOf(panel);
+        }
+        public void UpdatePanelOrderIDs()
+        {
+            int index = 0;
+            foreach (EditorPanel panel in container.Children)
+            {
+                if (panel.Model != null)
+                {
+                    panel.Model.OrderId = index;
+                    index++;
+                }
+            }
+        }
 
         #endregion
 

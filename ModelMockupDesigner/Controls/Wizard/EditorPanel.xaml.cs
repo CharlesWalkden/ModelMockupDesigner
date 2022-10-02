@@ -47,6 +47,10 @@ namespace ModelMockupDesigner.Controls
             InitializeComponent();
             panelParent = parent;
         }
+        public void SetNewParent(EditorColumn column)
+        {
+            panelParent = column;
+        }
 
         #endregion
 
@@ -102,6 +106,14 @@ namespace ModelMockupDesigner.Controls
             HeaderTextBlock.Foreground = Application.Current.Resources["PanelRedBrush"] as SolidColorBrush;
             HeaderTextBlock.Background = Brushes.White;
             Border.Fill = Brushes.Transparent;
+        }
+        private int GetIndex()
+        {
+            return PanelParent.FindIndex(this);
+        }
+        private void AddPanelAtIndex(int index, EditorPanel panel)
+        {
+            PanelParent.AddPanelAtIndex(index, panel);
         }
         public void HideNewRowColumn()
         {
@@ -219,6 +231,48 @@ namespace ModelMockupDesigner.Controls
 
             OnSelected?.Invoke(this, this);
         }
+        private void HeaderStackPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DataObject dragObject = new DataObject("grid", this);
+
+                DragDrop.DoDragDrop(this, dragObject, DragDropEffects.Move);
+            }
+        }
+        private void HeaderStackPanel_Drop(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent("grid"))
+            {
+                e.Effects = DragDropEffects.None;
+            }
+            else
+            {
+                try
+                {
+                    EditorPanel panel = e.Data.GetData("grid") as EditorPanel;
+
+                    if (panel != null && panel != this)
+                    {
+                        int destinationIndex = GetIndex();
+                        if (destinationIndex == panel.Model?.OrderId + 1 && panel.panelParent == this.panelParent)
+                        {
+                            // This means we are dragging to the panel below which is basically just putting it in the same palace it's currently in.
+                            return;
+                        }
+                        panel.DeleteControl();
+                        AddPanelAtIndex(destinationIndex, panel);
+                    }
+                }
+                catch
+                {
+
+                }
+
+                // Tidy stuff up.
+                HideNewRowColumn();
+            }
+        }
         private void Control_DragEnter(object sender, DragEventArgs e)
         {
             if (sender is Grid target)
@@ -235,6 +289,7 @@ namespace ModelMockupDesigner.Controls
         }
         private void Control_DragOver(object sender, DragEventArgs e)
         {
+            
             if (e.Data.GetDataPresent(typeof(NewControl)))
             {
                 e.Effects = DragDropEffects.Copy;
@@ -315,9 +370,11 @@ namespace ModelMockupDesigner.Controls
             }
         }
 
-        
+
+
 
         #endregion
 
+        
     }
 }

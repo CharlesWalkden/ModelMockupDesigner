@@ -27,6 +27,8 @@
                     HorizontalAlignment="Stretch"
                     Background="Transparent" 
                     MouseLeftButtonDown="Grid_MouseLeftButtonDown"
+                    MouseMove="HeaderStackPanel_MouseMove"
+                    Drop="HeaderStackPanel_Drop"
                     ContextMenuOpening="HeaderStackPanel_ContextMenuOpening">
             <TextBlock x:Name="HeaderTextBlock"
                        Text="Panel" 
