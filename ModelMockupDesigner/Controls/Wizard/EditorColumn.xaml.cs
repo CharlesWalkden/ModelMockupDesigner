@@ -46,6 +46,11 @@ namespace ModelMockupDesigner.Controls
             columnParent = parent;
         }
 
+        public void SetNewParent(EditorSection section) 
+        {
+            columnParent = section;
+        }
+
         #endregion
 
         #region Methods
@@ -113,7 +118,12 @@ namespace ModelMockupDesigner.Controls
                 panel.SetNewParent(this);
                 panel.OnSelected += OnSelected;
             }
-            if (container.Children.Count == index)
+
+            if (container.Children.Count == 0)
+            {
+                container.Children.Add(panel);
+            }
+            else if (container.Children.Count == index)
             {
                 container.Children.Insert(index -1, panel);
             }
@@ -144,6 +154,14 @@ namespace ModelMockupDesigner.Controls
             }
         }
 
+        private int GetIndex()
+        {
+            return ColumnParent.FindIndex(this);
+        }
+        private void AddColumnAtIndex(int index, EditorColumn column)
+        {
+            ColumnParent.AddColumnAtIndex(index, column);
+        }
         #endregion
 
 
@@ -158,6 +176,65 @@ namespace ModelMockupDesigner.Controls
             Border.Fill = Brushes.Yellow;
 
             OnSelected?.Invoke(this, this);
+        }
+        private void HeaderStackPanel_Drop(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent("column") && !e.Data.GetDataPresent("panel"))
+            {
+                e.Effects = DragDropEffects.None;
+            }
+            else
+            {
+                if (e.Data.GetDataPresent("column"))
+                {
+                    try
+                    {
+                        EditorColumn column = e.Data.GetData("column") as EditorColumn;
+
+                        if (column != null && column != this) 
+                        {
+                            int destinationIndex = GetIndex();
+                            if (destinationIndex == column.Model?.OrderId + 1 && column.ColumnParent == this.ColumnParent)
+                            {
+                                // This means we are dragging to the column to the right which is basically just putting it in the same place it's currently in.
+                                return;
+                            }
+                            column.DeleteControl();
+                            AddColumnAtIndex(destinationIndex, column);
+                        }
+                    }
+                    catch { }
+                }
+                else if (e.Data.GetDataPresent("panel"))
+                {
+                    try
+                    {
+                        EditorPanel panel = e.Data.GetData("panel") as EditorPanel;
+                        if (panel != null)
+                        {
+                            if (panel.PanelParent == this && panel.Model?.OrderId == 0)
+                            {
+                                // Return here are we are already in the position we are dragging to.
+                                return;                                
+                            }
+
+                            panel.DeleteControl();
+                            AddPanelAtIndex(0, panel);
+                        }
+                    }
+                    catch { }
+                }
+            }
+            
+        }
+        private void HeaderStackPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DataObject dragObject = new DataObject("column", this);
+
+                DragDrop.DoDragDrop(this, dragObject, DragDropEffects.Move);
+            }
         }
         private void HeaderStackPanel_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
@@ -199,6 +276,9 @@ namespace ModelMockupDesigner.Controls
             }
         }
 
+
         #endregion
+
+        
     }
 }

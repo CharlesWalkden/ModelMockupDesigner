@@ -39,15 +39,10 @@
               Grid.Row="1" 
               AllowDrop="True"
               Margin="5">
-            <Grid.RowDefinitions>
-                <RowDefinition MinHeight="50" Height="auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="50" Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid x:Name="container" Grid.Row="0" Grid.Column="0">
+            
+            <StackPanel x:Name="container" Orientation="Horizontal">
                 
-            </Grid>
+            </StackPanel>
         </Grid>
         
     </Grid>

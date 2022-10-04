@@ -235,14 +235,14 @@ namespace ModelMockupDesigner.Controls
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                DataObject dragObject = new DataObject("grid", this);
+                DataObject dragObject = new DataObject("panel", this);
 
                 DragDrop.DoDragDrop(this, dragObject, DragDropEffects.Move);
             }
         }
         private void HeaderStackPanel_Drop(object sender, DragEventArgs e)
         {
-            if (!e.Data.GetDataPresent("grid"))
+            if (!e.Data.GetDataPresent("panel"))
             {
                 e.Effects = DragDropEffects.None;
             }
@@ -250,14 +250,15 @@ namespace ModelMockupDesigner.Controls
             {
                 try
                 {
-                    EditorPanel panel = e.Data.GetData("grid") as EditorPanel;
+                    EditorPanel panel = e.Data.GetData("panel") as EditorPanel;
 
                     if (panel != null && panel != this)
                     {
                         int destinationIndex = GetIndex();
                         if (destinationIndex == panel.Model?.OrderId + 1 && panel.panelParent == this.panelParent)
                         {
-                            // This means we are dragging to the panel below which is basically just putting it in the same palace it's currently in.
+                            // This means we are dragging to the panel below which is basically just putting it in the same place it's currently in.
+                            // Only matters if we are moving down within the same column.
                             return;
                         }
                         panel.DeleteControl();

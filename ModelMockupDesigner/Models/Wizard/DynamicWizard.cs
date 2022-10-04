@@ -47,7 +47,6 @@ namespace ModelMockupDesigner.Models
         public Task CreateNew() 
         {
             DynamicWizardSection newSection = new(this);
-            newSection.CreateNew(); 
 
             return Task.CompletedTask;
         }

@@ -35,7 +35,6 @@ namespace ModelMockupDesigner.Controls
         private DynamicWizardSection SectionModel => DataContext as DynamicWizardSection;
 #pragma warning restore CS8603
 
-
         #endregion
 
         #region Constructor
@@ -53,24 +52,16 @@ namespace ModelMockupDesigner.Controls
         {
             DataContext = sectionModel;
 
-            for (int i = 0; i < sectionModel.WizardColumns.Count; i++)
-            {
-                container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
-            }
-
             foreach (DynamicWizardColumn wizardColumn in sectionModel.WizardColumns)
             {
                 EditorColumn editorColumn = new(this);
                 editorColumn.OnSelected += OnSelected;
 
                 container.Children.Add(editorColumn);
-                Grid.SetColumn(editorColumn, wizardColumn.Order);
 
                 await editorColumn.LoadModel(wizardColumn);
-
             }
         }
-
         public void Unselect()
         {
             HeaderStackPanel.Background = Brushes.Transparent;
@@ -88,15 +79,14 @@ namespace ModelMockupDesigner.Controls
             {
                 _ = SectionModel.WizardColumns.Remove((DynamicWizardColumn)child.Model);
                 container.Children.Remove(child);
+                child.ColumnParent = null;
+                UpdateColumnOrderIDs();
             }
         }
-
         private async Task AddColumn()
         {
             if (SectionModel == null)
                 return;
-
-            container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
 
             DynamicWizardColumn wizardColumn = new(SectionModel);
             wizardColumn.CreateNew();
@@ -107,14 +97,52 @@ namespace ModelMockupDesigner.Controls
             editorColumn.OnSelected += OnSelected;
 
             container.Children.Add(editorColumn);
-            Grid.SetColumn(editorColumn, wizardColumn.Order);
 
             await editorColumn.LoadModel(wizardColumn);
+        }
+        private void AddColumn(int index, EditorColumn column)  
+        {
+            if (SectionModel != null)
+            {
+                SectionModel.WizardColumns.Add(column.Model as DynamicWizardColumn);
+                column.SetNewParent(this);
+                column.OnSelected += OnSelected;
+            }
+
+            if (container.Children.Count == index)
+            {
+                container.Children.Insert(index - 1, column);
+            }
+            else
+            {
+                container.Children.Insert(index, column);
+            }
+        }
+        public int FindIndex(EditorColumn column)
+        {
+            return container.Children.IndexOf(column);
+        }
+        public void UpdateColumnOrderIDs() 
+        {
+            int index = 0;
+            foreach (EditorColumn column in container.Children)
+            {
+                if (column.Model != null) 
+                {
+                    column.Model.OrderId = index;
+                    index++;
+                }
+            }
+        }
+        public void AddColumnAtIndex(int index, EditorColumn column) 
+        {
+            AddColumn(index, column);
+            UpdateColumnOrderIDs();
         }
 
         #endregion
 
-       
+
         #region Events
 
         public EventHandler<IIsSelectable>? OnSelected;
