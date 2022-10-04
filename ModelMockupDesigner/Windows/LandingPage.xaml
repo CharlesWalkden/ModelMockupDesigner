@@ -71,7 +71,10 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="Recent Projects:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Margin="5,0,0,0" />
+                        <Grid Grid.Row="0">
+                            <TextBlock Grid.Row="0" Text="Recent Projects:" FontSize="25" HorizontalAlignment="Left" Foreground="White" Margin="10,20,0,0" />
+                            <Image Source="/Images/k2_Logo_White.png" Height="75" Width="75" HorizontalAlignment="Right" Margin="0,0,15,0"/>
+                        </Grid>
                         <ItemsControl x:Name="recentProjectView" Grid.Row="1" Background="Transparent" ItemsSource="{Binding RecentProjects}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

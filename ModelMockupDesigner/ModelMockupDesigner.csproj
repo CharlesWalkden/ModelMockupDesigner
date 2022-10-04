@@ -32,6 +32,8 @@
     <None Remove="Images\Icons\pencil.png" />
     <None Remove="Images\Icons\text-box-minus-outline.png" />
     <None Remove="Images\Icons\tools.png" />
+    <None Remove="Images\K2 Logo White.png" />
+    <None Remove="Images\k2_logo_white.png" />
     <None Remove="Images\treeviewfolder.png" />
     <None Remove="Windows\Small - 200px - White.png" />
   </ItemGroup>
@@ -65,7 +67,7 @@
     <Resource Include="Images\Icons\pencil.png" />
     <Resource Include="Images\Icons\text-box-minus-outline.png" />
     <Resource Include="Images\Icons\tools.png" />
-    <Resource Include="Images\K2 Logo White.png" />
+    <Resource Include="Images\k2_logo_white.png" />
     <Resource Include="Images\treeviewfolder.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
