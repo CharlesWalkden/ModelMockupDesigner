@@ -57,6 +57,13 @@ namespace ModelMockupDesigner
         private void WizardSelector_Loaded(object sender, RoutedEventArgs e)
         {
             SetupTreeView();
+            if (ViewModel != null)
+            {
+                if (ViewModel.ProjectModel != null)
+                {
+                    ViewModel.ProjectModel.LastAccess = DateTime.Now;
+                }
+            }
         }
 
         private void SetupTreeView()

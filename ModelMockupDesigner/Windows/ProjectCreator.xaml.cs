@@ -43,7 +43,7 @@ namespace ModelMockupDesigner.Windows
 
         private void Accept_Click(object sender, RoutedEventArgs e) 
         {
-            List<string> mandatoryFields = ViewModel.ValidateData();
+            List<string> mandatoryFields = ViewModel?.ValidateData() ?? new();
 
             StringBuilder sb = new();
 
@@ -56,8 +56,7 @@ namespace ModelMockupDesigner.Windows
             {
                 MessageBox.Show($"The following fields have not been recorded: {sb.ToString()}");
             }
-
-           else
+            else
             {
                 DialogResult = DialogResult.Accept;
                 OnClose?.Invoke(this, new DialogEventArgs(DialogResult));

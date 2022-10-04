@@ -28,7 +28,7 @@ namespace ModelMockupDesigner.Controls
         #region Public Properties
 
         public BaseModel? Model { get => PanelModel; }
-        public EditorColumn PanelParent { get => panelParent; set => panelParent = value; }
+        public EditorColumn? PanelParent { get => panelParent; set => panelParent = value; }
         public ElementType ElementType { get => ElementType.Panel; }
 
         #endregion
@@ -36,7 +36,7 @@ namespace ModelMockupDesigner.Controls
         #region Private Properties
 
         private DynamicWizardPanel? PanelModel { get; set; } 
-        private EditorColumn panelParent { get; set; }
+        private EditorColumn? panelParent { get; set; }
 
         #endregion
 
@@ -90,7 +90,7 @@ namespace ModelMockupDesigner.Controls
         }
         public void DeleteControl()
         {
-            PanelParent.Delete(this);
+            PanelParent?.Delete(this);
         }
         public void Delete(EditorCell cell)
         {
@@ -109,11 +109,11 @@ namespace ModelMockupDesigner.Controls
         }
         private int GetIndex()
         {
-            return PanelParent.FindIndex(this);
+            return PanelParent?.FindIndex(this) ?? -1;
         }
         private void AddPanelAtIndex(int index, EditorPanel panel)
         {
-            PanelParent.AddPanelAtIndex(index, panel);
+            PanelParent?.AddPanelAtIndex(index, panel);
         }
         public void HideNewRowColumn()
         {
@@ -250,7 +250,7 @@ namespace ModelMockupDesigner.Controls
             {
                 try
                 {
-                    EditorPanel panel = e.Data.GetData("panel") as EditorPanel;
+                    EditorPanel? panel = e.Data.GetData("panel") as EditorPanel;
 
                     if (panel != null && panel != this)
                     {
@@ -371,11 +371,7 @@ namespace ModelMockupDesigner.Controls
             }
         }
 
-
-
-
         #endregion
 
-        
     }
 }

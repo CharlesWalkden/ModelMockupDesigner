@@ -93,7 +93,7 @@ namespace ModelMockupDesigner
                 return;
 
             // When loading UI, open up Preview window also.
-            DialogLauncher<WizardDesignPreview> designPreview = new(this);
+            DialogLauncher<WizardDesignPreview> designPreview = new(this, ResizeMode.CanResize);
             await designPreview.Control.LoadWizard(WizardModel);
             OnWizardUpdated += designPreview.Control.WizardDesignPreview_OnWizardUpdated;
             designPreview.Show();
@@ -385,7 +385,7 @@ namespace ModelMockupDesigner
                     WizardType = WizardModel.WizardType
                 };
 
-                DialogLauncher<WizardCreator> wizardCreator = new(this);
+                DialogLauncher<WizardCreator> wizardCreator = new(this, ResizeMode.NoResize);
                 wizardCreator.Control.LoadExistingData(vm);
                 wizardCreator.OnClose += WizardCreator_OnClose;
                 if (wizardCreator.Control.ViewModel != null)

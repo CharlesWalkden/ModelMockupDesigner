@@ -136,7 +136,7 @@ namespace ModelMockupDesigner.ViewModels
         }
         private void CreateNewWizard()
         {
-            DialogLauncher<WizardCreator> wizardCreator = new(Owner);
+            DialogLauncher<WizardCreator> wizardCreator = new(Owner, ResizeMode.NoResize);
             wizardCreator.OnClose += WizardCreator_OnClose;
             if (wizardCreator.Control.ViewModel != null)
             {
@@ -151,7 +151,7 @@ namespace ModelMockupDesigner.ViewModels
         }
         private void CreateNewCateogry()
         {
-            DialogLauncher<CategoryCreator> categoryCreator = new(Owner);
+            DialogLauncher<CategoryCreator> categoryCreator = new(Owner, ResizeMode.NoResize);
             categoryCreator.OnClose += CategoryCreator_OnClose;
             categoryCreator.ShowDialog();
         }

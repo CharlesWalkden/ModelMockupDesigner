@@ -59,7 +59,6 @@ namespace ModelMockupDesigner.Controls
         {
             DataContext = columnModel;
 
-
             foreach (DynamicWizardPanel wizardPanel in columnModel.WizardPanels)
             {
                 EditorPanel editorPanel = new(this);

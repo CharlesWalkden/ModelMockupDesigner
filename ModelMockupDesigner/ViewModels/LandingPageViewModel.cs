@@ -55,7 +55,7 @@ namespace ModelMockupDesigner.ViewModels
         }
         private void NewProject() 
         {
-            DialogLauncher<ProjectCreator> projectCreator = new(Parent);
+            DialogLauncher<ProjectCreator> projectCreator = new(Parent, ResizeMode.NoResize);
             projectCreator.OnClose += ProjectCreator_OnClose;
             projectCreator.ShowDialog();
         }
@@ -80,9 +80,7 @@ namespace ModelMockupDesigner.ViewModels
         {
             Application.Current.Shutdown();
         }
-
-        #region Events
-        private void AllProjects_OnAddEntry(object? sender, EventArgs e)
+        public void RefreshRecentProjectsList()
         {
             List<Project> newList = AllProjects.OrderByDescending(x => x.LastAccess).ToList();
 
@@ -94,6 +92,12 @@ namespace ModelMockupDesigner.ViewModels
             {
                 RecentProjects.AddNewRange(ConvertToViewModel(newList.Take(5)));
             }
+        }
+
+        #region Events
+        private void AllProjects_OnAddEntry(object? sender, EventArgs e)
+        {
+            RefreshRecentProjectsList();
         }
         private async void WizardCreator_OnClose(object? sender, DialogEventArgs e)
         {

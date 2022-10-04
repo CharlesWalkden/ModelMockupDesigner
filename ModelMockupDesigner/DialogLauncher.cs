@@ -42,12 +42,11 @@ namespace ModelMockupDesigner
         public ScrollViewer? ScrollViewer = null;
 
         public DialogResult? DialogResult;
-        private bool DisplayOnSameScreen;
-        public DialogLauncher(object owner, bool sameScreen = true)
+        public DialogLauncher(object owner, ResizeMode resizeMode)
         {
-            DisplayOnSameScreen = sameScreen;
             Window.SnapsToDevicePixels = true;
             Window.UseLayoutRounding = true;
+            Window.ResizeMode = resizeMode;
 
             if (owner is Window)
             {

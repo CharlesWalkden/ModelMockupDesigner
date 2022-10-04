@@ -32,6 +32,12 @@ namespace ModelMockupDesigner
         {
             InitializeComponent();
             DataContext = new LandingPageViewModel(this);
+            Loaded += LandingPage_Loaded;
+        }
+
+        private void LandingPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.RefreshRecentProjectsList();
         }
 
         public WindowParameters GetWindowParameters()

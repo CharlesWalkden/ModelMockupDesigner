@@ -12,8 +12,10 @@
     <None Remove="Images\GuardianSmall.png" />
     <None Remove="Images\Icons\arrow-down.png" />
     <None Remove="Images\Icons\arrow-up.png" />
+    <None Remove="Images\Icons\check-bold.png" />
     <None Remove="Images\Icons\chevron-left.png" />
     <None Remove="Images\Icons\chevron-right.png" />
+    <None Remove="Images\Icons\close-thick.png" />
     <None Remove="Images\Icons\content-save-.png" />
     <None Remove="Images\Icons\delete.png" />
     <None Remove="Images\Icons\exit-run.png" />
@@ -43,8 +45,10 @@
     <Resource Include="Images\GuardianSmall.png" />
     <Resource Include="Images\Icons\arrow-down.png" />
     <Resource Include="Images\Icons\arrow-up.png" />
+    <Resource Include="Images\Icons\check-bold.png" />
     <Resource Include="Images\Icons\chevron-left.png" />
     <Resource Include="Images\Icons\chevron-right.png" />
+    <Resource Include="Images\Icons\close-thick.png" />
     <Resource Include="Images\Icons\content-save-.png" />
     <Resource Include="Images\Icons\delete.png" />
     <Resource Include="Images\Icons\exit-run.png" />
