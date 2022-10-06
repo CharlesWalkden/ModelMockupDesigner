@@ -23,12 +23,16 @@ namespace ModelMockupDesigner.Controls.Wizard.Fields
     /// </summary>
     public partial class AthenaRadioList : UserControl, ICellControl
     {
+        public CustomControl ControlModel { get; set; }
+
         private List<RadioButton> radioButtons = new();
 
-        private double columnWidth = 0;
-        public AthenaRadioList(List<string> listOptions)
+        //private double columnWidth = 0;
+        public AthenaRadioList(List<string> listOptions, CustomControl controlModel)
         {
             InitializeComponent();
+            controlModel.DisplayChanged += ControlModel_DisplayChanged; 
+            ControlModel = controlModel;
 
             if (listOptions != null)
             {
@@ -40,14 +44,22 @@ namespace ModelMockupDesigner.Controls.Wizard.Fields
                         Content = option
                     };
                     radioButtons.Add(button);
-                    button.Measure(new Size(1000.0, 1000.0));
-                    if (button.DesiredSize.Width > columnWidth)
-                        columnWidth = button.DesiredSize.Width;
+                    //button.Measure(new Size(1000.0, 1000.0));
+                    //if (button.DesiredSize.Width > columnWidth)
+                    //    columnWidth = button.DesiredSize.Width;
                 }
             }
             ShowGroupBox = true;
             this.SizeChanged += new SizeChangedEventHandler(AthenaCheckboxList_SizeChanged);
+            ControlModel = controlModel;
         }
+
+        private void ControlModel_DisplayChanged(object? sender, GroupBoxDisplayChangedEventArgs e)
+        {
+            ShowGroupBox = e.Display;
+            Title = e.GroupBoxTitle;
+        }
+
         void AthenaCheckboxList_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             int columnCount = 1;

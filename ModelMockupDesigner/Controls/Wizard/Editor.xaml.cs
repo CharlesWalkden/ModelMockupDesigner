@@ -210,7 +210,16 @@ namespace ModelMockupDesigner
 
             // Assign this for property editor binding.
             if (newSelection != null)
-                ViewModel.CurrentSelection = newSelection.Model as IPropertyEditor;
+            {
+                if (newSelection.Model is DynamicWizardCell wizardCell)
+                {
+                    ViewModel.CurrentSelection = wizardCell.Control as IPropertyEditor;
+                }
+                else
+                {
+                    ViewModel.CurrentSelection = newSelection.Model as IPropertyEditor;
+                }
+            }
             else
                 ViewModel.CurrentSelection = null;
         }

@@ -161,8 +161,8 @@ namespace ModelMockupDesigner.Controls
         {
             ColumnParent.AddColumnAtIndex(index, column);
         }
+        
         #endregion
-
 
         #region Events
 

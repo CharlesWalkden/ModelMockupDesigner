@@ -69,7 +69,6 @@ namespace ModelMockupDesigner.Controls
 
         #endregion
 
-
         public async Task LoadModel(DynamicWizardCell wizardCell)
         {
             DataContext = wizardCell;
@@ -88,7 +87,6 @@ namespace ModelMockupDesigner.Controls
 
         public void DeleteControl() 
         {
-            //CellParent.Delete(this);
             if (CellControl != null)
             {
                 Delete(CellControl);
@@ -110,7 +108,6 @@ namespace ModelMockupDesigner.Controls
             Root.Children.Add(control as FrameworkElement);
             CellControl = control;
         }
-        
         public async Task AddNewControl(ElementType? elementType, ICellControl? controlModel = null)
         {
             switch (elementType)
@@ -174,7 +171,7 @@ namespace ModelMockupDesigner.Controls
                             "Test2",
                             "Test3",
                             "Longer list option just to test the stretching of this field/groupbox."
-                        });
+                        }, new CustomControl(ElementType.RadioList));
 
                         AddCellControl(athenaRadioList);
 
@@ -191,8 +188,6 @@ namespace ModelMockupDesigner.Controls
         #region Events
 
         public EventHandler<IIsSelectable>? OnSelected;
-        
-
         private void Control_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(NewControl)))
@@ -259,23 +254,11 @@ namespace ModelMockupDesigner.Controls
             // TESTING - This is here to collapse the overlay so we can interact with the control for testing.
             //overlay.Visibility = Visibility.Collapsed;
         }
-
         private void Control_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (Root.Children.Count > 1)
-            {
-                //CustomControl customControl = ((Control)Root.Children[1]).DataContext as CustomControl;
-
-                //EditorActions.OpenPropertyEditor(customControl as IFrameworkElement);
-
-                // Old code, replace with new property editor.
-            }
-
             Container.Background = Brushes.Yellow;
-
             OnSelected?.Invoke(this, this);
         }
-
         private void Overlay_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             ContextMenu contextMenu = new ContextMenu();
@@ -304,7 +287,6 @@ namespace ModelMockupDesigner.Controls
 
             e.Handled = true;
         }
-
         private async void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             if (sender is MenuItem menuItem)
@@ -326,7 +308,6 @@ namespace ModelMockupDesigner.Controls
                 }
             }
         }
-
 
         #endregion
     }

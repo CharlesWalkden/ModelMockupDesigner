@@ -11,6 +11,6 @@ namespace ModelMockupDesigner.Interfaces
     {
         public string HeaderName { get; }
         public ElementType ElementType { get; }
-        public List<string> GetEditableProperties();
+        public Dictionary<string, string> GetEditableProperties();
     }
 }

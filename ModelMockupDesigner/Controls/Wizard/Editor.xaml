@@ -35,10 +35,10 @@
                 
             </StackPanel>
             
-        </Grid>
+        </Grid> 
         <Grid Grid.Row="1" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="100" Width="260" MaxWidth="600"/>
+                <ColumnDefinition MinWidth="100" Width="285" MaxWidth="600"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>

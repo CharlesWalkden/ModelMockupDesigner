@@ -36,7 +36,6 @@ namespace ModelMockupDesigner.Controls
 
         private DynamicWizardTable? TableModel { get; set; }
         private EditorCell tableParent { get; set; }
-        
 
         #endregion
 

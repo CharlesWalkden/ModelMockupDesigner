@@ -30,6 +30,8 @@ namespace ModelMockupDesigner.Models
             WizardPanels = new List<DynamicWizardPanel>();
         }
 
+        public event EventHandler<GroupBoxDisplayChangedEventArgs> DisplayChanged;
+
         public void CreateNew()
         {
             if (Parent != null)
@@ -40,16 +42,13 @@ namespace ModelMockupDesigner.Models
 
             WizardPanels.Add(wizardPanel);
         }
-        public List<string> GetEditableProperties()
+        public Dictionary<string, string> GetEditableProperties()
         {
-            List<string> properties = new()
-            {
-                new string("Name")
-            };
+            Dictionary<string, string> properties = new();
+            properties.Add("Name", "Name");
 
             return properties;
         }
-
 
         #region GroupBox
 
