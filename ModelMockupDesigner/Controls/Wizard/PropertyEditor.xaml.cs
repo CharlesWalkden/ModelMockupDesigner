@@ -41,40 +41,66 @@ namespace ModelMockupDesigner.Controls
             {
                 if (!string.IsNullOrEmpty(currentSelection.HeaderName))
                 {
-                    AddTitle(currentSelection.HeaderName);
+                    AddTitle(currentSelection.HeaderName, 18);
                 }
 
+                // Add all group box properties to edit if it can have one.
+                if (currentSelection is IGroupBoxContent boxContent)
+                {
+                    AddTitle("GroupBox", 12);
+
+                    AddProperty(boxContent, "Display", "Display"); 
+                    AddProperty(boxContent, "GroupBoxTitle", "Title");
+                    AddProperty(boxContent, "GroupHorizontalAlignment", "Horizontal");
+                    AddProperty(boxContent, "GroupVerticalAlignment", "Vertical");
+                }
+
+                // Have this becasue things will be different. Elements + controls etc
                 List<string> properties = currentSelection.GetEditableProperties();
 
-                foreach (string property in properties)
+                if (properties.Count > 0)
                 {
-                    PropertyInfo? info = currentSelection.GetType().GetProperty(property);
-                    if (info != null && info.CanRead && info.CanWrite)
+                    AddTitle("Control", 12);
+
+                    foreach (string property in properties)
                     {
-                        AddProperty(currentSelection, info);
+                        PropertyInfo? info = currentSelection.GetType().GetProperty(property);
+                        if (info != null && info.CanRead && info.CanWrite)
+                        {
+                            // Don't know the property at this point so just defult the display name to the property name.
+                            AddProperty(currentSelection, info, info.Name);
+                        }
                     }
                 }
             }
 
         }
 
-        private void AddTitle(string title)
+        private void AddTitle(string title, double fontSize = 16)
         {
             root.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             int rowIndex = root.RowDefinitions.Count - 1;
 
-            TextBlock block = new() { Text = title, FontWeight = FontWeights.Bold, FontSize = 16, TextDecorations = TextDecorations.Underline, Margin = new Thickness(5, 15, 5, 0), HorizontalAlignment = HorizontalAlignment.Center };
+            TextBlock block = new() { Text = title, FontWeight = FontWeights.Bold, FontSize = fontSize, TextDecorations = TextDecorations.Underline, Margin = new Thickness(5, 15, 5, 0), HorizontalAlignment = HorizontalAlignment.Center };
             root.Children.Add(block);
             Grid.SetRow(block, rowIndex);
             Grid.SetColumnSpan(block, 2);
         }
-        private void AddProperty(object item, PropertyInfo propertyInfo)
+        private void AddProperty(object item, string propertyName, string displayName)
+        {
+            PropertyInfo? propertyInfo = item.GetType().GetProperty(propertyName);
+            if (propertyInfo != null)
+            {
+                AddProperty(item, propertyInfo, displayName);
+            }
+        }
+        private void AddProperty(object item, PropertyInfo propertyInfo, string displayName)
         {
             root.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
             int rowIndex = root.RowDefinitions.Count - 1;
 
-            TextBlock label = new() { Text = propertyInfo.Name, Margin = new Thickness(5), HorizontalAlignment = HorizontalAlignment.Right };
+            TextBlock label = new() { Text = displayName, FontSize = 13.333, Margin = new Thickness(5), HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center };
 
             root.Children.Add(label);
             Grid.SetRow(label, rowIndex);
@@ -96,12 +122,37 @@ namespace ModelMockupDesigner.Controls
 
             if (property.PropertyType == typeof(string))
             {
-                TextBox textBox = new() { Margin = new Thickness(5), Width = 200 };
+                TextBox textBox = new() { Margin = new Thickness(5), Width = 170 };
+                textBox.HorizontalAlignment = HorizontalAlignment.Left;
 
                 Binding binding = new(property.Name) { Source = item, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
                 textBox.SetBinding(TextBox.TextProperty, binding);
 
                 element = textBox;
+            }
+            else if (property.PropertyType.IsEnum)
+            {
+                ComboBox comboBox = new ComboBox();
+                comboBox.HorizontalAlignment = HorizontalAlignment.Left;
+                comboBox.Margin = new Thickness(5);
+                foreach (var propertyInfo in Enum.GetValues(property.PropertyType))
+                {
+                    comboBox.Items.Add(propertyInfo);
+                }
+                Binding binding = new Binding(property.Name) { Source = item, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged};
+                comboBox.SetBinding(ComboBox.SelectedItemProperty, binding);
+
+                element = comboBox;
+            }
+            else if (property.PropertyType == typeof(bool))
+            {
+                CheckBox checkBox = new() { Margin = new Thickness(5) };
+                checkBox.HorizontalAlignment = HorizontalAlignment.Left;
+
+                Binding binding = new(property.Name) { Source = item, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+                checkBox.SetBinding(CheckBox.IsCheckedProperty, binding);
+
+                element = checkBox;
             }
 
             return element;

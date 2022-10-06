@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="ModelMockupDesigner.Controls.Wizard.Fields.AthenaGroupBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ModelMockupDesigner.Controls.Wizard.Fields"
+             mc:Ignorable="d" 
+             IsTabStop="False">
+    <Grid x:Name="LayoutRoot" Background="Transparent" Margin="0,-2,0,0">
+
+        <Border x:Name="outerBorder" BorderBrush="#FFdddddd" BorderThickness="1" Margin="0,0,0,0" Padding="1" CornerRadius="4,4,4,4" Background="#FFFFFFFF">
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.15" BlurRadius="8" ShadowDepth="4"/>
+            </Border.Effect>
+            <Grid x:Name="mainContent" x:FieldModifier="private">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--<Button Focusable="False" IsTabStop="False" Background="Transparent"/>-->
+                <Border x:Name="labelBackground" Height="20" Margin="0,0,0,0" VerticalAlignment="Top" Background="#FF24A4C8" CornerRadius="3,3,0,0" >
+                    <Grid>
+                        <TextBlock x:Name="label" Height="20" VerticalAlignment="Center" TextAlignment="Left" Margin="3,0,3,0" HorizontalAlignment="Left" FontFamily="Segoe UI" Foreground="#FFFFFFFF" FontSize="13.333" Visibility="Visible"></TextBlock>
+                        <!--<StackPanel x:Name="checkBoxStack" Orientation="Horizontal" Visibility="Collapsed" VerticalAlignment="Center">
+                            <controls:AthenaCheckBox x:Name="checkBox" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="13.333" MinHeight="20"></controls:AthenaCheckBox>
+                        </StackPanel>
+                        <StackPanel x:Name="yesNoStack" Orientation="Horizontal" Visibility="Collapsed">
+                            <TextBlock x:Name="yesNoLabel" Height="20" VerticalAlignment="Center" Margin="3,0,3,0" FontFamily="Segoe UI" Foreground="#FFFFFFFF" FontSize="13.333" TextWrapping="Wrap"></TextBlock>
+                            <controls:AthenaYesNoControl x:Name="yesNoControl" VerticalAlignment="Center" Margin="6,-14,-2,-12" Panel.ZIndex="99" />
+                            --><!-- For Disabled State - need to target both yesNoLabel and yesNoControl --><!--
+                        </StackPanel>-->
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- add required or important field example -->
+        <!--<controls:AthenaFieldIcon x:Name="fieldIcon" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-18,0,0,0" />-->
+    </Grid>
+</UserControl>

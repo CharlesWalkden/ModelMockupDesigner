@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="{StaticResource WizardEditorBackgroundBrush}" x:Name="Container" Margin="2.5">
-        <Grid x:Name="Root" Margin="2.5">
+        <Grid x:Name="Root" Margin="2.5,5,2.5,2.5">
             <Grid x:Name="overlay" 
               HorizontalAlignment="Stretch" 
               VerticalAlignment="Stretch" 

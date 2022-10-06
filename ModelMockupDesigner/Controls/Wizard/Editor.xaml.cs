@@ -470,6 +470,16 @@ namespace ModelMockupDesigner
                             selectedType = ElementType.YesNo;
                             break;
                         }
+                    case "RadioList":
+                        {
+                            selectedType = ElementType.RadioList;
+                            break;
+                        }
+                    default:
+                        {
+                            selectedType = ElementType.Unknown;
+                            break;
+                        }
                 }
             }
 

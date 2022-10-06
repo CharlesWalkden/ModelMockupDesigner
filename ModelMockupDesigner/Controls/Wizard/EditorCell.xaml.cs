@@ -1,4 +1,5 @@
 ﻿using ModelMockupDesigner.Controls.Wizard;
+using ModelMockupDesigner.Controls.Wizard.Fields;
 using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
@@ -52,7 +53,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Private Properties
 
-        private DynamicWizardCell? CellModel { get; set; } 
+        private DynamicWizardCell CellModel { get; set; } 
         private ICellParent cellParent { get; set; }
         private ICellControl? cellControl { get; set; }
 
@@ -160,6 +161,23 @@ namespace ModelMockupDesigner.Controls
 
                         AddCellControl(athenaYesNoControl);
                         
+                        overlay.Visibility = Visibility.Visible;
+                        overlay.Background = Brushes.Transparent;
+
+                        break;
+                    }
+                case ElementType.RadioList:
+                    {
+                        AthenaRadioList athenaRadioList = new AthenaRadioList(new List<string>()
+                        {
+                            "Test",
+                            "Test2",
+                            "Test3",
+                            "Longer list option just to test the stretching of this field/groupbox."
+                        });
+
+                        AddCellControl(athenaRadioList);
+
                         overlay.Visibility = Visibility.Visible;
                         overlay.Background = Brushes.Transparent;
 

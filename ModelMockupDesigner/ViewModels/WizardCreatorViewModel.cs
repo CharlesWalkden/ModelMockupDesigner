@@ -74,6 +74,10 @@ namespace ModelMockupDesigner.ViewModels
         public WizardCreatorViewModel()
         {
             CategoryList = new();
+
+            // Setting defaults for binding. 
+            WizardType = Enums.WizardType.Dynamic;
+            WizardTheme = Enums.WizardTheme.V7;
         }
 
         public void LoadCategoryList(List<ComboBoxItem>? categoryList)

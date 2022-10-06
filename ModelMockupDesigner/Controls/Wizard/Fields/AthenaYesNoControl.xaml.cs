@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ModelMockupDesigner.Controls.Wizard
+namespace ModelMockupDesigner.Controls
 {
     /// <summary>
     /// Interaction logic for BooleanButton.xaml

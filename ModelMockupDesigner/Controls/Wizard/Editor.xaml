@@ -45,24 +45,159 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="0" >
-                <Border BorderBrush="Black" BorderThickness="2" Margin="2" Height="20" Width="100"
+            <Grid Grid.Column="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0"
+                        BorderBrush="Black" BorderThickness="2" Margin="2" Height="20" Width="100"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                    <TextBlock Text="Table"/>
-                </Border>
-                <Border BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        <TextBlock Text="Table" Background="MediumSeaGreen"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="1"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                    <TextBlock Text="YesNo"/>
-                </Border>
-
-                <control:PropertyEditor CurrentSelection="{Binding CurrentSelection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-            </StackPanel>
+                        <TextBlock Text="YesNo"/>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="0"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="Label"/>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="1"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="Textbox"/>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="0"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="RadioList"/>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="1"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="CheckboxList"/>
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="0"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="DropDownList"/>
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="1"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="DropDownList"/>
+                    </Border>
+                    <Border Grid.Row="4" Grid.Column="0"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="Date"/>
+                    </Border>
+                    <Border Grid.Row="4" Grid.Column="1"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="Time"/>
+                    </Border>
+                    <Border Grid.Row="5" Grid.Column="0"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="DateTime"/>
+                    </Border>
+                    <Border Grid.Row="5" Grid.Column="1"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="ApproxDate"/>
+                    </Border>
+                    <Border Grid.Row="6" Grid.Column="0"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="Checkbox"/>
+                    </Border>
+                    <Border Grid.Row="6" Grid.Column="1"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="Image"/>
+                    </Border>
+                    <Border Grid.Row="7" Grid.Column="0"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="Button"/>
+                    </Border>
+                </Grid>
+                <GridSplitter Grid.Row="0" Height="10" VerticalAlignment="Bottom" Background="{StaticResource EditorDarkGrayBrush}" Panel.ZIndex="9999" />
+                <Grid Grid.Row="1" Margin="5,0,0,0">
+                    
+                    <control:PropertyEditor CurrentSelection="{Binding CurrentSelection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </Grid>
+            </Grid>
 
             <GridSplitter Grid.Column="0" Width="5" HorizontalAlignment="right" Background="{StaticResource EditorDarkGrayBrush}" />
 

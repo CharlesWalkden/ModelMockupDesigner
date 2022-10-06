@@ -13,11 +13,12 @@
 
 
     <Style TargetType="{x:Type TextBox}">
-        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
-        <Setter Property="Padding" Value="5,3"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Padding" Value="2,3"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="DimGray"/>
+        <Setter Property="AcceptsReturn" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">

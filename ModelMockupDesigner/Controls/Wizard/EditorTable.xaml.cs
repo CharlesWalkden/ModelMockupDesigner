@@ -248,19 +248,23 @@ namespace ModelMockupDesigner.Controls
         {
             NewControl? newControl = e.Data.GetData(typeof(NewControl)) as NewControl;
 
-            if (sender == newColumn)
+            // Only allow this new control if its not a table. Don't want tables within tables.
+            if (newControl != null && newControl.ElementType != ElementType.Table)
             {
-                if (newControl != null)
+                if (sender == newColumn)
                 {
-                    await AddColumn(newControl);
-                }
+                    if (newControl != null)
+                    {
+                        await AddColumn(newControl);
+                    }
 
-            }
-            if (sender == newRow)
-            {
-                if (newControl != null)
+                }
+                if (sender == newRow)
                 {
-                    await AddRow(newControl);
+                    if (newControl != null)
+                    {
+                        await AddRow(newControl);
+                    }
                 }
             }
             newColumn.Visibility = Visibility.Collapsed;

@@ -21,9 +21,15 @@ namespace ModelMockupDesigner.Models
             get => category;
             set
             {
+                // If we had a previous category, remove the wizard from it
                 if (category != null)
                 {
                     category.DeleteWizard(this);
+                }
+                // If we didnt have a previous category, remove the wizard from the lone wizard list.
+                if (category == null)
+                {
+                    Project?.LoneWizards.Remove(this);
                 }
                 category = value;
                 if (category != null)

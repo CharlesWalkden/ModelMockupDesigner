@@ -9,32 +9,17 @@ using System.Xml;
 
 namespace ModelMockupDesigner.Models
 {
-    public class CustomControl : BaseModel, ICellControl
+    public class CustomControl : BaseControlModel, ICellControl
     {
-        public ElementType ElementType { get; set; }
-
-        public BaseModel? Model => this;
-
+        
         public CustomControl(ElementType elementType)
         {
             ElementType = elementType;
         }
 
+        // Used for radion lists - default to 1
+        public int ColumnCount { get; set; } = 1;
 
 
-
-        #region xml
-
-        public override void LoadFromXml(XmlNode node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override XmlNode? ToXml()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
 }
