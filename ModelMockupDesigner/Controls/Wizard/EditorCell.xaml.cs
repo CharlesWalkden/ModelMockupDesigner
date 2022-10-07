@@ -114,7 +114,7 @@ namespace ModelMockupDesigner.Controls
             {
                 case ElementType.Table:
                     {
-                        DynamicWizardTable wizardTable;
+                        DynamicWizardTable? wizardTable;
                         if (controlModel == null)
                         {
                             wizardTable = new(CellModel);
@@ -143,7 +143,7 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.YesNo:
                     {
-                        CustomControl customControl;
+                        CustomControl? customControl;
 
                         if (controlModel == null)
                         {
@@ -165,13 +165,29 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.RadioList:
                     {
-                        AthenaRadioList athenaRadioList = new AthenaRadioList(new List<string>()
+                        CustomControl? customControl;
+
+                        if (controlModel == null)
                         {
-                            "Test",
-                            "Test2",
-                            "Test3",
-                            "Longer list option just to test the stretching of this field/groupbox."
-                        }, new CustomControl(ElementType.RadioList));
+                            customControl = new(ElementType.RadioList);
+
+                            DialogLauncher<ListCreator> listCreator = new DialogLauncher<ListCreator>(this, ResizeMode.NoResize);
+                            listCreator.ShowDialog();
+                            if (listCreator.DialogResult == DialogResult.Accept)
+                            {
+                                customControl.StoreListOption(listCreator.Control.ViewModel.GetListAsString());
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            customControl = controlModel as CustomControl;
+                        }
+
+                        AthenaRadioList athenaRadioList = new AthenaRadioList(customControl);
 
                         AddCellControl(athenaRadioList);
 
@@ -179,6 +195,7 @@ namespace ModelMockupDesigner.Controls
                         overlay.Background = Brushes.Transparent;
 
                         break;
+
                     }
                 default:
                     break;

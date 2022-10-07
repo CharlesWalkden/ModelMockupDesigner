@@ -56,7 +56,11 @@ namespace ModelMockupDesigner.Models
         {
             List<ComboBoxItem> categoryList = new List<ComboBoxItem>()
             {
-                new ComboBoxItem(){Text = "", Value = null}
+                new ComboBoxItem()
+                {
+                    Text = "",
+                    Value = null
+                }
             };
             if (Categories != null)
             {

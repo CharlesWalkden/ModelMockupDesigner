@@ -14,7 +14,7 @@ namespace ModelMockupDesigner.Controls
     {
         static public Task<FrameworkElement?> GetControl(CustomControl control)
         {
-            FrameworkElement controlElement = null;
+            FrameworkElement? controlElement = null;
 
             switch (control.ElementType)
             {

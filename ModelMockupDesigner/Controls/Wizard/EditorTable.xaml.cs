@@ -186,8 +186,9 @@ namespace ModelMockupDesigner.Controls
 
         protected override void OnPreviewDragEnter(DragEventArgs e)
         {
-            this.AllowDrop = true;
             base.OnPreviewDragEnter(e);
+            this.AllowDrop = true;
+
             newColumn.Visibility = Visibility.Visible;
             newRow.Visibility = Visibility.Visible;
         }
@@ -245,10 +246,8 @@ namespace ModelMockupDesigner.Controls
         }
         private async void Control_Drop(object sender, DragEventArgs e)
         {
-            NewControl? newControl = e.Data.GetData(typeof(NewControl)) as NewControl;
-
             // Only allow this new control if its not a table. Don't want tables within tables.
-            if (newControl != null && newControl.ElementType != ElementType.Table)
+            if (e.Data.GetData(typeof(NewControl)) is NewControl newControl && newControl.ElementType != ElementType.Table)
             {
                 if (sender == newColumn)
                 {

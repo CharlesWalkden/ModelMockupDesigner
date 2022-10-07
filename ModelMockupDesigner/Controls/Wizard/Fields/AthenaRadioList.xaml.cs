@@ -27,16 +27,16 @@ namespace ModelMockupDesigner.Controls.Wizard.Fields
 
         private List<RadioButton> radioButtons = new();
 
-        //private double columnWidth = 0;
-        public AthenaRadioList(List<string> listOptions, CustomControl controlModel)
+        public AthenaRadioList(CustomControl controlModel)
         {
             InitializeComponent();
-            controlModel.DisplayChanged += ControlModel_DisplayChanged; 
+            controlModel.DisplayChanged += GroupBox_DisplayChanged;
+            controlModel.OnColumnCountChanged += ControlModel_OnColumnCountChanged;
             ControlModel = controlModel;
 
-            if (listOptions != null)
+            if (controlModel.ListOptions != null)
             {
-                foreach (string option in listOptions)
+                foreach (string option in controlModel.ListOptions)
                 {
                     RadioButton button = new()
                     {
@@ -44,41 +44,56 @@ namespace ModelMockupDesigner.Controls.Wizard.Fields
                         Content = option
                     };
                     radioButtons.Add(button);
-                    //button.Measure(new Size(1000.0, 1000.0));
-                    //if (button.DesiredSize.Width > columnWidth)
-                    //    columnWidth = button.DesiredSize.Width;
                 }
             }
             ShowGroupBox = true;
-            this.SizeChanged += new SizeChangedEventHandler(AthenaCheckboxList_SizeChanged);
-            ControlModel = controlModel;
+            RefreshListOptions(controlModel.ColumnCount);
         }
 
-        private void ControlModel_DisplayChanged(object? sender, GroupBoxDisplayChangedEventArgs e)
+        private void ControlModel_OnColumnCountChanged(object? sender, int e)
+        {
+            RefreshListOptions(e);
+        }
+
+        private void GroupBox_DisplayChanged(object? sender, GroupBoxDisplayChangedEventArgs e)
         {
             ShowGroupBox = e.Display;
             Title = e.GroupBoxTitle;
         }
-
-        void AthenaCheckboxList_SizeChanged(object sender, SizeChangedEventArgs e)
+        public void RefreshListOptions(int columnCount)
         {
-            int columnCount = 1;
+            listParent.Children.Clear();
+
+            int itemsPerColumn = radioButtons.Count/columnCount;
+            int remainder = radioButtons.Count%columnCount;
+            if (remainder > 0)
+                itemsPerColumn++;
 
             List<StackPanel> stackPanels = new List<StackPanel>();
             listParent.ColumnDefinitions.Clear();
-            for (int i = 0; i< columnCount; i++)
+            for (int i = 0; i < columnCount; i++)
             {
                 AddColumn(ref stackPanels);
             }
 
             int currentColumnIndex = 0;
+            int currentColumnCount = 0;
             foreach (RadioButton button in radioButtons)
             {
                 if (button.Parent is StackPanel panel)
                 {
                     panel.Children.Remove(button);
                 }
+
+                if (currentColumnCount == itemsPerColumn)
+                {
+                    currentColumnIndex++;
+                    currentColumnCount = 0;
+                }
+
                 stackPanels[currentColumnIndex].Children.Add(button);
+                currentColumnCount++;
+                
             }
         }
         private void AddColumn(ref List<StackPanel> stackPanels)
@@ -122,7 +137,7 @@ namespace ModelMockupDesigner.Controls.Wizard.Fields
 
         public ElementType ElementType => ElementType.RadioList;
 
-        public BaseModel? Model => new CustomControl(ElementType);
+        public BaseModel? Model => ControlModel;
 
         #endregion
     }

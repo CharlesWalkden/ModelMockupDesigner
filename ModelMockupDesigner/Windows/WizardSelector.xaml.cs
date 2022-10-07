@@ -150,8 +150,7 @@ namespace ModelMockupDesigner
         {
             if (!(e.Source is TreeViewItem))
             {
-                TreeViewItem item = mainTreeView.SelectedItem as TreeViewItem;
-                if (item != null)
+                if (mainTreeView.SelectedItem is TreeViewItem item)
                     item.IsSelected = false;
             }
         }

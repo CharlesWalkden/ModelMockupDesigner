@@ -188,9 +188,7 @@ namespace ModelMockupDesigner.Controls
                 {
                     try
                     {
-                        EditorColumn column = e.Data.GetData("column") as EditorColumn;
-
-                        if (column != null && column != this) 
+                        if (e.Data.GetData("column") is EditorColumn column && column != this)
                         {
                             int destinationIndex = GetIndex();
                             if (destinationIndex == column.Model?.OrderId + 1 && column.ColumnParent == this.ColumnParent)
@@ -208,13 +206,12 @@ namespace ModelMockupDesigner.Controls
                 {
                     try
                     {
-                        EditorPanel panel = e.Data.GetData("panel") as EditorPanel;
-                        if (panel != null)
+                        if (e.Data.GetData("panel") is EditorPanel panel)
                         {
                             if (panel.PanelParent == this && panel.Model?.OrderId == 0)
                             {
                                 // Return here are we are already in the position we are dragging to.
-                                return;                                
+                                return;
                             }
 
                             panel.DeleteControl();

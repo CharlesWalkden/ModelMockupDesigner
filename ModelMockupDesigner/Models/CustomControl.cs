@@ -11,13 +11,29 @@ namespace ModelMockupDesigner.Models
 {
     public class CustomControl : BaseControlModel, ICellControl
     {
-        public CustomControl(ElementType elementType)
+        public event EventHandler<int>? OnColumnCountChanged; 
+        public CustomControl(ElementType elementType, List<string>? listOptions = null)
         {
             ElementType = elementType;
+            ListOptions = listOptions;
         }
 
-        // Used for radion lists - default to 1
-        public int ColumnCount { get; set; } = 1;
+        public List<string>? ListOptions { get; set; }
+        // Used for radio lists - default to 1
+        public int ColumnCount
+        {
+            get => columnCount;
+            set
+            {
+                if (columnCount == value)
+                    return;
+                
+                columnCount = value;
+                OnPropertyChanged(nameof(ColumnCount));
+                OnColumnCountChanged?.Invoke(this, value);
+            }
+        }
+        private int columnCount { get; set; } = 1;
 
         public override Dictionary<string, string> GetEditableProperties()
         {
@@ -33,6 +49,10 @@ namespace ModelMockupDesigner.Models
             }
 
             return properties;
+        }
+        public void StoreListOption(List<string> listOptions)
+        {
+            ListOptions = listOptions;
         }
     }
 }

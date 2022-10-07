@@ -72,7 +72,7 @@ namespace ModelMockupDesigner
 
             if (creatorModel.CurrentCategorySelection != null)
             {
-                WizardModel.Category = (Category)creatorModel.CurrentCategorySelection.Value;
+                WizardModel.Category = creatorModel.CurrentCategorySelection.Value as Category;
             }
             else
             {
@@ -104,7 +104,7 @@ namespace ModelMockupDesigner
 
             foreach (DynamicWizardSection wizardSection in WizardModel.Sections)
             {
-                EditorSection editorSection = new();
+                EditorSection? editorSection = new();
                 editorSection.OnSelected += UpdateCurrentSelection;
 
                 await editorSection.LoadModel(wizardSection);
@@ -118,7 +118,7 @@ namespace ModelMockupDesigner
         {
             ContentContainer.Children.Clear();
 
-            EditorSection page = Pages[pageIndex];
+            EditorSection? page = Pages[pageIndex];
 
             ContentContainer.Children.Add(page);
 
@@ -228,10 +228,10 @@ namespace ModelMockupDesigner
             if (WizardModel == null)
                 return;
 
-            EditorSection page = new();
+            EditorSection? page = new();
             page.OnSelected += UpdateCurrentSelection;
             
-            DynamicWizardSection newSectionModel = new(WizardModel);
+            DynamicWizardSection? newSectionModel = new(WizardModel);
             await page.LoadModel(newSectionModel);
             
             page.Model.OrderId = GetNextPageOrderNumber();
@@ -249,7 +249,7 @@ namespace ModelMockupDesigner
 
             Pages.Add(page);
 
-            ComboBoxItem comboBoxItem = new()
+            ComboBoxItem? comboBoxItem = new()
             {
                 Text = page.Model.Name,
                 Value = page.Model.OrderId
@@ -386,7 +386,7 @@ namespace ModelMockupDesigner
         {
             if (WizardModel != null)
             {
-                WizardCreatorViewModel vm = new()
+                WizardCreatorViewModel? vm = new()
                 {
                     WizardName = WizardModel.Name,
                     WizardDescription = WizardModel.Description,
@@ -430,7 +430,7 @@ namespace ModelMockupDesigner
         }
         public WindowParameters GetWindowParameters()
         {
-            WindowParameters windowParameters = new WindowParameters()
+            WindowParameters? windowParameters = new WindowParameters()
             {
                 CanResize = true,
                 MinHeight = 800,

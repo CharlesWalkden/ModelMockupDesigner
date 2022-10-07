@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="ModelMockupDesigner.Controls.ListCreator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ModelMockupDesigner.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="800"  Width="400">
+    <Border Background="{StaticResource EditorLightGrayBrush}" Padding="10">
+
+        <StackPanel Background="{StaticResource EditorDarkGrayBrush}">
+            <ListView Background="Transparent" ItemsSource="{Binding ListOptions, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding CurrentSelection, UpdateSourceTrigger=PropertyChanged}" Height="300"
+                      BorderBrush="Transparent" BorderThickness="0">
+                
+            </ListView>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox Text="{Binding CurrentText, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="False" Width="200" Margin="5"/>
+                <Button Content="Add" Command="{Binding AddOptionCommand}" Style="{StaticResource IconButton}" Margin="5"/>
+                <Button Content="Delete" Command="{Binding RemoveOptionCommand}" Style="{StaticResource IconButton}" Margin="5"/>
+            </StackPanel>
+            <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Width="50" Height="50" Margin="10,10,20,10" Click="Accept_Click" Style="{StaticResource IconButton}">
+                    <Image Source="/Images/Icons/check-bold.png"/>
+                </Button>
+                <Button Width="50" Height="50" Margin="20,10,10,10"  Click="Close_Click" Style="{StaticResource IconButton}">
+                    <Image Source="/Images/Icons/close-thick.png"/>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

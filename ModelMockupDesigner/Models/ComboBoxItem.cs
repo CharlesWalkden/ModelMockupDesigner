@@ -11,11 +11,9 @@ namespace ModelMockupDesigner.Models
     {
         public string? Text { get; set; }
 
-#pragma warning disable CS8618 // This object will always have a value when used!.
-        public object Value { get; set; }
-#pragma warning restore CS8618 
+        public object? Value { get; set; }
 
-        public override string ToString()
+        public override string? ToString()
         {
             if (Text == null || string.IsNullOrEmpty(Text))
             {
