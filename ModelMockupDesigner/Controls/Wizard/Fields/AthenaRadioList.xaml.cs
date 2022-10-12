@@ -26,7 +26,7 @@ namespace ModelMockupDesigner.Controls.Wizard.Fields
         public CustomControl ControlModel { get; set; }
 
         private List<RadioButton> radioButtons = new();
-
+        private List<StackPanel> StackPanels = new List<StackPanel>();
         public AthenaRadioList(CustomControl controlModel)
         {
             InitializeComponent();
@@ -62,22 +62,22 @@ namespace ModelMockupDesigner.Controls.Wizard.Fields
         }
         public void RefreshListOptions(int columnCount)
         {
+            StackPanels.Clear();
             listParent.Children.Clear();
-
-            int itemsPerColumn = radioButtons.Count/columnCount;
-            int remainder = radioButtons.Count%columnCount;
-            if (remainder > 0)
-                itemsPerColumn++;
-
-            List<StackPanel> stackPanels = new List<StackPanel>();
             listParent.ColumnDefinitions.Clear();
+
+            int numberOfRows = radioButtons.Count/columnCount;
+
+            if (radioButtons.Count % columnCount > 0)
+                numberOfRows++;
+
             for (int i = 0; i < columnCount; i++)
             {
-                AddColumn(ref stackPanels);
+                AddColumn();
             }
 
             int currentColumnIndex = 0;
-            int currentColumnCount = 0;
+            int columnItemCount = 0; 
             foreach (RadioButton button in radioButtons)
             {
                 if (button.Parent is StackPanel panel)
@@ -85,25 +85,27 @@ namespace ModelMockupDesigner.Controls.Wizard.Fields
                     panel.Children.Remove(button);
                 }
 
-                if (currentColumnCount == itemsPerColumn)
-                {
-                    currentColumnIndex++;
-                    currentColumnCount = 0;
-                }
+                StackPanels[currentColumnIndex].Children.Add(button);
+                columnItemCount++;
 
-                stackPanels[currentColumnIndex].Children.Add(button);
-                currentColumnCount++;
-                
+                if (columnItemCount >= numberOfRows)
+                {
+                    columnItemCount = 0;
+
+                    currentColumnIndex++;
+                    if (currentColumnIndex == columnCount)
+                        currentColumnIndex = 0;
+                }
             }
         }
-        private void AddColumn(ref List<StackPanel> stackPanels)
+        private void AddColumn()
         {
             listParent.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             StackPanel panel = new StackPanel();
             listParent.Children.Add(panel);
 
-            stackPanels.Add(panel);
-            Grid.SetColumn(panel, stackPanels.Count - 1);
+            StackPanels.Add(panel);
+            Grid.SetColumn(panel, StackPanels.Count - 1);
         }
         public bool ShowGroupBox
         {
