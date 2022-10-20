@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ModelMockupDesigner.Controls.Wizard.Fields
+namespace ModelMockupDesigner.Controls
 {
     /// <summary>
     /// Interaction logic for AthenaRadioList.xaml
@@ -46,8 +46,10 @@ namespace ModelMockupDesigner.Controls.Wizard.Fields
                     radioButtons.Add(button);
                 }
             }
-            ShowGroupBox = true;
+
             RefreshListOptions(controlModel.ColumnCount);
+            ShowGroupBox = false;
+            Title = null;
         }
 
         private void ControlModel_OnColumnCountChanged(object? sender, int e)
@@ -59,6 +61,11 @@ namespace ModelMockupDesigner.Controls.Wizard.Fields
         {
             ShowGroupBox = e.Display;
             Title = e.GroupBoxTitle;
+            if (e.Display)
+            {
+                HorizontalAlignment = e.HorizontalAlignment.ToXaml();
+                VerticalAlignment = e.VerticalAlignment.ToXaml();
+            }
         }
         public void RefreshListOptions(int columnCount)
         {

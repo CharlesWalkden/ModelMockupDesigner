@@ -10,6 +10,11 @@ namespace ModelMockupDesigner.ViewModels
 {
     public class ProjectCreatorViewModel : BaseViewModel 
     {
+        public ProjectCreatorViewModel()
+        {
+            // Set default for binding.
+            ProjectTemplate = ProjectTemplate.FullAntenatal;
+        }
         public string? ProjectName
         {
             get => projectName;
@@ -34,7 +39,6 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(ProjectDescription));
             }
         }
-
         public string? CustomerName
         {
             get => customerName;
@@ -47,7 +51,6 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(CustomerName));
             }
         }
-
         public ProjectTemplate ProjectTemplate
         {
             get => projectTemplate;
@@ -60,7 +63,6 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(ProjectTemplate));
             }
         }
-
         public List<string> ValidateData()
         {
             List<string> remaining = new ();
@@ -84,6 +86,7 @@ namespace ModelMockupDesigner.ViewModels
         private string? projectDescription { get; set; }
         private string? customerName { get; set; }
         private ProjectTemplate projectTemplate { get; set; }
+
         #endregion
     }
 }

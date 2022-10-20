@@ -32,6 +32,9 @@
                 <Button Style="{StaticResource IconButton}" Click="EditProperties_Click" x:Name="EditProperties">
                     <Image Source="/Images/Icons/file-document-edit.png" />
                 </Button>
+                <Button Style="{StaticResource IconButton}" Click="OpenPreviewWindow_Click" x:Name="OpenPreviewWindow">
+                    <Image Source="/Images/Icons/open-in-app.png" />
+                </Button>
                 
             </StackPanel>
             
@@ -85,7 +88,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="YesNo"/>
+                        <TextBlock Text="YesNo" Background="MediumSeaGreen"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="0"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -93,7 +96,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="Label"/>
+                        <TextBlock Text="Label" Background="MediumSeaGreen"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="1"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -109,7 +112,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="RadioList"/>
+                        <TextBlock Text="RadioList" Background="MediumSeaGreen"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"

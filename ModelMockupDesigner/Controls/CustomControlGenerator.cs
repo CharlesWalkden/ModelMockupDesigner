@@ -1,4 +1,4 @@
-﻿using ModelMockupDesigner.Controls.Wizard;
+﻿using ModelMockupDesigner.Controls;
 using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Models;
 using System;

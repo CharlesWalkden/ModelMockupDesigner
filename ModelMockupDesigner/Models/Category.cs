@@ -54,14 +54,8 @@ namespace ModelMockupDesigner.Models
         }
         public List<ComboBoxItem> GetCategoryList()
         {
-            List<ComboBoxItem> categoryList = new List<ComboBoxItem>()
-            {
-                new ComboBoxItem()
-                {
-                    Text = "",
-                    Value = null
-                }
-            };
+            List<ComboBoxItem> categoryList = new List<ComboBoxItem>();
+
             if (Categories != null)
             {
                 foreach (Category category in Categories)

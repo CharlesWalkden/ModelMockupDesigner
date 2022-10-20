@@ -87,18 +87,23 @@ namespace ModelMockupDesigner
 
             await LoadUI();
         }
+        private async Task LoadDesignPreview()
+        {
+            DialogLauncher<WizardDesignPreview> designPreview = new(this, ResizeMode.CanResize);
+            designPreview.OnClose += OnWizardDesignPreviewClose;
+            await designPreview.Control.LoadWizard(WizardModel);
+            OnWizardUpdated += designPreview.Control.WizardDesignPreview_OnWizardUpdated;
+            designPreview.Show();
+
+            DesignPreview = designPreview.Control;
+        }
         private async Task LoadUI()
         {
             if (WizardModel == null)
                 return;
 
             // When loading UI, open up Preview window also.
-            DialogLauncher<WizardDesignPreview> designPreview = new(this, ResizeMode.CanResize);
-            await designPreview.Control.LoadWizard(WizardModel);
-            OnWizardUpdated += designPreview.Control.WizardDesignPreview_OnWizardUpdated;
-            designPreview.Show();
-
-            DesignPreview = designPreview.Control;
+            await LoadDesignPreview();
 
             ContentContainer.Children.Clear();
 
@@ -420,6 +425,19 @@ namespace ModelMockupDesigner
                 }
             }
         }
+        private async void OpenPreviewWindow_Click(object sender, RoutedEventArgs e)
+        {
+            if (DesignPreview == null)
+            {
+                await LoadDesignPreview();
+            }
+            
+            e.Handled = true;
+        }
+        private void OnWizardDesignPreviewClose(object? sender, EventArgs e)
+        {
+            DesignPreview = null;
+        }
 
         #region Interface
 
@@ -484,6 +502,16 @@ namespace ModelMockupDesigner
                             selectedType = ElementType.RadioList;
                             break;
                         }
+                    case "Label":
+                        {
+                            selectedType = ElementType.Label;
+                            break;
+                        }
+                    case "Checkbox":
+                        {
+                            selectedType = ElementType.CheckBox;
+                            break;
+                        }
                     default:
                         {
                             selectedType = ElementType.Unknown;
@@ -495,9 +523,7 @@ namespace ModelMockupDesigner
             SelectedControl = new NewControl() { ElementType = selectedType };
         }
 
-
         #endregion
 
-        
     }
 }

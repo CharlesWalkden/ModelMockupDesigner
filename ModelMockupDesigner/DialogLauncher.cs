@@ -47,6 +47,7 @@ namespace ModelMockupDesigner
             Window.SnapsToDevicePixels = true;
             Window.UseLayoutRounding = true;
             Window.ResizeMode = resizeMode;
+            Window.Closed += Window_Closed;
 
             if (owner is Window)
             {
@@ -79,6 +80,16 @@ namespace ModelMockupDesigner
                 dialogClient.OnClose += new EventHandler<DialogEventArgs>(DialogClient_Close);
             }
         }
+
+        private void Window_Closed(object? sender, EventArgs e)
+        {
+            // If the result is none, this is the default and means we have not closed it, the user has with the X
+            if (DialogResult == null)   
+            {
+                OnClose?.Invoke(this, new DialogEventArgs() { Result = DialogResult });
+            }
+        }
+
         private void DialogClient_Close(object? sender, DialogEventArgs e)
         {
             DialogResult = e.Result;

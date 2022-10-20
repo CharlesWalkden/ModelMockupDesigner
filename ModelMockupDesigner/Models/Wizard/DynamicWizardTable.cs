@@ -53,6 +53,7 @@ namespace ModelMockupDesigner.Models
 
                 display = value;
                 OnPropertyChanged(nameof(Display));
+                DisplayChanged?.Invoke(this, new GroupBoxDisplayChangedEventArgs() { Display = value, GroupBoxTitle = GroupBoxTitle, HorizontalAlignment = GroupHorizontalAlignment, VerticalAlignment = GroupVerticalAlignment });
             }
         }
         public string GroupBoxTitle
@@ -65,6 +66,7 @@ namespace ModelMockupDesigner.Models
 
                 groupBoxTitle = value;
                 OnPropertyChanged(nameof(GroupBoxTitle));
+                DisplayChanged?.Invoke(this, new GroupBoxDisplayChangedEventArgs() { Display = Display, GroupBoxTitle = value, HorizontalAlignment = GroupHorizontalAlignment, VerticalAlignment = GroupVerticalAlignment });
             }
         }
         public HorizontalAlignmentTypes GroupHorizontalAlignment
@@ -77,6 +79,7 @@ namespace ModelMockupDesigner.Models
 
                 groupHorizontalAlignment = value;
                 OnPropertyChanged(nameof(GroupHorizontalAlignment));
+                DisplayChanged?.Invoke(this, new GroupBoxDisplayChangedEventArgs() { Display = Display, GroupBoxTitle = GroupBoxTitle, HorizontalAlignment = value, VerticalAlignment = GroupVerticalAlignment });
             }
         }
         public VerticalAlignmentTypes GroupVerticalAlignment
@@ -89,6 +92,7 @@ namespace ModelMockupDesigner.Models
 
                 groupVerticalAlignment = value;
                 OnPropertyChanged(nameof(GroupVerticalAlignment));
+                DisplayChanged?.Invoke(this, new GroupBoxDisplayChangedEventArgs() { Display = Display, GroupBoxTitle = GroupBoxTitle, HorizontalAlignment = GroupHorizontalAlignment, VerticalAlignment = value });
             }
         }
 

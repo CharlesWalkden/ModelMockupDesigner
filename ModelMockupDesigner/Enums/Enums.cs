@@ -19,6 +19,7 @@ namespace ModelMockupDesigner.Enums
     }
     public enum ProjectTemplate
     {
+        NotSet,
         FullAntenatal,
         IntrapartumOnly
     }
@@ -27,7 +28,12 @@ namespace ModelMockupDesigner.Enums
     {
         Unknown,
         Label,  
+
         TextBox, 
+        NumericTextBox,
+        MultiLineTextBox,
+        DoubleTextBox,
+
         RadioList, 
         CheckBoxList, 
         DropDownList, 
@@ -40,6 +46,8 @@ namespace ModelMockupDesigner.Enums
         ApproxDate, 
         TextSuggestion, 
         Button, 
+
+        GroupBox,
 
         Combobox,
         Grid,

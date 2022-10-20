@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="ModelMockupDesigner.Controls.Wizard.Fields.AthenaGroupBox"
+﻿<UserControl x:Class="ModelMockupDesigner.Controls.AthenaGroupBox"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ModelMockupDesigner.Controls.Wizard.Fields"
+             xmlns:local="clr-namespace:ModelMockupDesigner.Controls"
              mc:Ignorable="d" 
              IsTabStop="False">
     <Grid x:Name="LayoutRoot" Background="Transparent" Margin="0,-2,0,0">
@@ -18,7 +18,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <!--<Button Focusable="False" IsTabStop="False" Background="Transparent"/>-->
-                <Border x:Name="labelBackground" Height="20" Margin="0,0,0,0" VerticalAlignment="Top" Background="#FF24A4C8" CornerRadius="3,3,0,0" >
+                <Border x:Name="labelBackground" Height="20" Margin="0" VerticalAlignment="Top" Background="#FF24A4C8" CornerRadius="3,3,0,0" >
                     <Grid>
                         <TextBlock x:Name="label" Height="20" VerticalAlignment="Center" TextAlignment="Left" Margin="3,0,3,0" HorizontalAlignment="Left" FontFamily="Segoe UI" Foreground="#FFFFFFFF" FontSize="13.333" Visibility="Visible"></TextBlock>
                         <!--<StackPanel x:Name="checkBoxStack" Orientation="Horizontal" Visibility="Collapsed" VerticalAlignment="Center">

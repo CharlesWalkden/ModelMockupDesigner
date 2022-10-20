@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ModelMockupDesigner.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="50">
-    <Grid Background="{StaticResource WizardEditorBackgroundBrush}" Margin="0,2,0,2">
+             d:DesignHeight="75" d:DesignWidth="75">
+    <Grid Background="{StaticResource WizardEditorBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -21,7 +21,6 @@
                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                    StrokeThickness="1.5" StrokeDashArray="3 3" 
                    Grid.RowSpan="3" Grid.ColumnSpan="2" 
-                   AllowDrop="True"
                    Margin="0,8,0,0" />
         <StackPanel x:Name="HeaderStackPanel"
                     HorizontalAlignment="Stretch"
@@ -29,7 +28,8 @@
                     MouseLeftButtonDown="Grid_MouseLeftButtonDown"
                     MouseMove="HeaderStackPanel_MouseMove"
                     Drop="HeaderStackPanel_Drop"
-                    ContextMenuOpening="HeaderStackPanel_ContextMenuOpening">
+                    ContextMenuOpening="HeaderStackPanel_ContextMenuOpening"
+                    AllowDrop="True">
             <TextBlock x:Name="HeaderTextBlock"
                        Text="Panel" 
                        HorizontalAlignment="Left" 
@@ -41,16 +41,19 @@
         <Grid x:Name="Root"                
               Grid.Row="1" 
               AllowDrop="True"
-              Margin="5" >
+              Margin="5"
+              Background="{StaticResource WizardEditorBackgroundBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition MinHeight="25" Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="25" Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Grid x:Name="container" Grid.Row="0" Grid.Column="0" ShowGridLines="True">
-                
-            </Grid>
+            <Border Margin="5" Grid.Row="0" Grid.Column="0">
+                <Grid x:Name="container" ShowGridLines="True" >
+
+                </Grid>
+            </Border>
         </Grid>
         <Grid x:Name="newColumn" Visibility="Collapsed" Grid.Column="1" Grid.RowSpan="3" AllowDrop="True"
               DragEnter="Control_DragEnter"

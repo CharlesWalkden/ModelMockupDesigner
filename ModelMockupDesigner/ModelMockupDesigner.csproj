@@ -27,6 +27,7 @@
     <None Remove="Images\Icons\folder-open.png" />
     <None Remove="Images\Icons\format-list-bulleted.png" />
     <None Remove="Images\Icons\home.png" />
+    <None Remove="Images\Icons\open-in-app.png" />
     <None Remove="Images\Icons\page-first.png" />
     <None Remove="Images\Icons\page-last.png" />
     <None Remove="Images\Icons\pencil.png" />
@@ -62,6 +63,7 @@
     <Resource Include="Images\Icons\folder-open.png" />
     <Resource Include="Images\Icons\format-list-bulleted.png" />
     <Resource Include="Images\Icons\home.png" />
+    <Resource Include="Images\Icons\open-in-app.png" />
     <Resource Include="Images\Icons\page-first.png" />
     <Resource Include="Images\Icons\page-last.png" />
     <Resource Include="Images\Icons\pencil.png" />

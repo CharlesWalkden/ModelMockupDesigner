@@ -80,6 +80,10 @@ namespace ModelMockupDesigner.Controls
             {
                 EditorCell editorCell = new(this);
                 editorCell.OnSelected += OnSelected;
+                if (cellContent.Column == 0)
+                    editorCell.Margin = new Thickness(0,5,5,5);
+                else
+                    editorCell.Margin = new Thickness(5);
 
                 container.Children.Add(editorCell);
                 Grid.SetColumn(editorCell, cellContent.Column);
@@ -133,6 +137,10 @@ namespace ModelMockupDesigner.Controls
 
             EditorCell editorCell = new(this);
             editorCell.OnSelected += OnSelected;
+            if (column == 0)
+                editorCell.Margin = new Thickness(0, 5, 5, 5);
+            else
+                editorCell.Margin = new Thickness(5);
 
             await editorCell.LoadModel(wizardCell);
 

@@ -13,7 +13,7 @@
                 <ResourceDictionary Source="Styles/TextboxStyles.xaml"/>
                 <ResourceDictionary Source="Styles/ComboBoxStyles.xaml"/>
                 <ResourceDictionary Source="Styles/TreeView.xaml"/>
-                
+                <ResourceDictionary Source="Styles/CheckBoxStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

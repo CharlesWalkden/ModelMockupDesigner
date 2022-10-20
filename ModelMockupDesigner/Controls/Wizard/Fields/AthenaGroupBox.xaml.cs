@@ -1,25 +1,16 @@
-﻿using ModelMockupDesigner.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Interfaces;
+using ModelMockupDesigner.Models;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace ModelMockupDesigner.Controls.Wizard.Fields
+namespace ModelMockupDesigner.Controls
 {
     /// <summary>
     /// Interaction logic for AthenaGroupBox.xaml
     /// </summary>
-    public partial class AthenaGroupBox : UserControl
+    public partial class AthenaGroupBox : UserControl, ICellControl
     {
         public AthenaGroupBox()
         {
@@ -42,13 +33,20 @@ namespace ModelMockupDesigner.Controls.Wizard.Fields
                 }
             }
         }
+        private FrameworkElement? ContentControl { get; set; }
+        public ElementType ElementType => ElementType.GroupBox;
+
+        public BaseModel? Model => ContentControl?.DataContext as BaseModel;
+
         public void SetContent(FrameworkElement element)
         {
+            ContentControl = element;
             mainContent.Children.Add(element);
             Grid.SetRow(element, 1);
         }
         public void RemoveContent(FrameworkElement element)
         {
+            ContentControl = null;
             mainContent.Children.Remove(element);
         }
         public void Initialise(IGroupBoxContent content)
@@ -56,6 +54,12 @@ namespace ModelMockupDesigner.Controls.Wizard.Fields
             VerticalAlignment = content.GroupVerticalAlignment.ToXaml();
             HorizontalAlignment = content.GroupHorizontalAlignment.ToXaml();
             Text = content.GroupBoxTitle;
+        }
+        public void Initialise(GroupBoxDisplayChangedEventArgs e)
+        {
+            VerticalAlignment = e.VerticalAlignment.ToXaml();
+            HorizontalAlignment = e.HorizontalAlignment.ToXaml();
+            Text = e.GroupBoxTitle;
         }
     }
 }

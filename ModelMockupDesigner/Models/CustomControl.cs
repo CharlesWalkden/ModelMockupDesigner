@@ -11,12 +11,29 @@ namespace ModelMockupDesigner.Models
 {
     public class CustomControl : BaseControlModel, ICellControl
     {
-        public event EventHandler<int>? OnColumnCountChanged; 
+        public event EventHandler<int>? OnColumnCountChanged;
+
+        public event EventHandler? OnContentUpdated;
         public CustomControl(ElementType elementType, List<string>? listOptions = null)
         {
             ElementType = elementType;
             ListOptions = listOptions;
         }
+
+        // Text for label
+        public string? Text
+        {
+            get => text;
+            set
+            {
+                if (text == value)
+                    return;
+
+                text = value;
+                OnPropertyChanged(nameof(Text));
+            }
+        }
+        private string? text { get; set; }
 
         public List<string>? ListOptions { get; set; }
         // Used for radio lists - default to 1
@@ -35,17 +52,26 @@ namespace ModelMockupDesigner.Models
         }
         private int columnCount { get; set; } = 1;
 
+        public int MinimumCharacters { get; set; }
+        private int minimumCharacters { get; set; }
+        public int MinimumLines { get; set; }
+        private int minimumLines { get; set; }
+        public int DoublePrecision { get; set; }
+
         public override Dictionary<string, string> GetEditableProperties()
         {
             Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("Name", "Name");
             properties.Add("Horizontal", "HorizontalAlignment");
             properties.Add("Vertical", "VerticalAlignment");
-
-
+            
             if (ElementType == ElementType.RadioList)
             {
                 properties.Add("ColumnCount", "ColumnCount");
+            }
+            if (ElementType == ElementType.Label || ElementType == ElementType.CheckBox)
+            {
+                properties.Add("Text", "Text");
             }
 
             return properties;

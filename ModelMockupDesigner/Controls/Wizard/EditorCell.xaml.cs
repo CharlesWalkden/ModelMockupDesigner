@@ -1,5 +1,4 @@
-﻿using ModelMockupDesigner.Controls.Wizard;
-using ModelMockupDesigner.Controls.Wizard.Fields;
+﻿using ModelMockupDesigner.Controls;
 using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
@@ -48,6 +47,7 @@ namespace ModelMockupDesigner.Controls
                 }
             }
         }
+        public AthenaGroupBox? GroupBox { get; set; }
 
         #endregion
 
@@ -130,6 +130,11 @@ namespace ModelMockupDesigner.Controls
                             CellModel.Control = wizardTable;
                         }
 
+                        if (wizardTable != null)
+                        {
+                            wizardTable.DisplayChanged += OnGroupBoxDisplayChanged;
+                        }
+
                         EditorTable editorTable = new(this);
                         editorTable.OnSelected += OnSelected;
                         await editorTable.LoadModel(wizardTable);
@@ -154,10 +159,15 @@ namespace ModelMockupDesigner.Controls
                             customControl = controlModel as CustomControl;
                         }
 
+                        if (customControl != null)
+                        {
+                            customControl.DisplayChanged += OnGroupBoxDisplayChanged;
+                        }
+
                         AthenaYesNoControl athenaYesNoControl = new(customControl);
 
                         AddCellControl(athenaYesNoControl);
-                        
+
                         overlay.Visibility = Visibility.Visible;
                         overlay.Background = Brushes.Transparent;
 
@@ -175,7 +185,14 @@ namespace ModelMockupDesigner.Controls
                             listCreator.ShowDialog();
                             if (listCreator.DialogResult == DialogResult.Accept)
                             {
-                                customControl.StoreListOption(listCreator.Control.ViewModel.GetListAsString());
+                                if (listCreator.Control.ViewModel != null)
+                                {
+                                    customControl.StoreListOption(listCreator.Control.ViewModel.GetListAsString());
+                                }
+                                else
+                                {
+                                    break;
+                                }
                             }
                             else
                             {
@@ -197,6 +214,90 @@ namespace ModelMockupDesigner.Controls
                         break;
 
                     }
+                case ElementType.Label:
+                    {
+                        CustomControl? customControl;
+                        if (controlModel == null)
+                        {
+                            customControl = new(ElementType.Label);
+                        }
+                        else
+                        {
+                            customControl = controlModel as CustomControl;
+                        }
+
+                        if (customControl != null)
+                        {
+                            customControl.DisplayChanged += OnGroupBoxDisplayChanged;
+                        }
+
+                        AthenaLabel athenaLabel = new(customControl);
+
+                        AddCellControl(athenaLabel);
+
+                        overlay.Visibility = Visibility.Visible;
+                        overlay.Background = Brushes.Transparent;
+
+                        break;
+                    }
+                case ElementType.TextBox:
+                    {
+                        break;
+                    }
+                case ElementType.CheckBoxList:
+                    {
+                        break;
+                    }
+                case ElementType.Date:
+                    {
+                        break;
+                    }
+                case ElementType.Time:
+                    {
+                        break;
+                    }
+                case ElementType.DateTime:
+                    {
+                        break;
+                    }
+                case ElementType.ApproxDate:
+                    {
+                        break;
+                    }
+                case ElementType.CheckBox:
+                    {
+                        CustomControl? customControl;
+                        if (controlModel == null)
+                        {
+                            customControl = new(ElementType.CheckBox);
+                        }
+                        else
+                        {
+                            customControl = controlModel as CustomControl;
+                        }
+
+                        if (customControl != null)
+                        {
+                            customControl.DisplayChanged += OnGroupBoxDisplayChanged;
+                        }
+
+                        AthenaCheckBox athenaCheckBox = new(customControl);
+
+                        AddCellControl(athenaCheckBox);
+
+                        overlay.Visibility = Visibility.Visible;
+                        overlay.Background = Brushes.Transparent;
+
+                        break;
+                    }
+                case ElementType.Image:
+                    {
+                        break;
+                    }
+                case ElementType.Button:
+                    {
+                        break;
+                    }
                 default:
                     break;
             }
@@ -205,6 +306,46 @@ namespace ModelMockupDesigner.Controls
         #region Events
 
         public EventHandler<IIsSelectable>? OnSelected;
+        private void OnGroupBoxDisplayChanged(object? sender, GroupBoxDisplayChangedEventArgs e)
+        {
+            if (CellControl != null)
+            {
+                if (e.Display)
+                {
+                    if (GroupBox == null)
+                    {
+                        FrameworkElement? control = CellControl as FrameworkElement;
+                        if (control != null)
+                        {
+                            AthenaGroupBox gb = new AthenaGroupBox();
+                            gb.Margin = new Thickness(5);
+                            gb.Initialise(e);
+
+                            Root.Children.Remove(control);
+
+                            gb.SetContent(control);
+
+                            Root.Children.Add(gb);
+
+                            GroupBox = gb;
+                        }
+                    }
+                }
+                else
+                {
+                    if (GroupBox != null)
+                    {
+                        GroupBox.RemoveContent((FrameworkElement)CellControl);
+                        Root.Children.Remove(GroupBox);
+                        GroupBox = null;
+                        Root.Children.Add((FrameworkElement)CellControl);
+                    }
+                }
+
+                GroupBox?.Initialise(e);
+            }
+            
+        }
         private void Control_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(NewControl)))

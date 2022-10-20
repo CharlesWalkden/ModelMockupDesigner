@@ -90,8 +90,32 @@ namespace ModelMockupDesigner.Models
 
         #region Content
 
-        public HorizontalAlignmentTypes HorizontalAlignment { get; set; }
-        public VerticalAlignmentTypes VerticalAlignment { get; set; }
+        public HorizontalAlignmentTypes HorizontalAlignment
+        {
+            get => horizontalAlignment;
+            set
+            {
+                if (horizontalAlignment == value)
+                    return;
+
+                horizontalAlignment = value;
+                OnPropertyChanged(nameof(HorizontalAlignment));
+            }
+        }
+        private HorizontalAlignmentTypes horizontalAlignment { get; set; }
+        public VerticalAlignmentTypes VerticalAlignment
+        {
+            get => verticalAlignment;
+            set
+            {
+                if (verticalAlignment == value)
+                    return;
+
+                verticalAlignment = value;
+                OnPropertyChanged(nameof(VerticalAlignment));
+            }
+        }
+        private VerticalAlignmentTypes verticalAlignment { get; set; }
 
         #endregion
 
