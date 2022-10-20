@@ -105,11 +105,34 @@ namespace ModelMockupDesigner.Controls
         }
         private void AddCellControl(ICellControl control)
         {
-            Root.Children.Add(control as FrameworkElement);
-            CellControl = control;
+            FrameworkElement? newControl = null;
+
+            if (control != null)
+            {
+                if (control.DisplayGroupbox)
+                {
+                    AthenaGroupBox groupBox = new AthenaGroupBox();
+                    groupBox.Margin = new Thickness(5);
+                    groupBox.Initialise(control.Model);
+                    groupBox.SetContent(control as FrameworkElement);
+
+                    newControl = groupBox;
+                    GroupBox = groupBox;
+                }
+                else
+                    newControl = control as FrameworkElement;
+
+                if (newControl != null)
+                {
+                    Root.Children.Add(newControl);
+                    CellControl = control;
+                }
+            }
         }
         public async Task AddNewControl(ElementType? elementType, ICellControl? controlModel = null)
         {
+            ICellControl? cellControl = null; 
+             
             switch (elementType)
             {
                 case ElementType.Table:
@@ -139,10 +162,7 @@ namespace ModelMockupDesigner.Controls
                         editorTable.OnSelected += OnSelected;
                         await editorTable.LoadModel(wizardTable);
 
-                        AddCellControl(editorTable);
-
-                        overlay.Visibility = Visibility.Collapsed;
-                        overlay.Background = Brushes.White;
+                        cellControl = editorTable;
 
                         break;
                     }
@@ -156,7 +176,7 @@ namespace ModelMockupDesigner.Controls
                         }
                         else
                         {
-                            customControl = controlModel as CustomControl;
+                            customControl = (CustomControl?)controlModel;
                         }
 
                         if (customControl != null)
@@ -166,10 +186,7 @@ namespace ModelMockupDesigner.Controls
 
                         AthenaYesNoControl athenaYesNoControl = new(customControl);
 
-                        AddCellControl(athenaYesNoControl);
-
-                        overlay.Visibility = Visibility.Visible;
-                        overlay.Background = Brushes.Transparent;
+                        cellControl = athenaYesNoControl;
 
                         break;
                     }
@@ -206,10 +223,7 @@ namespace ModelMockupDesigner.Controls
 
                         AthenaRadioList athenaRadioList = new AthenaRadioList(customControl);
 
-                        AddCellControl(athenaRadioList);
-
-                        overlay.Visibility = Visibility.Visible;
-                        overlay.Background = Brushes.Transparent;
+                        cellControl = athenaRadioList;
 
                         break;
 
@@ -223,7 +237,7 @@ namespace ModelMockupDesigner.Controls
                         }
                         else
                         {
-                            customControl = controlModel as CustomControl;
+                            customControl = (CustomControl?)controlModel;
                         }
 
                         if (customControl != null)
@@ -233,10 +247,7 @@ namespace ModelMockupDesigner.Controls
 
                         AthenaLabel athenaLabel = new(customControl);
 
-                        AddCellControl(athenaLabel);
-
-                        overlay.Visibility = Visibility.Visible;
-                        overlay.Background = Brushes.Transparent;
+                        cellControl = athenaLabel; 
 
                         break;
                     }
@@ -273,7 +284,7 @@ namespace ModelMockupDesigner.Controls
                         }
                         else
                         {
-                            customControl = controlModel as CustomControl;
+                            customControl = (CustomControl?)controlModel;
                         }
 
                         if (customControl != null)
@@ -283,10 +294,7 @@ namespace ModelMockupDesigner.Controls
 
                         AthenaCheckBox athenaCheckBox = new(customControl);
 
-                        AddCellControl(athenaCheckBox);
-
-                        overlay.Visibility = Visibility.Visible;
-                        overlay.Background = Brushes.Transparent;
+                        cellControl = athenaCheckBox;
 
                         break;
                     }
@@ -296,11 +304,46 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.Button:
                     {
+                        CustomControl? customControl;
+                        if (controlModel == null)
+                        {
+                            customControl = new(ElementType.Button);
+                        }
+                        else
+                        {
+                            customControl = (CustomControl?)controlModel;
+                        }
+
+                        if (customControl != null)
+                        {
+                            customControl.DisplayChanged += OnGroupBoxDisplayChanged;
+                        }
+
+                        AthenaCheckBox athenaCheckBox = new(customControl);
+
+                        cellControl = athenaCheckBox;
                         break;
                     }
                 default:
                     break;
             }
+
+            if (cellControl != null)
+            {
+                AddCellControl(cellControl);
+            }
+
+            if (cellControl is EditorTable table)
+            {
+                overlay.Visibility = Visibility.Collapsed;
+                overlay.Background = Brushes.White;
+            }
+            else
+            {
+                overlay.Visibility = Visibility.Visible;
+                overlay.Background = Brushes.Transparent;
+            }
+
         }
 
         #region Events

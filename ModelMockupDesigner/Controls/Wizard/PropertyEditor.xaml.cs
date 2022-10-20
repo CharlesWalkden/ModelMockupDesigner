@@ -49,7 +49,7 @@ namespace ModelMockupDesigner.Controls
                 {
                     AddTitle("GroupBox", 12);
 
-                    AddProperty(boxContent, "Display", "Display"); 
+                    AddProperty(boxContent, "DisplayGroupbox", "Display"); 
                     AddProperty(boxContent, "GroupBoxTitle", "Title");
                     AddProperty(boxContent, "GroupHorizontalAlignment", "Horizontal");
                     AddProperty(boxContent, "GroupVerticalAlignment", "Vertical");

@@ -23,10 +23,13 @@ namespace ModelMockupDesigner.Controls
     /// </summary>
     public partial class AthenaYesNoControl : UserControl, ICellControl
     {
-        public BaseModel? Model { get => DataContext as CustomControl; }
+        public BaseModel? Model { get => ControlModel; }
 
         public ElementType ElementType => ElementType.YesNo;
 
+        public bool DisplayGroupbox => ControlModel?.DisplayGroupbox ?? false;
+
+        private CustomControl? ControlModel => DataContext as CustomControl;
 
         public AthenaYesNoControl(CustomControl customControlModel)
         {

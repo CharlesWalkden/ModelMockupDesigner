@@ -67,9 +67,9 @@ namespace ModelMockupDesigner.Models
             
             if (ElementType == ElementType.RadioList)
             {
-                properties.Add("ColumnCount", "ColumnCount");
+                properties.Add("Columns", "ColumnCount");
             }
-            if (ElementType == ElementType.Label || ElementType == ElementType.CheckBox)
+            if (ElementType == ElementType.Label || ElementType == ElementType.CheckBox || ElementType == ElementType.Button)
             {
                 properties.Add("Text", "Text");
             }

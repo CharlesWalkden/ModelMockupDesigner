@@ -15,7 +15,7 @@
                       Style="{DynamicResource CheckBoxStyle2}" Background="Transparent" />
 
             <ToggleButton x:Name="button" Content="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
-                          Style="{DynamicResource touchToggleCheckboxWizard}"/>
+                          Style="{DynamicResource touchToggleButton}"/>
         </StackPanel>
     </Grid>
 </UserControl>

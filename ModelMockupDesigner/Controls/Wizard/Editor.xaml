@@ -130,14 +130,6 @@
                         PreviewMouseDown="Border_PreviewMouseDown">
                         <TextBlock Text="DropDownList"/>
                     </Border>
-                    <Border Grid.Row="3" Grid.Column="1"
-                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
-                        VerticalAlignment="Top" 
-                        HorizontalAlignment="Left"
-                        PreviewMouseMove="Border_PreviewMouseMove"
-                        PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="DropDownList"/>
-                    </Border>
                     <Border Grid.Row="4" Grid.Column="0"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
                         VerticalAlignment="Top" 
@@ -176,7 +168,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="Checkbox"/>
+                        <TextBlock Text="Checkbox" Background="MediumSeaGreen"/>
                     </Border>
                     <Border Grid.Row="6" Grid.Column="1"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -192,7 +184,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="Button"/>
+                        <TextBlock Text="Button" Background="MediumSeaGreen"/>
                     </Border>
                 </Grid>
                 <GridSplitter Grid.Row="0" Height="10" VerticalAlignment="Bottom" Background="{StaticResource EditorDarkGrayBrush}" Panel.ZIndex="9999" />

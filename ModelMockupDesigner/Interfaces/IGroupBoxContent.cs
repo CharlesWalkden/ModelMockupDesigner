@@ -10,7 +10,7 @@ namespace ModelMockupDesigner.Interfaces
 {
     public interface IGroupBoxContent
     {
-        bool Display { get; set; }
+        bool DisplayGroupbox { get; set; } 
         string GroupBoxTitle { get; set; }
         HorizontalAlignmentTypes GroupHorizontalAlignment { get; set; } 
         VerticalAlignmentTypes GroupVerticalAlignment { get; set; }

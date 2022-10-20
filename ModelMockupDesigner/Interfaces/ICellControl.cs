@@ -12,5 +12,6 @@ namespace ModelMockupDesigner.Interfaces
     {
         ElementType ElementType { get; }
         BaseModel? Model { get; }
+        bool DisplayGroupbox { get; }
     }
 }

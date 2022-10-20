@@ -23,21 +23,33 @@ namespace ModelMockupDesigner.Controls
     /// </summary>
     public partial class AthenaCheckBox : UserControl, ICellControl
     {
-        
+        public ElementType ElementType => ControlModel?.ElementType ?? ElementType.CheckBox;
+
+        public BaseModel? Model => ControlModel;
+
+        public bool DisplayGroupbox { get => ControlModel?.DisplayGroupbox ?? false; }
+
+        private CustomControl? ControlModel => DataContext as CustomControl;
+
         public AthenaCheckBox(CustomControl controlModel)
         {
             InitializeComponent();
 
             DataContext = controlModel;
 
+            if (string.IsNullOrWhiteSpace(controlModel.Text))
+            {
+                controlModel.Text = "TODO: Set Text";
+            }
+
             if (controlModel.ElementType == ElementType.CheckBox)
             {
                 button.Visibility = Visibility.Collapsed;
             }
+            else
+            {
+                checkBox.Visibility = Visibility.Collapsed;
+            }
         }
-
-        public ElementType ElementType => throw new NotImplementedException();
-
-        public BaseModel? Model => DataContext as CustomControl;
     }
 }

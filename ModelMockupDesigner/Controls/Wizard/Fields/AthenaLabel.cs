@@ -57,6 +57,8 @@ namespace ModelMockupDesigner.Controls
 
         public BaseModel? Model => ControlModel;
 
+        public bool DisplayGroupbox => ControlModel.DisplayGroupbox;
+
         #endregion
     }
 }

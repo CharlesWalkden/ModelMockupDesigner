@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace ModelMockupDesigner.Models
 {
-    public class DynamicWizardColumn : BaseModel, IPropertyEditor, IGroupBoxContent
+    public class DynamicWizardColumn : BaseModel, IPropertyEditor
     {
         public DynamicWizardSection? Parent { get; set; }
 
@@ -20,9 +20,6 @@ namespace ModelMockupDesigner.Models
         public string HeaderName => "Column";
 
         public ElementType ElementType => ElementType.Column;
-
-        
-        
 
         public DynamicWizardColumn(DynamicWizardSection? parent)
         {
@@ -49,72 +46,6 @@ namespace ModelMockupDesigner.Models
 
             return properties;
         }
-
-        #region GroupBox
-
-        public bool Display
-        {
-            get => display;
-            set
-            {
-                if (display == value)
-                    return;
-
-                display = value;
-                OnPropertyChanged(nameof(Display));
-            }
-        }
-
-        public string GroupBoxTitle
-        {
-            get => groupBoxTitle;
-            set
-            {
-                if (groupBoxTitle == value)
-                    return;
-
-                groupBoxTitle = value;
-                OnPropertyChanged(nameof(GroupBoxTitle));
-            }
-        }
-
-        public VerticalAlignmentTypes GroupVerticalAlignment
-        {
-            get => groupVerticalAlignment;
-            set
-            {
-                if (groupVerticalAlignment == value)
-                    return;
-
-
-                groupVerticalAlignment = value;
-                OnPropertyChanged(nameof(GroupVerticalAlignment));
-            }
-        }
-
-        public HorizontalAlignmentTypes GroupHorizontalAlignment
-        {
-            get => groupHorizontalAlignment;
-            set
-            {
-                if (groupHorizontalAlignment == value)
-                    return;
-
-                groupHorizontalAlignment = value;
-                OnPropertyChanged(nameof(GroupHorizontalAlignment));
-            }
-        }
-
-        #endregion
-
-        #region Private
-
-        private bool display { get; set; }
-        private string groupBoxTitle { get; set; }
-        private VerticalAlignmentTypes groupVerticalAlignment { get; set; }
-        private HorizontalAlignmentTypes groupHorizontalAlignment { get; set; }
-
-        #endregion
 
         #region Xml
 

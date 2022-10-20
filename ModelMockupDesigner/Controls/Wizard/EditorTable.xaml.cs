@@ -29,6 +29,7 @@ namespace ModelMockupDesigner.Controls
         public BaseModel? Model { get => TableModel; }
         public EditorCell TableParent { get => tableParent; set => tableParent = value; }
         public ElementType ElementType { get => ElementType.Table; }
+        public bool DisplayGroupbox { get => TableModel?.DisplayGroupbox ?? false; }
 
         #endregion
 

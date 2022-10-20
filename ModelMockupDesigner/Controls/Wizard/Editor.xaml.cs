@@ -512,6 +512,11 @@ namespace ModelMockupDesigner
                             selectedType = ElementType.CheckBox;
                             break;
                         }
+                    case "Button":
+                        {
+                            selectedType = ElementType.Button;
+                            break;
+                        }
                     default:
                         {
                             selectedType = ElementType.Unknown;
