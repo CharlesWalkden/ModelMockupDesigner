@@ -13,14 +13,14 @@ namespace ModelMockupDesigner.Models
     public class GroupBoxDisplayChangedEventArgs : EventArgs
     {
         public bool Display { get; set; }
-        public string? GroupBoxTitle { get; set; }
+        public string GroupBoxTitle { get; set; }
         public HorizontalAlignmentTypes HorizontalAlignment { get; set; }
         public VerticalAlignmentTypes VerticalAlignment { get; set; }
     }
 
     public abstract class BaseModel : INotifyPropertyChanged, IGroupBoxContent
     {
-        public string? Name
+        public string Name
         {
             get => name;
             set
@@ -45,7 +45,7 @@ namespace ModelMockupDesigner.Models
             }
         }
         private int orderId { get; set; } = 0;
-        private string? name { get; set; }
+        private string name { get; set; }
 
         #region GroupBox
 
@@ -114,7 +114,7 @@ namespace ModelMockupDesigner.Models
 
         #endregion
 
-        public event PropertyChangedEventHandler? PropertyChanged = (sender, e) => { };
+        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
         public void OnPropertyChanged(string name)
         {
@@ -122,6 +122,6 @@ namespace ModelMockupDesigner.Models
         }
 
         public abstract void LoadFromXml(XmlNode node);
-        public abstract XmlNode? ToXml(); 
+        public abstract XmlNode ToXml(); 
     }
 }

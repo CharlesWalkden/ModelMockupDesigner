@@ -9,7 +9,7 @@ namespace ModelMockupDesigner.ViewModels
 {
     public class CategoryCreatorViewModel : BaseViewModel
     {
-        public string? CategoryName
+        public string CategoryName
         {
             get => categoryName;
             set
@@ -21,7 +21,7 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(CategoryName));
             }
         }
-        public string? CategoryDescription
+        public string CategoryDescription
         {
             get => categoryDescription;
             set
@@ -36,8 +36,8 @@ namespace ModelMockupDesigner.ViewModels
 
         #region Private Properties
 
-        private string? categoryName { get; set; }
-        private string? categoryDescription { get; set; } 
+        private string categoryName { get; set; }
+        private string categoryDescription { get; set; } 
         #endregion
     }
 }

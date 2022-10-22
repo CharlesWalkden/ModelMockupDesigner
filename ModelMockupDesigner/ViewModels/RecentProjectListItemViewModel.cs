@@ -10,7 +10,7 @@ namespace ModelMockupDesigner.ViewModels
 {
     public class RecentProjectListItemViewModel : BaseViewModel
     {
-        public Project? ProjectModel { get; set; }
+        public Project ProjectModel { get; set; }
         public bool Selected
         {
             get => selected;
@@ -22,7 +22,7 @@ namespace ModelMockupDesigner.ViewModels
         }
         private bool selected { get; set; }
 
-        public event EventHandler? OnSelected;
+        public event EventHandler OnSelected;
         public ICommand SelectCommand { get; set; }
 
         public RecentProjectListItemViewModel()

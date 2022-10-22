@@ -9,8 +9,8 @@ namespace ModelMockupDesigner.Interfaces
 {
     public interface IPropertyEditor
     {
-        public string HeaderName { get; }
-        public ElementType ElementType { get; }
-        public Dictionary<string, string> GetEditableProperties();
+        string HeaderName { get; }
+        ElementType ElementType { get; }
+        Dictionary<string, string> GetEditableProperties();
     }
 }

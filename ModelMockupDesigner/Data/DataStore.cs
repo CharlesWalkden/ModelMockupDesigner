@@ -11,7 +11,7 @@ namespace ModelMockupDesigner.Data
     {
         public static List<Category> GetIntrapartumCategories()
         {
-            List<Category> categories = new()
+            List<Category> categories = new List<Category>()
             {
                 new Category(Guid.Empty){Name = "Intrapartum", Categories = GetSubCategoriesIntrapartum()},
             };
@@ -20,7 +20,7 @@ namespace ModelMockupDesigner.Data
         }
         public static List<Category> GetAntenatalCategories()
         {
-            List<Category> categories = new()
+            List<Category> categories = new List<Category>()
             {
                 new Category(Guid.Empty){Name = "Profile", Categories = GetSubCategoriesProfile()},
                 new Category(Guid.Empty){Name = "Consultations & Admissions", Categories = GetSubCategoriesConsultations()},
@@ -34,7 +34,7 @@ namespace ModelMockupDesigner.Data
         }
         public static List<Category> GetSubCategoriesProfile()
         {
-            List<Category> categories = new()
+            List<Category> categories = new List<Category>()
             {
                 new Category(Guid.Empty){Name = "Woman's Details"},
                 new Category(Guid.Empty){Name = "Obstetric Profile"},
@@ -51,7 +51,7 @@ namespace ModelMockupDesigner.Data
 
         public static List<Category> GetSubCategoriesConsultations()
         {
-            List<Category> categories = new()
+            List<Category> categories = new List<Category>()
             {
                 new Category(Guid.Empty){Name = "Helpline Contacts"},
                 new Category(Guid.Empty){Name = "Antenatal Consultations"},
@@ -64,7 +64,7 @@ namespace ModelMockupDesigner.Data
 
         public static List<Category> GetSubCategoriesAntenatal()
         {
-            List<Category> categories = new()
+            List<Category> categories = new List<Category>()
             {
                 new Category(Guid.Empty){Name = "Plan of Care"},
                 new Category(Guid.Empty){Name = "Observations"},
@@ -80,7 +80,7 @@ namespace ModelMockupDesigner.Data
 
         public static List<Category> GetSubCategoriesIntrapartum()
         {
-            List<Category> categories = new()
+            List<Category> categories = new List<Category>()
             {
                 new Category(Guid.Empty){Name = "Woman"},
                 new Category(Guid.Empty){Name = "Baby"},
@@ -92,7 +92,7 @@ namespace ModelMockupDesigner.Data
 
         public static List<Category> GetSubCategoriesPostnatal()
         {
-            List<Category> categories = new()
+            List<Category> categories = new List<Category>()
             {
                 new Category(Guid.Empty){Name = "Postnatal Summary"},
                 new Category(Guid.Empty){Name = "Observations"},

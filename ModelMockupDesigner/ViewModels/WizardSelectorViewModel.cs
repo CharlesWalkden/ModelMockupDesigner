@@ -19,7 +19,7 @@ namespace ModelMockupDesigner.ViewModels
     {
         public WizardSelector Owner { get; set; }
 
-        public Project? ProjectModel
+        public Project ProjectModel
         {
             get => projectModel;
             set
@@ -42,9 +42,9 @@ namespace ModelMockupDesigner.ViewModels
                 projectModel = value;
             }
         }
-        private Project? projectModel { get; set; }
+        private Project projectModel { get; set; }
 
-        public string? ProjectName
+        public string ProjectName
         {
             get => projectName;
             set
@@ -57,7 +57,7 @@ namespace ModelMockupDesigner.ViewModels
             }
         }
 
-        public string? ProjectDescription
+        public string ProjectDescription
         {
             get => projecDescription;
             set
@@ -70,7 +70,7 @@ namespace ModelMockupDesigner.ViewModels
             }
         }
 
-        public string? CustomerName
+        public string CustomerName
         {
             get => customerName;
             set
@@ -83,11 +83,11 @@ namespace ModelMockupDesigner.ViewModels
             }
         }
 
-        private string? projectName { get; set; }
+        private string projectName { get; set; }
 
-        private string? projecDescription { get; set; }
+        private string projecDescription { get; set; }
 
-        private string? customerName { get; set; }
+        private string customerName { get; set; }
 
         public ICommand EditWizardCommand { get; set; }
         public ICommand CreateNewWizardCommand { get; set; }
@@ -95,7 +95,7 @@ namespace ModelMockupDesigner.ViewModels
         public ICommand DeleteCommand { get; set; }
         public ICommand CloseWizardSelectorCommand { get; set; }
 
-        public EventHandler? OnListUpdated;
+        public EventHandler OnListUpdated;
 
         public WizardSelectorViewModel(WizardSelector owner)
         {
@@ -136,7 +136,7 @@ namespace ModelMockupDesigner.ViewModels
         }
         private void CreateNewWizard()
         {
-            DialogLauncher<WizardCreator> wizardCreator = new(Owner, ResizeMode.NoResize);
+            DialogLauncher<WizardCreator> wizardCreator = new DialogLauncher<WizardCreator>(Owner, ResizeMode.NoResize);
             wizardCreator.OnClose += WizardCreator_OnClose;
             if (wizardCreator.Control.ViewModel != null)
             {
@@ -151,7 +151,7 @@ namespace ModelMockupDesigner.ViewModels
         }
         private void CreateNewCateogry()
         {
-            DialogLauncher<CategoryCreator> categoryCreator = new(Owner, ResizeMode.NoResize);
+            DialogLauncher<CategoryCreator> categoryCreator = new DialogLauncher<CategoryCreator>(Owner, ResizeMode.NoResize);
             categoryCreator.OnClose += CategoryCreator_OnClose;
             categoryCreator.ShowDialog();
         }
@@ -190,7 +190,7 @@ namespace ModelMockupDesigner.ViewModels
                 }
             }
         }
-        private async void WizardCreator_OnClose(object? sender, DialogEventArgs e)
+        private async void WizardCreator_OnClose(object sender, DialogEventArgs e)
         {
             if (sender is DialogLauncher<WizardCreator> wizardCreator && wizardCreator.Control != null && wizardCreator.Control.DialogResult == DialogResult.Accept &&
                 wizardCreator.Control.ViewModel != null)
@@ -211,12 +211,12 @@ namespace ModelMockupDesigner.ViewModels
             }
         }
 
-        private void CategoryCreator_OnClose(object? sender, DialogEventArgs e)
+        private void CategoryCreator_OnClose(object sender, DialogEventArgs e)
         {
             if (sender is DialogLauncher<CategoryCreator> categoryCreator && categoryCreator.Control != null && categoryCreator.Control.DialogResult == DialogResult.Accept &&
                 categoryCreator.Control.ViewModel != null)
             {
-                Category category = new(Guid.Empty)
+                Category category = new Category(Guid.Empty)
                 {
                     Name = categoryCreator.Control.ViewModel.CategoryName,
                     Description = categoryCreator.Control.ViewModel.CategoryDescription

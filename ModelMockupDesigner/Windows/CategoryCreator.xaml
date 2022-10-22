@@ -21,11 +21,12 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Category Name:" FontSize="25" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="10,5,10,5"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CategoryName,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="28" HorizontalAlignment="Left" Margin="0,5,10,0"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CategoryName,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="28" HorizontalAlignment="Left" Margin="0,5,10,0"
+                         Style="{StaticResource genericTextBox}"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="0"  Text="Category Description:" FontSize="25" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Top" Margin="10,0"/>
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CategoryDescription,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="100" TextWrapping="Wrap"
-                         AcceptsReturn="True" HorizontalAlignment="Left" Margin="0,5,0,0"/>
+                         AcceptsReturn="True" HorizontalAlignment="Left" Margin="0,5,0,0" Style="{StaticResource genericTextBox}"/>
 
                 <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Width="50" Height="50" Margin="10,10,20,10" Click="Accept_Click" Style="{StaticResource IconButton}">

@@ -11,14 +11,14 @@ namespace ModelMockupDesigner.Models
 {
     public class DynamicWizardCell : BaseModel 
     {
-        public ICellParent? Parent { get; set; }
+        public ICellParent Parent { get; set; }
 
         public int Row { get; set; } = 0;
         public int Column { get; set; } = 0;
 
-        public ICellControl? Control { get; set; }
+        public ICellControl Control { get; set; }
 
-        public DynamicWizardCell(ICellParent? parent)
+        public DynamicWizardCell(ICellParent parent)
         {
             Parent = parent;
         }
@@ -30,7 +30,7 @@ namespace ModelMockupDesigner.Models
             throw new NotImplementedException();
         }
 
-        public override XmlNode? ToXml()
+        public override XmlNode ToXml()
         {
             throw new NotImplementedException();
         }

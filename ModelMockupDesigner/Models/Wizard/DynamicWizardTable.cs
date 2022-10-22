@@ -12,11 +12,11 @@ namespace ModelMockupDesigner.Models
 {
     public class DynamicWizardTable : BaseModel, ICellParent, ICellControl, IPropertyEditor
     {
-        public DynamicWizardCell? Parent { get; set; }
+        public DynamicWizardCell Parent { get; set; }
 
         public List<DynamicWizardCell> Cells { get; set; }
 
-        public DynamicWizardTable(DynamicWizardCell? parent)
+        public DynamicWizardTable(DynamicWizardCell parent)
         {
             Parent = parent;
             Cells = new List<DynamicWizardCell>();
@@ -24,7 +24,7 @@ namespace ModelMockupDesigner.Models
 
         public void CreateNew()
         {
-            DynamicWizardCell wizardCell = new(this);
+            DynamicWizardCell wizardCell = new DynamicWizardCell(this);
 
             Cells.Add(wizardCell);
         }
@@ -33,7 +33,7 @@ namespace ModelMockupDesigner.Models
 
         public Dictionary<string, string> GetEditableProperties()
         {
-            Dictionary<string, string> properties = new();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("Name", "Name");
 
             return properties;
@@ -46,7 +46,7 @@ namespace ModelMockupDesigner.Models
             throw new NotImplementedException();
         }
 
-        public override XmlNode? ToXml()
+        public override XmlNode ToXml()
         {
             throw new NotImplementedException();
         }
@@ -60,7 +60,7 @@ namespace ModelMockupDesigner.Models
             throw new NotImplementedException();
         }
 
-        public BaseModel? Model => throw new NotImplementedException();
+        public BaseModel Model => throw new NotImplementedException();
 
         #endregion
     }

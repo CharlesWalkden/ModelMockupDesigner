@@ -24,9 +24,9 @@ namespace ModelMockupDesigner
     /// </summary>
     public partial class WizardSelector : UserControl, IWindowStack
     {
-        public WizardSelectorViewModel? ViewModel { get => DataContext as WizardSelectorViewModel; }
+        public WizardSelectorViewModel ViewModel { get => DataContext as WizardSelectorViewModel; }
 
-        public TreeViewItem? CurrentSelection
+        public TreeViewItem CurrentSelection
         {
             get => currentSelection;
             set
@@ -39,13 +39,13 @@ namespace ModelMockupDesigner
                 }
             }
         }
-        private TreeViewItem? currentSelection { get; set; }
+        private TreeViewItem currentSelection { get; set; }
 
         public WizardSelector(Project project)
         {
             InitializeComponent();
             Loaded += WizardSelector_Loaded;
-            WizardSelectorViewModel viewModel = new(this)
+            WizardSelectorViewModel viewModel = new WizardSelectorViewModel(this)
             {
                 ProjectModel = project
             };
@@ -74,13 +74,13 @@ namespace ModelMockupDesigner
             {
                 foreach (Category category in ViewModel.ProjectModel.Categories)
                 {
-                    CategoryTreeViewItem categoryTreeViewItem = new(null, category);
+                    CategoryTreeViewItem categoryTreeViewItem = new CategoryTreeViewItem(null, category);
 
                     mainTreeView.Items.Add(categoryTreeViewItem);
                 }
                 foreach (IWizardModel wizard in ViewModel.ProjectModel.LoneWizards)
                 {
-                    WizardTreeViewItem wizardTreeViewItem = new(wizard);
+                    WizardTreeViewItem wizardTreeViewItem = new WizardTreeViewItem(wizard);
 
                     mainTreeView.Items.Add(wizardTreeViewItem);
                 }
@@ -95,7 +95,7 @@ namespace ModelMockupDesigner
 
         #region Interface
 
-        public event EventHandler? OnClosed;
+        public event EventHandler OnClosed;
 
         public void CloseAsync()
         {
@@ -104,7 +104,7 @@ namespace ModelMockupDesigner
 
         #endregion
 
-        private void OnListUpdated_RefreshTreeView(object? sender, EventArgs e)
+        private void OnListUpdated_RefreshTreeView(object sender, EventArgs e)
         {
             SetupTreeView();
         }
@@ -158,10 +158,10 @@ namespace ModelMockupDesigner
 
     public class CategoryTreeViewItem : TreeViewItem
     {
-        public Category? CategoryParent { get; set; }
+        public Category CategoryParent { get; set; }
         public Category Category { get; private set; }
 
-        public CategoryTreeViewItem(Category? parent, Category category)
+        public CategoryTreeViewItem(Category parent, Category category)
         {
             CategoryParent = parent;
             Category = category;
@@ -180,7 +180,7 @@ namespace ModelMockupDesigner
             {
                 foreach (Category subCategory in Category.Categories)
                 {
-                    CategoryTreeViewItem categoryTreeView = new(Category, subCategory);
+                    CategoryTreeViewItem categoryTreeView = new CategoryTreeViewItem(Category, subCategory);
                     
                     if (subCategory.IsExpanded)
                     {
@@ -196,9 +196,9 @@ namespace ModelMockupDesigner
 
             if (Category.Wizards != null)
             {
-                foreach (DynamicWizard wizard in Category.Wizards)
+                foreach (DynamicWizard wizard in Category.Wizards.Cast<DynamicWizard>())
                 {
-                    WizardTreeViewItem treeViewItem = new(wizard);
+                    WizardTreeViewItem treeViewItem = new WizardTreeViewItem(wizard);
                     this.Items.Add(treeViewItem);
                 }
             }

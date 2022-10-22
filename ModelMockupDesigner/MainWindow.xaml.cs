@@ -54,7 +54,7 @@ namespace ModelMockupDesigner
             Loaded += MainWindow_Loaded;
         }
 
-        private void UpdateWindowParameters(object? sender, WindowParameters parameters)
+        private void UpdateWindowParameters(object sender, WindowParameters parameters)
         {
             SetMinHeight(parameters.MinHeight);
             SetMinWidth(parameters.MinWidth);

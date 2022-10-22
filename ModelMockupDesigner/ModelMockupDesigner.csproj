@@ -2,9 +2,10 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <TargetFramework>net472</TargetFramework>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>False</UseWindowsForms>
+    <StartupObject>ModelMockupDesigner.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

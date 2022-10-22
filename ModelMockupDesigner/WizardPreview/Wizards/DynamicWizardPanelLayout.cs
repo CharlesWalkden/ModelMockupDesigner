@@ -42,7 +42,7 @@ namespace ModelMockupDesigner.WizardPreview.Wizards
 
             foreach (DynamicWizardCell cell in Template.Cells)
             {
-                FrameworkElement? control = null;
+                FrameworkElement control = null;
 
                 if (cell.Control is DynamicWizardTable)
                 {

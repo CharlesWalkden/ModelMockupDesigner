@@ -23,14 +23,16 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Project Name:" FontSize="25" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="10,5,10,5"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ProjectName,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="28" HorizontalAlignment="Left" Margin="0,5,10,0"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ProjectName,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="28" HorizontalAlignment="Left" Margin="0,5,10,0"
+                         Style="{StaticResource genericTextBox}"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Project Description:" FontSize="25" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="top" Margin="10,0" />
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ProjectDescription,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="100" TextWrapping="Wrap"
-                         AcceptsReturn="True" HorizontalAlignment="Left" Margin="0,5,0,0"/>
+                         AcceptsReturn="True" HorizontalAlignment="Left" Margin="0,5,0,0" Style="{StaticResource genericTextBox}"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Customer Name:" FontSize="25" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="10,5,10,5" />
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CustomerName,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="28" HorizontalAlignment="Left" Margin="0,5,0,0"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CustomerName,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="28" HorizontalAlignment="Left" Margin="0,5,0,0"
+                         Style="{StaticResource genericTextBox}"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Project Template:" FontSize="25" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="10,5" />
                 <controls:ProjectTemplateSelector Grid.Row="3" Grid.Column="1" CurrentTemplate="{Binding ProjectTemplate, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"

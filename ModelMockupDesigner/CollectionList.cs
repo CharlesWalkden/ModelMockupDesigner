@@ -11,11 +11,11 @@ namespace ModelMockupDesigner
 {
     public class CollectionList<T> : ObservableCollection<T>
     {
-        public event EventHandler? OnAddEntry;
+        public event EventHandler OnAddEntry;
 
         private bool SuppressNotification = false;
 
-        public CollectionList(IEnumerable<T>? list = null)
+        public CollectionList(IEnumerable<T> list = null)
         {
             if (list != null)
                 AddRange(list);

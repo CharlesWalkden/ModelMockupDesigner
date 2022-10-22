@@ -11,7 +11,7 @@ namespace ModelMockupDesigner.Interfaces
     public interface ICellControl
     {
         ElementType ElementType { get; }
-        BaseModel? Model { get; }
+        BaseModel Model { get; }
         bool DisplayGroupbox { get; }
     }
 }

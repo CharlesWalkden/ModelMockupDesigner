@@ -26,9 +26,9 @@ namespace ModelMockupDesigner.Controls
     {
         #region Public Properties
 
-        public BaseModel? Model { get => CellModel; }
+        public BaseModel Model { get => CellModel; }
         public ICellParent CellParent { get => cellParent; set => cellParent = value; }
-        public ICellControl? CellControl
+        public ICellControl CellControl
         {
             get => cellControl;
             set
@@ -42,12 +42,12 @@ namespace ModelMockupDesigner.Controls
                 }
                 else
                 {
-                    CellModel.Control = (ICellControl?)value.Model;
+                    CellModel.Control = (ICellControl)value.Model;
 
                 }
             }
         }
-        public AthenaGroupBox? GroupBox { get; set; }
+        public AthenaGroupBox GroupBox { get; set; }
 
         #endregion
 
@@ -55,7 +55,7 @@ namespace ModelMockupDesigner.Controls
 
         private DynamicWizardCell CellModel { get; set; } 
         private ICellParent cellParent { get; set; }
-        private ICellControl? cellControl { get; set; }
+        private ICellControl cellControl { get; set; }
 
         #endregion
 
@@ -105,14 +105,16 @@ namespace ModelMockupDesigner.Controls
         }
         private void AddCellControl(ICellControl control)
         {
-            FrameworkElement? newControl = null;
+            FrameworkElement newControl = null;
 
             if (control != null)
             {
-                if (control.DisplayGroupbox)
+                // Dont add group box for datetime and radio list as the group box is already built into the control so just needs enabling.
+                if (control.DisplayGroupbox && 
+                    (control.ElementType != ElementType.DateTime && control.ElementType != ElementType.RadioList))
                 {
                     AthenaGroupBox groupBox = new AthenaGroupBox();
-                    groupBox.Margin = new Thickness(5);
+                    //groupBox.Margin = new Thickness(5);
                     groupBox.Initialise(control.Model);
                     groupBox.SetContent(control as FrameworkElement);
 
@@ -129,18 +131,18 @@ namespace ModelMockupDesigner.Controls
                 }
             }
         }
-        public async Task AddNewControl(ElementType? elementType, ICellControl? controlModel = null)
+        public async Task AddNewControl(ElementType elementType, ICellControl controlModel = null)
         {
-            ICellControl? cellControl = null; 
-             
+            ICellControl cellControl = null;
+
             switch (elementType)
             {
                 case ElementType.Table:
                     {
-                        DynamicWizardTable? wizardTable;
+                        DynamicWizardTable wizardTable;
                         if (controlModel == null)
                         {
-                            wizardTable = new(CellModel);
+                            wizardTable = new DynamicWizardTable(CellModel);
                             wizardTable.CreateNew();
                         }
                         else
@@ -158,7 +160,7 @@ namespace ModelMockupDesigner.Controls
                             wizardTable.DisplayChanged += OnGroupBoxDisplayChanged;
                         }
 
-                        EditorTable editorTable = new(this);
+                        EditorTable editorTable = new EditorTable(this);
                         editorTable.OnSelected += OnSelected;
                         await editorTable.LoadModel(wizardTable);
 
@@ -168,15 +170,15 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.YesNo:
                     {
-                        CustomControl? customControl;
+                        CustomControl customControl;
 
                         if (controlModel == null)
                         {
-                            customControl = new(ElementType.YesNo);
+                            customControl = new CustomControl(ElementType.YesNo);
                         }
                         else
                         {
-                            customControl = (CustomControl?)controlModel;
+                            customControl = (CustomControl)controlModel;
                         }
 
                         if (customControl != null)
@@ -184,7 +186,7 @@ namespace ModelMockupDesigner.Controls
                             customControl.DisplayChanged += OnGroupBoxDisplayChanged;
                         }
 
-                        AthenaYesNoControl athenaYesNoControl = new(customControl);
+                        AthenaYesNoControl athenaYesNoControl = new AthenaYesNoControl(customControl);
 
                         cellControl = athenaYesNoControl;
 
@@ -192,11 +194,11 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.RadioList:
                     {
-                        CustomControl? customControl;
+                        CustomControl customControl;
 
                         if (controlModel == null)
                         {
-                            customControl = new(ElementType.RadioList);
+                            customControl = new CustomControl(ElementType.RadioList);
 
                             DialogLauncher<ListCreator> listCreator = new DialogLauncher<ListCreator>(this, ResizeMode.NoResize);
                             listCreator.ShowDialog();
@@ -230,14 +232,14 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.Label:
                     {
-                        CustomControl? customControl;
+                        CustomControl customControl;
                         if (controlModel == null)
                         {
-                            customControl = new(ElementType.Label);
+                            customControl = new CustomControl(ElementType.Label);
                         }
                         else
                         {
-                            customControl = (CustomControl?)controlModel;
+                            customControl = (CustomControl)controlModel;
                         }
 
                         if (customControl != null)
@@ -245,16 +247,34 @@ namespace ModelMockupDesigner.Controls
                             customControl.DisplayChanged += OnGroupBoxDisplayChanged;
                         }
 
-                        AthenaLabel athenaLabel = new(customControl);
+                        AthenaLabel athenaLabel = new AthenaLabel(customControl);
 
-                        cellControl = athenaLabel; 
+                        cellControl = athenaLabel;
 
                         break;
                     }
                 case ElementType.TextBox:
+                case ElementType.MultiLineTextBox:
+                case ElementType.NumericTextBox:
+                case ElementType.DoubleTextBox:
                     {
+                        CustomControl customControl;
+                        if (controlModel == null)
+                        {
+                            customControl = new CustomControl(elementType) ;
+                        }
+                        else
+                        {
+                            customControl = (CustomControl)controlModel;
+                        }
+
+                        AthenaTextBox athenaTextBox = new AthenaTextBox(customControl);
+
+                        cellControl = athenaTextBox;
+
                         break;
                     }
+                
                 case ElementType.CheckBoxList:
                     {
                         break;
@@ -269,6 +289,20 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.DateTime:
                     {
+                        CustomControl customControl;
+                        if (controlModel == null)
+                        {
+                            customControl = new CustomControl(ElementType.DateTime);
+                        }
+                        else
+                        {
+                            customControl = (CustomControl)controlModel;
+                        }
+
+                        AthenaDateTime athenaDateTime = new AthenaDateTime(customControl);
+
+                        cellControl = athenaDateTime;
+
                         break;
                     }
                 case ElementType.ApproxDate:
@@ -277,14 +311,14 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.CheckBox:
                     {
-                        CustomControl? customControl;
+                        CustomControl customControl;
                         if (controlModel == null)
                         {
-                            customControl = new(ElementType.CheckBox);
+                            customControl = new CustomControl(ElementType.CheckBox);
                         }
                         else
                         {
-                            customControl = (CustomControl?)controlModel;
+                            customControl = (CustomControl)controlModel;
                         }
 
                         if (customControl != null)
@@ -292,7 +326,7 @@ namespace ModelMockupDesigner.Controls
                             customControl.DisplayChanged += OnGroupBoxDisplayChanged;
                         }
 
-                        AthenaCheckBox athenaCheckBox = new(customControl);
+                        AthenaCheckBox athenaCheckBox = new AthenaCheckBox(customControl);
 
                         cellControl = athenaCheckBox;
 
@@ -304,14 +338,14 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.Button:
                     {
-                        CustomControl? customControl;
+                        CustomControl customControl;
                         if (controlModel == null)
                         {
-                            customControl = new(ElementType.Button);
+                            customControl = new CustomControl(ElementType.Button);
                         }
                         else
                         {
-                            customControl = (CustomControl?)controlModel;
+                            customControl = (CustomControl)controlModel;
                         }
 
                         if (customControl != null)
@@ -319,7 +353,7 @@ namespace ModelMockupDesigner.Controls
                             customControl.DisplayChanged += OnGroupBoxDisplayChanged;
                         }
 
-                        AthenaCheckBox athenaCheckBox = new(customControl);
+                        AthenaCheckBox athenaCheckBox = new AthenaCheckBox(customControl);
 
                         cellControl = athenaCheckBox;
                         break;
@@ -333,7 +367,7 @@ namespace ModelMockupDesigner.Controls
                 AddCellControl(cellControl);
             }
 
-            if (cellControl is EditorTable table)
+            if (cellControl is EditorTable table) //|| cellControl is AthenaDateTime)
             {
                 overlay.Visibility = Visibility.Collapsed;
                 overlay.Background = Brushes.White;
@@ -348,8 +382,8 @@ namespace ModelMockupDesigner.Controls
 
         #region Events
 
-        public EventHandler<IIsSelectable>? OnSelected;
-        private void OnGroupBoxDisplayChanged(object? sender, GroupBoxDisplayChangedEventArgs e)
+        public EventHandler<IIsSelectable> OnSelected;
+        private void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
         {
             if (CellControl != null)
             {
@@ -357,11 +391,11 @@ namespace ModelMockupDesigner.Controls
                 {
                     if (GroupBox == null)
                     {
-                        FrameworkElement? control = CellControl as FrameworkElement;
+                        FrameworkElement control = CellControl as FrameworkElement;
                         if (control != null)
                         {
                             AthenaGroupBox gb = new AthenaGroupBox();
-                            gb.Margin = new Thickness(5);
+                            //gb.Margin = new Thickness(5);
                             gb.Initialise(e);
 
                             Root.Children.Remove(control);
@@ -472,9 +506,9 @@ namespace ModelMockupDesigner.Controls
 
             }
 
-            if (CellModel?.Parent is not DynamicWizardTable)
+            if (!(CellModel?.Parent is DynamicWizardTable))
             {
-                MenuItem item = new() { Header = "Add Table" };
+                MenuItem item = new MenuItem() { Header = "Add Table" };
                 item.Click += MenuItem_Click;
                 contextMenu.Items.Add(item);
             }

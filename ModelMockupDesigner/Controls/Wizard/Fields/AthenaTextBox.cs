@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ModelMockupDesigner.Controls
 {
@@ -18,18 +19,61 @@ namespace ModelMockupDesigner.Controls
         public AthenaTextBox(CustomControl customControl)
         {
             ControlModel = customControl;
-            this.TextChanged += AthenaTextBox_TextChanged;
+            TextChanged += AthenaTextBox_TextChanged;
+            GotFocus += AthenaTextBox_GotFocus;
+            LostFocus += AthenaTextBox_LostFocus;
+
+            customControl.OnControlUpdated += CustomControl_OnControlUpdated;
+
+            Initialise();
+        }
+        private void Initialise()
+        {
+            ElementType = ControlModel.ElementType;
+            switch (ElementType)
+            {
+                case ElementType.DoubleTextBox:
+                case ElementType.NumericTextBox:
+                    {
+                        MinWidth = 50;
+                        break;
+                    }
+                case ElementType.MultiLineTextBox:
+                    {
+                        MinWidth = 300;
+                        if (ControlModel.MinimumLines <= 1)
+                        {
+                            MinLines = 4;
+                        }
+                        else
+                        {
+                            MinLines = ControlModel.MinimumLines;
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        MinWidth = 200;
+                        break;
+                    }
+            }
         }
 
-        private string? lastText;
+        private void CustomControl_OnControlUpdated(object sender, EventArgs e)
+        {
+            MinLines = ControlModel.MinimumLines;
+            UpdateMinimumSize();
+        }
+
+        private string lastText;
         private int lastSelStart = 0;
-        public string? Filter { get; set; }
+        public string Filter { get; set; }
         private void AthenaTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             bool error = false;
-            if (!String.IsNullOrEmpty(Filter) && this.Text.Length > 0)
+            if (!string.IsNullOrEmpty(Filter) && Text.Length > 0)
             {
-                foreach (char c in this.Text)
+                foreach (char c in Text)
                 {
                     if (!Filter.Contains(c.ToString()))
                     {
@@ -40,14 +84,14 @@ namespace ModelMockupDesigner.Controls
             }
 
             // Make sure its a valid number
-            if (!string.IsNullOrEmpty(this.Text) && this.Text != "-")
+            if (!string.IsNullOrEmpty(this.Text) && Text != "-")
             {
                 if (ControlModel.ElementType == ElementType.DoubleTextBox)
                 {
-                    if (this.Text != ".")
+                    if (Text != ".")
                     {
                         double d = 0.0;
-                        if (!double.TryParse(this.Text, out d))
+                        if (!double.TryParse(Text, out d))
                         {
                             error = true;
                         }
@@ -56,7 +100,7 @@ namespace ModelMockupDesigner.Controls
                 else if (ControlModel.ElementType == ElementType.NumericTextBox)
                 {
                     int i = 0;
-                    if (!int.TryParse(this.Text, out i))
+                    if (!int.TryParse(Text, out i))
                     {
                         error = true;
                     }
@@ -65,16 +109,34 @@ namespace ModelMockupDesigner.Controls
 
             if (error)
             {
-                this.TextChanged -= AthenaTextBox_TextChanged;
-                this.Text = lastText;
-                this.TextChanged += AthenaTextBox_TextChanged;
-                this.SelectionStart = lastSelStart;
+                TextChanged -= AthenaTextBox_TextChanged;
+                Text = lastText;
+                TextChanged += AthenaTextBox_TextChanged;
+                SelectionStart = lastSelStart;
                 return;
             }
 
-            lastText = this.Text;
-            lastSelStart = this.SelectionStart;
+            lastText = Text;
+            lastSelStart = SelectionStart;
         }
+        private void AthenaTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+            Background = new SolidColorBrush(Colors.White);
+
+        }
+        private void AthenaTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+            Background = new SolidColorBrush(Color.FromArgb(255, 152, 251, 152));
+
+        }
+        protected override void OnVisualParentChanged(DependencyObject oldParent)
+        {
+            base.OnVisualParentChanged(oldParent);
+            UpdateMinimumSize();
+        }
+
         private void UpdateMinimumSize()
         {
             if (ControlModel.MinimumCharacters > 0)
@@ -89,13 +151,18 @@ namespace ModelMockupDesigner.Controls
                 {
                     lines += Environment.NewLine + str;
                 }
-                string temp = this.Text;
-                this.Text = lines;
-                this.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-                this.MinWidth = this.DesiredSize.Width;
+                TextChanged -= AthenaTextBox_TextChanged;
+
+                string temp = Text;
+                Text = lines;
+                Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+
+                MinWidth = DesiredSize.Width;
                 if (MinLines > 1)
-                    this.MinHeight = this.DesiredSize.Height;
-                this.Text = temp;
+                    MinHeight = DesiredSize.Height;
+                Text = temp;
+
+                TextChanged += AthenaTextBox_TextChanged;
             }
         }
         public ElementType ElementType
@@ -112,7 +179,7 @@ namespace ModelMockupDesigner.Controls
                 {
                     case ElementType.TextBox:
                         // Prevent the control from increasing in size as text is typed into it
-                        this.TextWrapping = System.Windows.TextWrapping.NoWrap;
+                        TextWrapping = System.Windows.TextWrapping.NoWrap;
                         break;
                     case ElementType.NumericTextBox:
                         //Alignment = ContentAlignment.MiddleRight;
@@ -120,8 +187,8 @@ namespace ModelMockupDesigner.Controls
                         break;
                     case ElementType.MultiLineTextBox:
                         VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-                        base.AcceptsReturn = true;
-                        //VerticalContentAlignment = VerticalAlignment.Top;
+                        AcceptsReturn = true;
+                        VerticalContentAlignment = VerticalAlignment.Top;
                         break;
                     case ElementType.DoubleTextBox:
                         //Alignment = ContentAlignment.MiddleRight;
@@ -130,7 +197,7 @@ namespace ModelMockupDesigner.Controls
                 }
             }
         }
-        public BaseModel? Model => ControlModel;
+        public BaseModel Model => ControlModel;
         public bool DisplayGroupbox => ControlModel.DisplayGroupbox;
     }
 }

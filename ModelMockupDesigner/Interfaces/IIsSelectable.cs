@@ -10,7 +10,7 @@ namespace ModelMockupDesigner.Interfaces
 {
     public interface IIsSelectable
     {
-        BaseModel? Model { get; }
+        BaseModel Model { get; }
         void Unselect();
         void DeleteControl();
     }

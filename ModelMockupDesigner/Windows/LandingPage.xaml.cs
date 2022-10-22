@@ -27,7 +27,7 @@ namespace ModelMockupDesigner
     /// </summary>
     public partial class LandingPage : UserControl, IWindowStack
     {
-        private LandingPageViewModel? ViewModel { get => DataContext as LandingPageViewModel; }
+        private LandingPageViewModel ViewModel { get => DataContext as LandingPageViewModel; }
         public LandingPage()
         {
             InitializeComponent();
@@ -54,7 +54,7 @@ namespace ModelMockupDesigner
 
         #region Not used, needed for interface
 
-        public event EventHandler? OnClosed;
+        public event EventHandler OnClosed;
         public void CloseAsync()
         {
             throw new NotImplementedException();

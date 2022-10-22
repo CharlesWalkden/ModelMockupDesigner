@@ -28,26 +28,24 @@ namespace ModelMockupDesigner
     /// </summary>
     public partial class Editor : UserControl, IWindowStack
     {
-#pragma warning disable CS8603 // Will never be null as we create a new viewmodel in constructor.
         public WizardEditorViewModel ViewModel { get => DataContext as WizardEditorViewModel; }
-#pragma warning restore CS8603 
 
-        public DynamicWizard? WizardModel { get; set; }
+        public DynamicWizard WizardModel { get; set; }
 
-        public IIsSelectable? CurrentSelection { get; set; }
+        public IIsSelectable CurrentSelection { get; set; }
 
-        public List<EditorSection>? Pages { get; set; }
-        public EditorSection? CurrentPage { get; set; }
+        public List<EditorSection> Pages { get; set; }
+        public EditorSection CurrentPage { get; set; }
 
-        public WizardDesignPreview? DesignPreview;
+        public WizardDesignPreview DesignPreview;
 
-        public event EventHandler<DynamicWizard>? OnWizardUpdated;
+        public event EventHandler<DynamicWizard> OnWizardUpdated;
 
         public Editor()
         {
             InitializeComponent();
             DataContext = new WizardEditorViewModel();
-            Pages = new();
+            Pages = new List<EditorSection>();
         }
         public async Task LoadEditor(DynamicWizard wizard)
         {
@@ -61,7 +59,7 @@ namespace ModelMockupDesigner
         }
         public async Task LoadEditor(WizardCreatorViewModel creatorModel)
         {
-            WizardModel = new()
+            WizardModel = new DynamicWizard()
             {
                 Name = creatorModel.WizardName,
                 Description = creatorModel.WizardDescription,
@@ -89,7 +87,7 @@ namespace ModelMockupDesigner
         }
         private async Task LoadDesignPreview()
         {
-            DialogLauncher<WizardDesignPreview> designPreview = new(this, ResizeMode.CanResize);
+            DialogLauncher<WizardDesignPreview> designPreview = new DialogLauncher<WizardDesignPreview>(this, ResizeMode.CanResize);
             designPreview.OnClose += OnWizardDesignPreviewClose;
             await designPreview.Control.LoadWizard(WizardModel);
             OnWizardUpdated += designPreview.Control.WizardDesignPreview_OnWizardUpdated;
@@ -109,7 +107,7 @@ namespace ModelMockupDesigner
 
             foreach (DynamicWizardSection wizardSection in WizardModel.Sections)
             {
-                EditorSection? editorSection = new();
+                EditorSection editorSection = new EditorSection();
                 editorSection.OnSelected += UpdateCurrentSelection;
 
                 await editorSection.LoadModel(wizardSection);
@@ -123,7 +121,7 @@ namespace ModelMockupDesigner
         {
             ContentContainer.Children.Clear();
 
-            EditorSection? page = Pages[pageIndex];
+            EditorSection page = Pages[pageIndex];
 
             ContentContainer.Children.Add(page);
 
@@ -197,7 +195,7 @@ namespace ModelMockupDesigner
             }
 
         }
-        private void UpdateCurrentSelection(object? sender, IIsSelectable? newSelection)
+        private void UpdateCurrentSelection(object sender, IIsSelectable newSelection)
         {
             if (CurrentSelection != null)
             {
@@ -233,10 +231,10 @@ namespace ModelMockupDesigner
             if (WizardModel == null)
                 return;
 
-            EditorSection? page = new();
+            EditorSection page = new EditorSection();
             page.OnSelected += UpdateCurrentSelection;
             
-            DynamicWizardSection? newSectionModel = new(WizardModel);
+            DynamicWizardSection newSectionModel = new DynamicWizardSection(WizardModel);
             await page.LoadModel(newSectionModel);
             
             page.Model.OrderId = GetNextPageOrderNumber();
@@ -250,11 +248,12 @@ namespace ModelMockupDesigner
         }
         private void AddPage(EditorSection page)
         {
-            Pages ??= new List<EditorSection>();
+            if (Pages == null)
+                Pages = new List<EditorSection>();
 
             Pages.Add(page);
 
-            ComboBoxItem? comboBoxItem = new()
+            ComboBoxItem comboBoxItem = new ComboBoxItem()
             {
                 Text = page.Model.Name,
                 Value = page.Model.OrderId
@@ -391,7 +390,7 @@ namespace ModelMockupDesigner
         {
             if (WizardModel != null)
             {
-                WizardCreatorViewModel? vm = new()
+                WizardCreatorViewModel vm = new WizardCreatorViewModel()
                 {
                     WizardName = WizardModel.Name,
                     WizardDescription = WizardModel.Description,
@@ -399,7 +398,7 @@ namespace ModelMockupDesigner
                     WizardType = WizardModel.WizardType
                 };
 
-                DialogLauncher<WizardCreator> wizardCreator = new(this, ResizeMode.NoResize);
+                DialogLauncher<WizardCreator> wizardCreator = new DialogLauncher<WizardCreator>(this, ResizeMode.NoResize);
                 wizardCreator.Control.LoadExistingData(vm);
                 wizardCreator.OnClose += WizardCreator_OnClose;
                 if (wizardCreator.Control.ViewModel != null)
@@ -414,7 +413,7 @@ namespace ModelMockupDesigner
                 wizardCreator.ShowDialog();
             }
         }
-        private void WizardCreator_OnClose(object? sender, DialogEventArgs e)
+        private void WizardCreator_OnClose(object sender, DialogEventArgs e)
         {
             if (sender is DialogLauncher<WizardCreator> wizardCreator && wizardCreator.Control != null && wizardCreator.Control.DialogResult == DialogResult.Accept &&
                 wizardCreator.Control.ViewModel != null)
@@ -434,21 +433,21 @@ namespace ModelMockupDesigner
             
             e.Handled = true;
         }
-        private void OnWizardDesignPreviewClose(object? sender, EventArgs e)
+        private void OnWizardDesignPreviewClose(object sender, EventArgs e)
         {
             DesignPreview = null;
         }
 
         #region Interface
 
-        public event EventHandler? OnClosed;
+        public event EventHandler OnClosed;
         public void CloseAsync()
         {
             OnClosed?.Invoke(this, new EventArgs());
         }
         public WindowParameters GetWindowParameters()
         {
-            WindowParameters? windowParameters = new WindowParameters()
+            WindowParameters windowParameters = new WindowParameters()
             {
                 CanResize = true,
                 MinHeight = 800,
@@ -462,8 +461,8 @@ namespace ModelMockupDesigner
 
         #region Temp new field item drag
 
-        private Border? Source { get; set; }
-        private NewControl? SelectedControl { get; set; }
+        private Border Source { get; set; }
+        private NewControl SelectedControl { get; set; }
         private void Border_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -476,7 +475,7 @@ namespace ModelMockupDesigner
         private void Border_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             Source = (Border)sender;
-            TextBlock? child = null;
+            TextBlock child = null;
             if (Source != null)
             {
                 child = Source.Child as TextBlock;
@@ -515,6 +514,31 @@ namespace ModelMockupDesigner
                     case "Button":
                         {
                             selectedType = ElementType.Button;
+                            break;
+                        }
+                    case "DateTime":
+                        {
+                            selectedType = ElementType.DateTime;
+                            break;
+                        }
+                    case "Textbox":
+                        {
+                            selectedType = ElementType.TextBox;
+                            break;
+                        }
+                    case "TextboxMultiLine":
+                        {
+                            selectedType = ElementType.MultiLineTextBox;
+                            break;
+                        }
+                    case "TextboxDouble":
+                        {
+                            selectedType = ElementType.DoubleTextBox;
+                            break;
+                        }
+                    case "TextboxNumeric":
+                        {
+                            selectedType = ElementType.NumericTextBox;
                             break;
                         }
                     default:

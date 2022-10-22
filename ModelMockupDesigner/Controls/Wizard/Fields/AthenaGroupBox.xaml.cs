@@ -33,12 +33,12 @@ namespace ModelMockupDesigner.Controls
                 }
             }
         }
-        private FrameworkElement? ContentControl { get; set; }
+        private FrameworkElement ContentControl { get; set; }
         public ElementType ElementType => ElementType.GroupBox;
 
-        public BaseModel? Model => ContentControl?.DataContext as BaseModel;
+        public BaseModel Model => ContentControl?.DataContext as BaseModel;
         public bool DisplayGroupbox { get => false; } 
-        public void SetContent(FrameworkElement? element)
+        public void SetContent(FrameworkElement element)
         {
             if (element != null)
             {

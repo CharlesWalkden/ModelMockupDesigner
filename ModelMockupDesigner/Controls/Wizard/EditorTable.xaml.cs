@@ -26,7 +26,7 @@ namespace ModelMockupDesigner.Controls
     {
         #region Public Properties
 
-        public BaseModel? Model { get => TableModel; }
+        public BaseModel Model { get => TableModel; }
         public EditorCell TableParent { get => tableParent; set => tableParent = value; }
         public ElementType ElementType { get => ElementType.Table; }
         public bool DisplayGroupbox { get => TableModel?.DisplayGroupbox ?? false; }
@@ -35,7 +35,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Private Properties
 
-        private DynamicWizardTable? TableModel { get; set; }
+        private DynamicWizardTable TableModel { get; set; }
         private EditorCell tableParent { get; set; }
 
         #endregion
@@ -70,7 +70,7 @@ namespace ModelMockupDesigner.Controls
 
             foreach (DynamicWizardCell cell in tableModel.Cells)
             {
-                EditorCell editorCell = new(this);
+                EditorCell editorCell = new EditorCell(this);
                 editorCell.OnSelected += OnSelected;
 
                 container.Children.Add(editorCell);
@@ -113,17 +113,17 @@ namespace ModelMockupDesigner.Controls
             newRow.Background = Brushes.Transparent;
         }
 
-        private async Task AddCell(int column, int row, ElementType? elementType = null)
+        private async Task AddCell(int column, int row, ElementType elementType = ElementType.Unknown)
         {
-            DynamicWizardCell wizardCell = new(TableModel) { Column = column, Row = row };
+            DynamicWizardCell wizardCell = new DynamicWizardCell(TableModel) { Column = column, Row = row };
 
             TableModel?.Cells.Add(wizardCell);
 
-            EditorCell editorCell = new(this);
+            EditorCell editorCell = new EditorCell(this);
             editorCell.OnSelected += OnSelected;
             await editorCell.LoadModel(wizardCell);
 
-            if (elementType != null)
+            if (elementType != ElementType.Unknown)
             {
                 await editorCell.AddNewControl(elementType);
             }
@@ -133,7 +133,7 @@ namespace ModelMockupDesigner.Controls
             Grid.SetRow(editorCell, row);
 
         }
-        private async Task AddColumn(NewControl? newControl = null)
+        private async Task AddColumn(NewControl newControl = null)
         {
             if (TableModel == null)
                 return;
@@ -156,7 +156,7 @@ namespace ModelMockupDesigner.Controls
                 }
             }
         }
-        private async Task AddRow(NewControl? newControl = null)
+        private async Task AddRow(NewControl newControl = null)
         {
             if (TableModel == null)
                 return;
@@ -210,7 +210,7 @@ namespace ModelMockupDesigner.Controls
         
         #region Events
 
-        public EventHandler<IIsSelectable>? OnSelected;
+        public EventHandler<IIsSelectable> OnSelected;
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderStackPanel.Background = Brushes.Green;
@@ -273,15 +273,15 @@ namespace ModelMockupDesigner.Controls
         {
             ContextMenu contextMenu = new ContextMenu();
 
-            MenuItem menuItem = new() { Header = "Delete Table" };
+            MenuItem menuItem = new MenuItem() { Header = "Delete Table" };
             menuItem.Click += MenuItem_Click;
             contextMenu.Items.Add(menuItem);
 
-            menuItem = new() { Header = "Add Column to Panel" };
+            menuItem = new MenuItem() { Header = "Add Column to Panel" };
             menuItem.Click += MenuItem_Click;
             contextMenu.Items.Add(menuItem);
 
-            menuItem = new() { Header = "Add Row to Panel" };
+            menuItem = new MenuItem() { Header = "Add Row to Panel" };
             menuItem.Click += MenuItem_Click;
             contextMenu.Items.Add(menuItem);
 

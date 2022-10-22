@@ -12,11 +12,11 @@ namespace ModelMockupDesigner.Models
 {
     public class DynamicWizard : BaseModel, IWizardModel
     {
-        public string? Description { get; set; }
-        public WizardType? WizardType { get; set; }
-        public WizardTheme? WizardTheme { get; set; }
+        public string Description { get; set; }
+        public WizardType WizardType { get; set; }
+        public WizardTheme WizardTheme { get; set; }
         public List<DynamicWizardSection> Sections { get; set; }
-        public Category? Category
+        public Category Category
         {
             get => category;
             set
@@ -42,8 +42,8 @@ namespace ModelMockupDesigner.Models
                 }
             }
         }
-        private Category? category { get; set; }
-        public Project? Project { get; set; }
+        private Category category { get; set; }
+        public Project Project { get; set; }
 
         public DynamicWizard()
         {
@@ -52,7 +52,7 @@ namespace ModelMockupDesigner.Models
 
         public Task CreateNew() 
         {
-            DynamicWizardSection newSection = new(this);
+            DynamicWizardSection newSection = new DynamicWizardSection(this);
 
             return Task.CompletedTask;
         }
@@ -66,7 +66,8 @@ namespace ModelMockupDesigner.Models
             if (vm.CurrentCategorySelection != null)
                 Category = (Category)vm.CurrentCategorySelection.Value;
 
-            Project ??= vm.Project;
+            if (Project == null)
+                Project = vm.Project;
         }
 
         #region Xml
@@ -79,7 +80,7 @@ namespace ModelMockupDesigner.Models
         {
 
         }
-        public override XmlNode? ToXml()
+        public override XmlNode ToXml()
         {
             XmlWriterSettings settings = new XmlWriterSettings
             {

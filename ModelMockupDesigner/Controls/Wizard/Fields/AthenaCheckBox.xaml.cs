@@ -25,11 +25,11 @@ namespace ModelMockupDesigner.Controls
     {
         public ElementType ElementType => ControlModel?.ElementType ?? ElementType.CheckBox;
 
-        public BaseModel? Model => ControlModel;
+        public BaseModel Model => ControlModel;
 
         public bool DisplayGroupbox { get => ControlModel?.DisplayGroupbox ?? false; }
 
-        private CustomControl? ControlModel => DataContext as CustomControl;
+        private CustomControl ControlModel => DataContext as CustomControl;
 
         public AthenaCheckBox(CustomControl controlModel)
         {

@@ -25,7 +25,7 @@ namespace ModelMockupDesigner.Controls
     {
         public CustomControl ControlModel { get; set; }
 
-        private List<RadioButton> radioButtons = new();
+        private List<RadioButton> radioButtons = new List<RadioButton>();
         private List<StackPanel> StackPanels = new List<StackPanel>();
         public AthenaRadioList(CustomControl controlModel)
         {
@@ -38,7 +38,7 @@ namespace ModelMockupDesigner.Controls
             {
                 foreach (string option in controlModel.ListOptions)
                 {
-                    RadioButton button = new()
+                    RadioButton button = new RadioButton()
                     {
                         Style = Application.Current.Resources["RadioButtonStyle1"] as Style,
                         Content = option
@@ -48,16 +48,16 @@ namespace ModelMockupDesigner.Controls
             }
 
             RefreshListOptions(controlModel.ColumnCount);
-            ShowGroupBox = false;
-            Title = null;
+            ShowGroupBox = ControlModel.DisplayGroupbox;
+            Title = ControlModel.GroupBoxTitle;
         }
 
-        private void ControlModel_OnColumnCountChanged(object? sender, int e)
+        private void ControlModel_OnColumnCountChanged(object sender, int e)
         {
             RefreshListOptions(e);
         }
 
-        private void GroupBox_DisplayChanged(object? sender, GroupBoxDisplayChangedEventArgs e)
+        private void GroupBox_DisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
         {
             ShowGroupBox = e.Display;
             Title = e.GroupBoxTitle;
@@ -146,7 +146,7 @@ namespace ModelMockupDesigner.Controls
 
         public ElementType ElementType => ElementType.RadioList;
 
-        public BaseModel? Model => ControlModel;
+        public BaseModel Model => ControlModel;
 
         public bool DisplayGroupbox => ControlModel.DisplayGroupbox;
 

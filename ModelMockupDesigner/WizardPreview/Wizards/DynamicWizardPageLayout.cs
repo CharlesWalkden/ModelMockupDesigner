@@ -22,7 +22,7 @@ namespace ModelMockupDesigner.WizardPreview
         {
             this.Children.Clear();
 
-            DynamicWizardSectionLayout sectionLayout = new(Template);
+            DynamicWizardSectionLayout sectionLayout = new DynamicWizardSectionLayout(Template);
             await sectionLayout.Build();
 
             this.Children.Add(sectionLayout);

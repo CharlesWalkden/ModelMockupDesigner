@@ -20,13 +20,13 @@ namespace ModelMockupDesigner
         {
             Result = result;
         }
-        public DialogResult? Result;
+        public DialogResult Result;
         public bool AffirmativeResponse
         {
             get
             {
                 bool res = false;
-                if (Result.HasValue && (Result == DialogResult.Yes || Result == DialogResult.OK || Result == DialogResult.Accept))
+                if (Result == DialogResult.Yes || Result == DialogResult.OK || Result == DialogResult.Accept)
                 {
                     res = true;
                 }
@@ -36,12 +36,12 @@ namespace ModelMockupDesigner
     }
     public class DialogLauncher<T> where T : class, new()
     {
-        public EventHandler<DialogEventArgs>? OnClose;
+        public EventHandler<DialogEventArgs> OnClose;
 
         public Window Window = new Window();
-        public ScrollViewer? ScrollViewer = null;
+        public ScrollViewer ScrollViewer = null;
 
-        public DialogResult? DialogResult;
+        public DialogResult DialogResult;
         public DialogLauncher(object owner, ResizeMode resizeMode)
         {
             Window.SnapsToDevicePixels = true;
@@ -60,7 +60,7 @@ namespace ModelMockupDesigner
 
             Window.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(window_MouseLeftButtonDown);
 
-            ScrollViewer = new()
+            ScrollViewer = new ScrollViewer()
             {
                 Name = "scrollViewerContainer",
                 VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
@@ -81,7 +81,7 @@ namespace ModelMockupDesigner
             }
         }
 
-        private void Window_Closed(object? sender, EventArgs e)
+        private void Window_Closed(object sender, EventArgs e)
         {
             // If the result is none, this is the default and means we have not closed it, the user has with the X
             if (DialogResult == null)   
@@ -90,7 +90,7 @@ namespace ModelMockupDesigner
             }
         }
 
-        private void DialogClient_Close(object? sender, DialogEventArgs e)
+        private void DialogClient_Close(object sender, DialogEventArgs e)
         {
             DialogResult = e.Result;
             Close();
@@ -149,9 +149,7 @@ namespace ModelMockupDesigner
         //    }
         //}
 
-#pragma warning disable CS8603 // We will always have content here. If we don't something has gone wrong and needs fixing.
         public T Control => ((ScrollViewer)Window.Content).Content as T;
-#pragma warning restore CS8603 // Possible null reference return.
         private void window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             try

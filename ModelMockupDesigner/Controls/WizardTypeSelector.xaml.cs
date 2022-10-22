@@ -57,7 +57,7 @@ namespace ModelMockupDesigner.Controls
 
         private void Checkbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            CheckBox? checkBox = sender as CheckBox;
+            CheckBox checkBox = sender as CheckBox;
             WizardType type = WizardType.Dynamic; //Default for now
 
             if (checkBox != null)

@@ -11,6 +11,6 @@ namespace ModelMockupDesigner.Models
     {
         public ElementType ElementType { get; set; }
 
-        public string? DisplayText { get; set; }
+        public string DisplayText { get; set; }
     }
 }

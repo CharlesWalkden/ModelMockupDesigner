@@ -26,7 +26,7 @@ namespace ModelMockupDesigner.Models
         {
             OrderId = Parent.WizardPanels.Count;
 
-            DynamicWizardCell wizardCell = new(this);
+            DynamicWizardCell wizardCell = new DynamicWizardCell(this);
 
             Cells.Add(wizardCell);
         }
@@ -36,7 +36,7 @@ namespace ModelMockupDesigner.Models
         public string HeaderName => "Panel";
         public Dictionary<string, string> GetEditableProperties()
         {
-            Dictionary<string, string> properties = new();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("Name", "Name");
 
             return properties;
@@ -49,7 +49,7 @@ namespace ModelMockupDesigner.Models
             throw new NotImplementedException();
         }
 
-        public override XmlNode? ToXml()
+        public override XmlNode ToXml()
         {
             throw new NotImplementedException();
         }

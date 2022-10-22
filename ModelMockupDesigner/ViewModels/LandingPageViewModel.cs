@@ -14,15 +14,15 @@ namespace ModelMockupDesigner.ViewModels
 {
     public class LandingPageViewModel
     {
-        public RecentProjectListItemViewModel? CurrentSelected { get; set; } = null;
+        public RecentProjectListItemViewModel CurrentSelected { get; set; } = null;
         public CollectionList<Project> AllProjects { get; set; }
         public CollectionList<RecentProjectListItemViewModel> RecentProjects { get; set; }
         public LandingPageViewModel(UserControl owner)
         {
             Parent = owner;
-            AllProjects = new();
+            AllProjects = new CollectionList<Project>();
             AllProjects.OnAddEntry += AllProjects_OnAddEntry; 
-            RecentProjects = new();
+            RecentProjects = new CollectionList<RecentProjectListItemViewModel>();
 
             NewProjectCommand = new RelayCommand(NewProject);
             LoadProjectCommand = new RelayCommand(LoadProject);
@@ -39,10 +39,10 @@ namespace ModelMockupDesigner.ViewModels
 
         public List<RecentProjectListItemViewModel> ConvertToViewModel(IEnumerable<Project> projects)
         {
-            List<RecentProjectListItemViewModel> recents = new();
+            List<RecentProjectListItemViewModel> recents = new List<RecentProjectListItemViewModel>();
             foreach (Project project in projects)
             {
-                RecentProjectListItemViewModel vm = new()
+                RecentProjectListItemViewModel vm = new RecentProjectListItemViewModel()
                 {
                     ProjectModel = project
                 };
@@ -55,7 +55,7 @@ namespace ModelMockupDesigner.ViewModels
         }
         private void NewProject() 
         {
-            DialogLauncher<ProjectCreator> projectCreator = new(Parent, ResizeMode.NoResize);
+            DialogLauncher<ProjectCreator> projectCreator = new DialogLauncher<ProjectCreator>(Parent, ResizeMode.NoResize);
             projectCreator.OnClose += ProjectCreator_OnClose;
             projectCreator.ShowDialog();
         }
@@ -95,11 +95,11 @@ namespace ModelMockupDesigner.ViewModels
         }
 
         #region Events
-        private void AllProjects_OnAddEntry(object? sender, EventArgs e)
+        private void AllProjects_OnAddEntry(object sender, EventArgs e)
         {
             RefreshRecentProjectsList();
         }
-        private async void WizardCreator_OnClose(object? sender, DialogEventArgs e)
+        private async void WizardCreator_OnClose(object sender, DialogEventArgs e)
         {
             if (sender is DialogLauncher<WizardCreator> wizardCreator && wizardCreator.Control != null && wizardCreator.Control.DialogResult == DialogResult.Accept &&
                 wizardCreator.Control.ViewModel != null)
@@ -119,12 +119,12 @@ namespace ModelMockupDesigner.ViewModels
                 }
             }
         }
-        private void ProjectCreator_OnClose(object? sender, DialogEventArgs e)
+        private void ProjectCreator_OnClose(object sender, DialogEventArgs e)
         {
             if (sender is DialogLauncher<ProjectCreator> projectCreator && projectCreator.Control != null && projectCreator.Control.DialogResult == DialogResult.Accept &&
                 projectCreator.Control.ViewModel != null)
             {
-                Project project = new(projectCreator.Control.ViewModel);
+                Project project = new Project(projectCreator.Control.ViewModel);
                 AllProjects.AddEntry(project);
 
                 WizardSelector wizardSelector = new WizardSelector(project);
@@ -132,7 +132,7 @@ namespace ModelMockupDesigner.ViewModels
                 WindowControl.DisplayWindow(wizardSelector);
             }
         }
-        private void RecentProject_Selected(object? sender, EventArgs e)
+        private void RecentProject_Selected(object sender, EventArgs e)
         {
             if (sender is RecentProjectListItemViewModel viewModel)
             {

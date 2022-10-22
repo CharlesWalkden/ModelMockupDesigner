@@ -15,9 +15,9 @@ namespace ModelMockupDesigner.ViewModels
     {
         public CollectionList<ListViewItem> ListOptions { get; set; }
 
-        public ListViewItem? CurrentSelection { get; set; }
+        public ListViewItem CurrentSelection { get; set; }
         
-        public string? CurrentText { get; set; }
+        public string CurrentText { get; set; }
 
         public ListCreatorViewModel()
         {

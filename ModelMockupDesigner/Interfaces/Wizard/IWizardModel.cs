@@ -10,8 +10,8 @@ namespace ModelMockupDesigner.Interfaces
 {
     public interface IWizardModel
     {
-        string? Name { get; set; }
-        WizardType? WizardType { get; }
-        Category? Category { get; set; }
+        string Name { get; set; }
+        WizardType WizardType { get; }
+        Category Category { get; set; }
     }
 }

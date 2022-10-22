@@ -64,7 +64,7 @@ namespace ModelMockupDesigner.Controls
 
                     foreach (KeyValuePair<string,string> property in properties)
                     {
-                        PropertyInfo? info = currentSelection.GetType().GetProperty(property.Value);
+                        PropertyInfo info = currentSelection.GetType().GetProperty(property.Value);
                         if (info != null && info.CanRead && info.CanWrite)
                         {
                             AddProperty(currentSelection, info, property.Key);
@@ -79,14 +79,14 @@ namespace ModelMockupDesigner.Controls
             root.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             int rowIndex = root.RowDefinitions.Count - 1;
 
-            TextBlock block = new() { Text = title, FontWeight = FontWeights.Bold, FontSize = fontSize, TextDecorations = TextDecorations.Underline, Margin = new Thickness(5, 15, 5, 0), HorizontalAlignment = HorizontalAlignment.Center };
+            TextBlock block = new TextBlock() { Text = title, FontWeight = FontWeights.Bold, FontSize = fontSize, TextDecorations = TextDecorations.Underline, Margin = new Thickness(5, 15, 5, 0), HorizontalAlignment = HorizontalAlignment.Center };
             root.Children.Add(block);
             Grid.SetRow(block, rowIndex);
             Grid.SetColumnSpan(block, 2);
         }
         private void AddProperty(object item, string propertyName, string displayName)
         {
-            PropertyInfo? propertyInfo = item.GetType().GetProperty(propertyName);
+            PropertyInfo propertyInfo = item.GetType().GetProperty(propertyName);
             if (propertyInfo != null)
             {
                 AddProperty(item, propertyInfo, displayName);
@@ -98,12 +98,12 @@ namespace ModelMockupDesigner.Controls
 
             int rowIndex = root.RowDefinitions.Count - 1;
 
-            TextBlock label = new() { Text = displayName, FontSize = 13.333, Margin = new Thickness(5), HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center };
+            TextBlock label = new TextBlock() { Text = displayName, FontSize = 13.333, Margin = new Thickness(5), HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center };
 
             root.Children.Add(label);
             Grid.SetRow(label, rowIndex);
 
-            FrameworkElement? editingControl = GetEditingElement(item, propertyInfo);
+            FrameworkElement editingControl = GetEditingElement(item, propertyInfo);
 
             if (editingControl != null)
             {
@@ -113,7 +113,7 @@ namespace ModelMockupDesigner.Controls
             }
         }
 
-        private FrameworkElement? GetEditingElement(object item, PropertyInfo property)
+        private FrameworkElement GetEditingElement(object item, PropertyInfo property)
         {
             FrameworkElement element;
 
@@ -133,20 +133,21 @@ namespace ModelMockupDesigner.Controls
             }
             else if (property.PropertyType == typeof(bool))
             {
-                CheckBox checkBox = new() { Margin = new Thickness(5) };
+                CheckBox checkBox = new CheckBox() { Margin = new Thickness(5) };
                 checkBox.HorizontalAlignment = HorizontalAlignment.Left;
 
-                Binding binding = new(property.Name) { Source = item, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+                Binding binding = new Binding(property.Name) { Source = item, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
                 checkBox.SetBinding(CheckBox.IsCheckedProperty, binding);
 
                 element = checkBox;
             }
             else
             {
-                TextBox textBox = new() { Margin = new Thickness(5), Width = 170 };
+                TextBox textBox = new TextBox() { Margin = new Thickness(5), Width = 170 };
+                textBox.Style = Application.Current.Resources["genericTextBox"] as Style;
                 textBox.HorizontalAlignment = HorizontalAlignment.Left;
 
-                Binding binding = new(property.Name) { Source = item, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+                Binding binding = new Binding(property.Name) { Source = item, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
                 textBox.SetBinding(TextBox.TextProperty, binding);
 
                 element = textBox;
@@ -168,7 +169,7 @@ namespace ModelMockupDesigner.Controls
             }
         }
 
-        private IPropertyEditor? currentSelection { get; set; } 
+        private IPropertyEditor currentSelection { get; set; } 
 
         public static readonly DependencyProperty CurrentSelectionProperty =
             DependencyProperty.Register(nameof(CurrentSelection), typeof(IPropertyEditor), typeof(PropertyEditor), new FrameworkPropertyMetadata(default(IPropertyEditor), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CurrentSelectionPropertyChanged));

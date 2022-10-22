@@ -25,27 +25,27 @@ namespace ModelMockupDesigner.Windows
     {
         #region Interface
 
-        public event EventHandler<DialogEventArgs>? OnClose;
+        public event EventHandler<DialogEventArgs> OnClose;
 
         #endregion
 
-        public ProjectCreatorViewModel? ViewModel { get => DataContext as ProjectCreatorViewModel; }
+        public ProjectCreatorViewModel ViewModel { get => DataContext as ProjectCreatorViewModel; }
         public DialogResult DialogResult { get; set; }
 
         public ProjectCreator()
         {
             InitializeComponent();
 
-            ProjectCreatorViewModel viewModel = new();
+            ProjectCreatorViewModel viewModel = new ProjectCreatorViewModel();
 
             DataContext = viewModel;
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e) 
         {
-            List<string> mandatoryFields = ViewModel?.ValidateData() ?? new();
+            List<string> mandatoryFields = ViewModel?.ValidateData() ?? new List<string>();
 
-            StringBuilder sb = new();
+            StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < mandatoryFields.Count; i++)
             {

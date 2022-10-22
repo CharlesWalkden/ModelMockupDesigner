@@ -25,11 +25,11 @@ namespace ModelMockupDesigner.Windows
     {
         #region Interface
 
-        public event EventHandler<DialogEventArgs>? OnClose;
+        public event EventHandler<DialogEventArgs> OnClose;
 
         #endregion
 
-        public CategoryCreatorViewModel? ViewModel { get => DataContext as CategoryCreatorViewModel; }
+        public CategoryCreatorViewModel ViewModel { get => DataContext as CategoryCreatorViewModel; }
         public DialogResult DialogResult { get; set; }
 
         public CategoryCreator()

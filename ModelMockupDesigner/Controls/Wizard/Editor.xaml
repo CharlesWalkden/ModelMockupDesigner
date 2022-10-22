@@ -69,6 +69,9 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -112,7 +115,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="RadioList" Background="MediumSeaGreen"/>
+                        <TextBlock Text="TextboxMultiLine"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -120,7 +123,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="CheckboxList"/>
+                        <TextBlock Text="TextboxDouble"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="0"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -128,7 +131,15 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="DropDownList"/>
+                        <TextBlock Text="TextboxNumeric"/>
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="1"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="RadioList" Background="MediumSeaGreen"/>
                     </Border>
                     <Border Grid.Row="4" Grid.Column="0"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -136,7 +147,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="Date"/>
+                        <TextBlock Text="CheckboxList"/>
                     </Border>
                     <Border Grid.Row="4" Grid.Column="1"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -144,7 +155,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="Time"/>
+                        <TextBlock Text="DropDownList"/>
                     </Border>
                     <Border Grid.Row="5" Grid.Column="0"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -152,7 +163,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="DateTime"/>
+                        <TextBlock Text="Date"/>
                     </Border>
                     <Border Grid.Row="5" Grid.Column="1"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -160,7 +171,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="ApproxDate"/>
+                        <TextBlock Text="Time"/>
                     </Border>
                     <Border Grid.Row="6" Grid.Column="0"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -168,7 +179,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="Checkbox" Background="MediumSeaGreen"/>
+                        <TextBlock Text="DateTime" Background="MediumSeaGreen"/>
                     </Border>
                     <Border Grid.Row="6" Grid.Column="1"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -176,9 +187,25 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="Image"/>
+                        <TextBlock Text="ApproxDate"/>
                     </Border>
                     <Border Grid.Row="7" Grid.Column="0"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="Checkbox" Background="MediumSeaGreen"/>
+                    </Border>
+                    <Border Grid.Row="7" Grid.Column="1"
+                        BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"
+                        PreviewMouseMove="Border_PreviewMouseMove"
+                        PreviewMouseDown="Border_PreviewMouseDown">
+                        <TextBlock Text="Image"/>
+                    </Border>
+                    <Border Grid.Row="8" Grid.Column="0"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
                         VerticalAlignment="Top" 
                         HorizontalAlignment="Left"

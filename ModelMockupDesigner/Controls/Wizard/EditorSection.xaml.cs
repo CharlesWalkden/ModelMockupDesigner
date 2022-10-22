@@ -31,9 +31,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Private Properties
 
-#pragma warning disable CS8603 // Will always have a value
         private DynamicWizardSection SectionModel => DataContext as DynamicWizardSection;
-#pragma warning restore CS8603
 
         #endregion
 
@@ -54,7 +52,7 @@ namespace ModelMockupDesigner.Controls
 
             foreach (DynamicWizardColumn wizardColumn in sectionModel.WizardColumns)
             {
-                EditorColumn editorColumn = new(this);
+                EditorColumn editorColumn = new EditorColumn(this);
                 editorColumn.OnSelected += OnSelected;
 
                 container.Children.Add(editorColumn);
@@ -88,12 +86,12 @@ namespace ModelMockupDesigner.Controls
             if (SectionModel == null)
                 return;
 
-            DynamicWizardColumn wizardColumn = new(SectionModel);
+            DynamicWizardColumn wizardColumn = new DynamicWizardColumn(SectionModel);
             wizardColumn.CreateNew();
 
             SectionModel.WizardColumns.Add(wizardColumn);
 
-            EditorColumn editorColumn = new(this);
+            EditorColumn editorColumn = new EditorColumn(this);
             editorColumn.OnSelected += OnSelected;
 
             container.Children.Add(editorColumn);
@@ -145,7 +143,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Events
 
-        public EventHandler<IIsSelectable>? OnSelected;
+        public EventHandler<IIsSelectable> OnSelected;
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderStackPanel.Background = Application.Current.Resources["SectionPinkBrush"] as SolidColorBrush;

@@ -22,14 +22,14 @@ namespace ModelMockupDesigner
     /// </summary>
     public partial class WizardDesignPreview : UserControl, IDialogClient
     {
-        public PreviewWizardLayout? PreviewWizardLayout; 
+        public PreviewWizardLayout PreviewWizardLayout; 
 
         public WizardDesignPreview()
         {
             InitializeComponent();
         }
 
-        public async void WizardDesignPreview_OnWizardUpdated(object? sender, DynamicWizard e)
+        public async void WizardDesignPreview_OnWizardUpdated(object sender, DynamicWizard e)
         {
             if (PreviewWizardLayout == null)
                 await LoadWizard(e);
@@ -41,7 +41,7 @@ namespace ModelMockupDesigner
 
         public async Task LoadWizard(IWizardModel wizard)
         {
-            PreviewWizardLayout = new(wizard.WizardType);
+            PreviewWizardLayout = new PreviewWizardLayout(wizard.WizardType);
             await PreviewWizardLayout.LoadWizard(wizard);
 
             root.Children.Add(PreviewWizardLayout);
@@ -49,11 +49,11 @@ namespace ModelMockupDesigner
 
         #region Interface
 
-        public event EventHandler<DialogEventArgs>? OnClose;
+        public event EventHandler<DialogEventArgs> OnClose;
 
         public void Close()
         {
-            OnClose?.Invoke(this, new() { Result = Enums.DialogResult.None});
+            OnClose?.Invoke(this, new DialogEventArgs() { Result = Enums.DialogResult.None});
         }
 
         #endregion

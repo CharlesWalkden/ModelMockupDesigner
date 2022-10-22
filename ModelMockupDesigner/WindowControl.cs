@@ -11,8 +11,8 @@ namespace ModelMockupDesigner
 {
     public class WindowControl
     {
-        public static event EventHandler<WindowParameters>? OnWindowDisplay;
-        public static Grid? MainWindow
+        public static event EventHandler<WindowParameters> OnWindowDisplay;
+        public static Grid MainWindow
         {
             get => mainWindow;
             set => mainWindow = value;
@@ -35,7 +35,7 @@ namespace ModelMockupDesigner
         {
             if (windowStack.Count > 0 && MainWindow != null)
             {
-                UserControl control = windowStack[^1];
+                UserControl control = windowStack[windowStack.Count-1];
                 MainWindow.Children.Add(control);
                 MainWindow.Children[0].Visibility = System.Windows.Visibility.Visible;
 
@@ -55,7 +55,7 @@ namespace ModelMockupDesigner
                 }
             }
         }
-        private static void CloseTopWindow_OnClosed(object? sender, EventArgs e)
+        private static void CloseTopWindow_OnClosed(object sender, EventArgs e)
         {
             if (WindowIndex < windowStack.Count && MainWindow != null)
             {
@@ -67,8 +67,8 @@ namespace ModelMockupDesigner
 
         #region Private Properties
 
-        private static Grid? mainWindow;
-        private static List<UserControl> windowStack = new();
+        private static Grid mainWindow;
+        private static List<UserControl> windowStack = new List<UserControl>();
 
         #endregion
 

@@ -16,9 +16,9 @@ namespace ModelMockupDesigner.Models
 {
     public class Project : BaseModel
     {
-        public string? ProjectName { get; set; }
-        public string? ProjectDescription { get; set; }
-        public string? CustomerName { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectDescription { get; set; }
+        public string CustomerName { get; set; }
         public ProjectTemplate ProjectTemplate { get; set; }
         public List<IWizardModel> AllWizards { get; set; }
         public int WizardCount { get => AllWizards.Count; }
@@ -44,7 +44,7 @@ namespace ModelMockupDesigner.Models
                         break;
                     }
                 default:
-                    Categories = new();
+                    Categories = new List<Category>();
                     break;
             }
 
@@ -68,7 +68,7 @@ namespace ModelMockupDesigner.Models
             {
                 foreach (Category category in Categories)
                 {
-                    ComboBoxItem comboBox = new()
+                    ComboBoxItem comboBox = new ComboBoxItem()
                     {
                         Text = category.Name,
                         Value = category
@@ -111,7 +111,7 @@ namespace ModelMockupDesigner.Models
             throw new NotImplementedException();
         }
 
-        public override XmlNode? ToXml()
+        public override XmlNode ToXml()
         {
             throw new NotImplementedException();
         }

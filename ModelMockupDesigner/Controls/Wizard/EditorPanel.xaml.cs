@@ -27,16 +27,16 @@ namespace ModelMockupDesigner.Controls
     {
         #region Public Properties
 
-        public BaseModel? Model { get => PanelModel; }
-        public EditorColumn? PanelParent { get => panelParent; set => panelParent = value; }
+        public BaseModel Model { get => PanelModel; }
+        public EditorColumn PanelParent { get => panelParent; set => panelParent = value; }
         public ElementType ElementType { get => ElementType.Panel; }
 
         #endregion
 
         #region Private Properties
 
-        private DynamicWizardPanel? PanelModel { get; set; } 
-        private EditorColumn? panelParent { get; set; }
+        private DynamicWizardPanel PanelModel { get; set; } 
+        private EditorColumn panelParent { get; set; }
 
         #endregion
 
@@ -78,7 +78,7 @@ namespace ModelMockupDesigner.Controls
 
             foreach (DynamicWizardCell cellContent in panelModel.Cells)
             {
-                EditorCell editorCell = new(this);
+                EditorCell editorCell = new EditorCell(this);
                 editorCell.OnSelected += OnSelected;
                 if (cellContent.Column == 0)
                     editorCell.Margin = new Thickness(0,5,5,5);
@@ -129,13 +129,13 @@ namespace ModelMockupDesigner.Controls
             newRow.Visibility = Visibility.Collapsed;
             newRow.Background = Brushes.Transparent;
         }
-        private async Task AddCell(int column, int row, ElementType? elementType = null)
+        private async Task AddCell(int column, int row, ElementType elementType = ElementType.Unknown)
         {
-            DynamicWizardCell wizardCell = new(PanelModel) { Column = column, Row = row};
+            DynamicWizardCell wizardCell = new DynamicWizardCell(PanelModel) { Column = column, Row = row};
 
             PanelModel?.Cells.Add(wizardCell);
 
-            EditorCell editorCell = new(this);
+            EditorCell editorCell = new EditorCell(this);
             editorCell.OnSelected += OnSelected;
             if (column == 0)
                 editorCell.Margin = new Thickness(0, 5, 5, 5);
@@ -144,7 +144,7 @@ namespace ModelMockupDesigner.Controls
 
             await editorCell.LoadModel(wizardCell);
 
-            if (elementType != null)
+            if (elementType != ElementType.Unknown)
             {
                 await editorCell.AddNewControl(elementType);
             }
@@ -153,7 +153,7 @@ namespace ModelMockupDesigner.Controls
             Grid.SetColumn(editorCell,column);
             Grid.SetRow(editorCell, row);
         }
-        private async Task AddColumn(NewControl? newControl = null)
+        private async Task AddColumn(NewControl newControl = null)
          {
             if (PanelModel == null)
                 return;
@@ -176,7 +176,7 @@ namespace ModelMockupDesigner.Controls
                 }
             }
         }
-        private async Task AddRow(NewControl? newControl = null)
+        private async Task AddRow(NewControl newControl = null)
         {
             if (PanelModel == null)
                 return;
@@ -229,7 +229,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Events
 
-        public EventHandler<IIsSelectable>? OnSelected;
+        public EventHandler<IIsSelectable> OnSelected;
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderStackPanel.Background = Application.Current.Resources["PanelRedBrush"] as SolidColorBrush;
@@ -258,7 +258,7 @@ namespace ModelMockupDesigner.Controls
             {
                 try
                 {
-                    EditorPanel? panel = e.Data.GetData("panel") as EditorPanel;
+                    EditorPanel panel = e.Data.GetData("panel") as EditorPanel;
 
                     if (panel != null && panel != this)
                     {
@@ -310,7 +310,7 @@ namespace ModelMockupDesigner.Controls
         }
         private async void Control_Drop(object sender, DragEventArgs e)
         {
-            NewControl? newControl = e.Data.GetData(typeof(NewControl)) as NewControl;
+            NewControl newControl = e.Data.GetData(typeof(NewControl)) as NewControl;
 
             if (sender == newColumn)
             {
@@ -334,15 +334,15 @@ namespace ModelMockupDesigner.Controls
         {
             ContextMenu contextMenu = new ContextMenu();
 
-            MenuItem menuItem = new() { Header = "Delete Panel" };
+            MenuItem menuItem = new MenuItem() { Header = "Delete Panel" };
             menuItem.Click += MenuItem_Click;
             contextMenu.Items.Add(menuItem);
 
-            menuItem = new() { Header = "Add Column to Panel" };
+            menuItem = new MenuItem() { Header = "Add Column to Panel" };
             menuItem.Click += MenuItem_Click;
             contextMenu.Items.Add(menuItem);
 
-            menuItem = new() { Header = "Add Row to Panel" };
+            menuItem = new MenuItem() { Header = "Add Row to Panel" };
             menuItem.Click += MenuItem_Click;
             contextMenu.Items.Add(menuItem);
 

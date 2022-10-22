@@ -20,7 +20,7 @@ namespace ModelMockupDesigner
     /// </summary>
     public partial class MainContainer : UserControl
     {
-        public static MainContainer? TheMainContainer;
+        public static MainContainer TheMainContainer;
 
         public object Owner;
         public MainContainer()

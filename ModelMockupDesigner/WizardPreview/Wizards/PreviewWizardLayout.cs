@@ -24,12 +24,12 @@ namespace ModelMockupDesigner
     /// </summary>
     public partial class PreviewWizardLayout : UserControl
     {
-        public event EventHandler? OnPreviousPressed;
-        public event EventHandler? OnNextPressed;
+        public event EventHandler OnPreviousPressed;
+        public event EventHandler OnNextPressed;
 
-        private readonly IWizardManager? Manager;
+        private readonly IWizardManager Manager;
 
-        public PreviewWizardLayout(WizardType? wizardType)
+        public PreviewWizardLayout(WizardType wizardType)
         {
             InitializeComponent();
             
@@ -102,11 +102,11 @@ namespace ModelMockupDesigner
         }
         private void previousButton_Click(object sender, RoutedEventArgs e)
         {
-            OnPreviousPressed?.Invoke(this, new());
+            OnPreviousPressed?.Invoke(this, new EventArgs());
         }
         private void nextButton_Click(object sender, RoutedEventArgs e)
         {
-            OnNextPressed?.Invoke(this, new());
+            OnNextPressed?.Invoke(this, new EventArgs());
         }
     }
 }

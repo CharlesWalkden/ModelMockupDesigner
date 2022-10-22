@@ -11,10 +11,10 @@ namespace ModelMockupDesigner.Models
     public class Category : BaseModel
     {
         public Guid Id { get; set; }
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
-        public List<Category>? Categories { get; set; }
-        public List<IWizardModel>? Wizards { get; set; }
+        public List<Category> Categories { get; set; }
+        public List<IWizardModel> Wizards { get; set; }
 
         public bool IsExpanded { get; set; } = false;
 
@@ -29,11 +29,11 @@ namespace ModelMockupDesigner.Models
                 Id = id;
             }
 
-            Categories = new();
-            Wizards = new();
+            Categories = new List<Category>();
+            Wizards = new List<IWizardModel>();
 
         }
-        public void Load(List<IWizardModel> wizards, List<Category>? categories = null)
+        public void Load(List<IWizardModel> wizards, List<Category> categories = null)
         {
             Wizards = wizards;
             Categories = categories;
@@ -60,7 +60,7 @@ namespace ModelMockupDesigner.Models
             {
                 foreach (Category category in Categories)
                 {
-                    ComboBoxItem comboBoxItem = new()
+                    ComboBoxItem comboBoxItem = new ComboBoxItem()
                     {
                         Text = category.Name,
                         Value = category
@@ -84,7 +84,7 @@ namespace ModelMockupDesigner.Models
             throw new NotImplementedException();
         }
 
-        public override XmlNode? ToXml()
+        public override XmlNode ToXml()
         {
             throw new NotImplementedException();
         }

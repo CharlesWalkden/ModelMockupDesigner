@@ -11,17 +11,23 @@ namespace ModelMockupDesigner.Models
 {
     public class CustomControl : BaseControlModel, ICellControl
     {
-        public event EventHandler<int>? OnColumnCountChanged;
+        public event EventHandler<int> OnColumnCountChanged;
 
-        public event EventHandler? OnContentUpdated;
-        public CustomControl(ElementType elementType, List<string>? listOptions = null)
+        public event EventHandler OnControlUpdated; 
+        public CustomControl(ElementType elementType, List<string> listOptions = null)
         {
             ElementType = elementType;
             ListOptions = listOptions;
+
+            if (elementType == ElementType.DateTime || elementType == ElementType.RadioList)
+            {
+                DisplayGroupbox = true;
+                GroupBoxTitle = "TODO: Set GroupBox Title";
+            }
         }
 
         // Text for label
-        public string? Text
+        public string Text
         {
             get => text;
             set
@@ -33,9 +39,9 @@ namespace ModelMockupDesigner.Models
                 OnPropertyChanged(nameof(Text));
             }
         }
-        private string? text { get; set; }
+        private string text { get; set; }
 
-        public List<string>? ListOptions { get; set; }
+        public List<string> ListOptions { get; set; }
         // Used for radio lists - default to 1
         public int ColumnCount
         {
@@ -52,11 +58,49 @@ namespace ModelMockupDesigner.Models
         }
         private int columnCount { get; set; } = 1;
 
-        public int MinimumCharacters { get; set; }
+        public int MinimumCharacters
+        {
+            get => minimumCharacters;
+            set
+            {
+                if (minimumCharacters == value)
+                    return;
+
+                minimumCharacters = value;
+                OnPropertyChanged(nameof(MinimumCharacters));
+                OnControlUpdated?.Invoke(this, new EventArgs());
+            }
+        }
         private int minimumCharacters { get; set; }
-        public int MinimumLines { get; set; }
-        private int minimumLines { get; set; }
-        public int DoublePrecision { get; set; }
+        public int MinimumLines
+        {
+            get => minimumLines;
+            set
+            {
+                if (minimumLines == value)
+                    return;
+
+                minimumLines = value;
+                OnPropertyChanged(nameof(MinimumLines));
+                OnControlUpdated?.Invoke(this, new EventArgs());
+            }
+        }
+        // Default min lines to 1.
+        private int minimumLines { get; set; } = 1;
+        public int DoublePrecision
+        {
+            get => doublePrecision;
+            set
+            {
+                if (doublePrecision == value)
+                    return;
+
+                doublePrecision = value;
+                OnPropertyChanged(nameof(DoublePrecision));
+                OnControlUpdated?.Invoke(this, new EventArgs());
+            }
+        }
+        private int doublePrecision { get; set; }
 
         public override Dictionary<string, string> GetEditableProperties()
         {
@@ -72,6 +116,20 @@ namespace ModelMockupDesigner.Models
             if (ElementType == ElementType.Label || ElementType == ElementType.CheckBox || ElementType == ElementType.Button)
             {
                 properties.Add("Text", "Text");
+            }
+            if (ElementType == ElementType.TextBox || ElementType == ElementType.NumericTextBox)
+            {
+                properties.Add("MinCharacters", "MinimumCharacters");
+            }
+            if (ElementType == ElementType.MultiLineTextBox)
+            {
+                properties.Add("MinCharacters", "MinimumCharacters");
+                properties.Add("MinLines", "MinimumLines");
+            }
+            if (ElementType == ElementType.DoubleTextBox)
+            {
+                properties.Add("MinCharacters", "MinimumCharacters");
+                properties.Add("DoublePrecision", "DoublePrecision");
             }
 
             return properties;

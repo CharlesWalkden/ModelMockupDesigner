@@ -15,7 +15,7 @@ namespace ModelMockupDesigner.ViewModels
             // Set default for binding.
             ProjectTemplate = ProjectTemplate.FullAntenatal;
         }
-        public string? ProjectName
+        public string ProjectName
         {
             get => projectName;
             set
@@ -27,7 +27,7 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(ProjectName));
             }
         }
-        public string? ProjectDescription
+        public string ProjectDescription
         {
             get => projectDescription;
             set
@@ -39,7 +39,7 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(ProjectDescription));
             }
         }
-        public string? CustomerName
+        public string CustomerName
         {
             get => customerName;
             set
@@ -65,7 +65,7 @@ namespace ModelMockupDesigner.ViewModels
         }
         public List<string> ValidateData()
         {
-            List<string> remaining = new ();
+            List<string> remaining = new List<string>();
 
             if (string.IsNullOrWhiteSpace(ProjectName))
             {
@@ -82,9 +82,9 @@ namespace ModelMockupDesigner.ViewModels
 
         #region Private Properties
 
-        private string? projectName { get; set; }
-        private string? projectDescription { get; set; }
-        private string? customerName { get; set; }
+        private string projectName { get; set; }
+        private string projectDescription { get; set; }
+        private string customerName { get; set; }
         private ProjectTemplate projectTemplate { get; set; }
 
         #endregion

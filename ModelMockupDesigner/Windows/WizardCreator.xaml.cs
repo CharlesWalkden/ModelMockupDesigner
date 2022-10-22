@@ -25,17 +25,17 @@ namespace ModelMockupDesigner
     {
         #region Interface
 
-        public event EventHandler<DialogEventArgs>? OnClose;
+        public event EventHandler<DialogEventArgs> OnClose;
 
         #endregion
 
-        public WizardCreatorViewModel? ViewModel { get => DataContext as WizardCreatorViewModel; }
+        public WizardCreatorViewModel ViewModel { get => DataContext as WizardCreatorViewModel; }
         public DialogResult DialogResult { get; set; }
         public WizardCreator()
         {
             InitializeComponent();
 
-            WizardCreatorViewModel wizardCreatorViewModel = new();
+            WizardCreatorViewModel wizardCreatorViewModel = new WizardCreatorViewModel();
 
             DataContext = wizardCreatorViewModel;
         }

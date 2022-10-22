@@ -49,7 +49,7 @@ namespace ModelMockupDesigner.Models
 
         public ElementType ElementType { get; set; }
 
-        public BaseModel? Model => this;
+        public BaseModel Model => this;
 
         public string HeaderName => ElementType.ToString();
 
@@ -61,7 +61,7 @@ namespace ModelMockupDesigner.Models
             throw new NotImplementedException();
         }
 
-        public override XmlNode? ToXml()
+        public override XmlNode ToXml()
         {
             throw new NotImplementedException();
         }

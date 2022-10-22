@@ -12,7 +12,7 @@ namespace ModelMockupDesigner.ViewModels
 {
     public class WizardEditorViewModel : BaseViewModel
     {
-        public string? WizardName
+        public string WizardName
         {
             get => wizardName;
             set
@@ -25,7 +25,7 @@ namespace ModelMockupDesigner.ViewModels
             }
         }
         
-        public ComboBoxItem? CurrentPage
+        public ComboBoxItem CurrentPage
         {
             get => currentPage;
             set
@@ -37,11 +37,11 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(CurrentPage));
             }
         }
-        private ComboBoxItem? currentPage { get; set; }
+        private ComboBoxItem currentPage { get; set; }
 
         public CollectionList<ComboBoxItem> PageList { get; set; }
 
-        public IPropertyEditor? CurrentSelection
+        public IPropertyEditor CurrentSelection
         {
             get => currentSelection;
             set
@@ -51,7 +51,7 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(CurrentSelection));
             }
         }
-        private IPropertyEditor? currentSelection { get; set; }
+        private IPropertyEditor currentSelection { get; set; }
         public WizardEditorViewModel()
         {
             PageList = new CollectionList<ComboBoxItem>();
@@ -87,7 +87,7 @@ namespace ModelMockupDesigner.ViewModels
 
         #region Private Properties
 
-        private string? wizardName { get; set; }
+        private string wizardName { get; set; }
 
         #endregion
 

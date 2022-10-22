@@ -26,14 +26,14 @@ namespace ModelMockupDesigner.Controls
     {
         #region Public Properties
 
-        public BaseModel? Model { get => ColumnModel; }
+        public BaseModel Model { get => ColumnModel; }
         public EditorSection ColumnParent { get => columnParent; set => columnParent = value; }
 
         #endregion
 
         #region Private Properties
 
-        private DynamicWizardColumn? ColumnModel => DataContext as DynamicWizardColumn;
+        private DynamicWizardColumn ColumnModel => DataContext as DynamicWizardColumn;
         private EditorSection columnParent { get; set; } 
  
         #endregion
@@ -61,7 +61,7 @@ namespace ModelMockupDesigner.Controls
 
             foreach (DynamicWizardPanel wizardPanel in columnModel.WizardPanels)
             {
-                EditorPanel editorPanel = new(this);
+                EditorPanel editorPanel = new EditorPanel(this);
                 editorPanel.OnSelected += OnSelected;
 
                 container.Children.Add(editorPanel);
@@ -97,12 +97,12 @@ namespace ModelMockupDesigner.Controls
             if (ColumnModel == null)
                 return;
 
-            DynamicWizardPanel wizardPanel = new(ColumnModel);
+            DynamicWizardPanel wizardPanel = new DynamicWizardPanel(ColumnModel);
             wizardPanel.CreateNew();
 
             ColumnModel.WizardPanels.Add(wizardPanel);
 
-            EditorPanel editorPanel = new(this);
+            EditorPanel editorPanel = new EditorPanel(this);
             editorPanel.OnSelected += OnSelected;
 
             container.Children.Add(editorPanel);
@@ -166,7 +166,7 @@ namespace ModelMockupDesigner.Controls
 
         #region Events
 
-        public EventHandler<IIsSelectable>? OnSelected;
+        public EventHandler<IIsSelectable> OnSelected;
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderStackPanel.Background = Application.Current.Resources["ColumnGrayBrush"] as SolidColorBrush;

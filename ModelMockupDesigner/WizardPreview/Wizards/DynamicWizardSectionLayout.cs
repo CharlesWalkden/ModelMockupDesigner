@@ -29,7 +29,7 @@ namespace ModelMockupDesigner.WizardPreview
             {
                 ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
 
-                DynamicWizardColumnLayout columnLayout = new(column);
+                DynamicWizardColumnLayout columnLayout = new DynamicWizardColumnLayout(column);
                 await columnLayout.Build();
 
                 Children.Add(columnLayout);

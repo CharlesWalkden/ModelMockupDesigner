@@ -12,7 +12,7 @@ namespace ModelMockupDesigner.Models
 {
     public class DynamicWizardColumn : BaseModel, IPropertyEditor
     {
-        public DynamicWizardSection? Parent { get; set; }
+        public DynamicWizardSection Parent { get; set; }
 
         public int Order { get; set; } = 0;
         public List<DynamicWizardPanel> WizardPanels { get; set; }
@@ -21,27 +21,25 @@ namespace ModelMockupDesigner.Models
 
         public ElementType ElementType => ElementType.Column;
 
-        public DynamicWizardColumn(DynamicWizardSection? parent)
+        public DynamicWizardColumn(DynamicWizardSection parent)
         {
             Parent = parent;
             WizardPanels = new List<DynamicWizardPanel>();
         }
-
-        public event EventHandler<GroupBoxDisplayChangedEventArgs> DisplayChanged;
 
         public void CreateNew()
         {
             if (Parent != null)
                 Order = Parent.WizardColumns.Count;
 
-            DynamicWizardPanel wizardPanel = new(this);
+            DynamicWizardPanel wizardPanel = new DynamicWizardPanel(this);
             wizardPanel.CreateNew();
 
             WizardPanels.Add(wizardPanel);
         }
         public Dictionary<string, string> GetEditableProperties()
         {
-            Dictionary<string, string> properties = new();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("Name", "Name");
 
             return properties;
@@ -54,7 +52,7 @@ namespace ModelMockupDesigner.Models
             throw new NotImplementedException();
         }
 
-        public override XmlNode? ToXml()
+        public override XmlNode ToXml()
         {
             throw new NotImplementedException();
         }

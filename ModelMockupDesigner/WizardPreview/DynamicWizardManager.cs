@@ -13,9 +13,9 @@ namespace ModelMockupDesigner.WizardPreview
     {
         private readonly PreviewWizardLayout Ui;
 
-        private DynamicWizard? DynamicWizard;
+        private DynamicWizard DynamicWizard;
 
-        private DynamicWizardPageLayout? CurrentPage;
+        private DynamicWizardPageLayout CurrentPage;
 
         private List<DynamicWizardSection> Pages { get; set; }
 
@@ -53,13 +53,13 @@ namespace ModelMockupDesigner.WizardPreview
 
             UpdateNavButtons();
         }
-        private async void Ui_OnPreviousPressed(object? sender, EventArgs e)
+        private async void Ui_OnPreviousPressed(object sender, EventArgs e)
         {
             int index = Pages.IndexOf(CurrentPage.Template) - 1;
 
             await DisplayPage(index);
         }
-        private async void Ui_OnNextPressed(object? sender, EventArgs e)
+        private async void Ui_OnNextPressed(object sender, EventArgs e)
         {
             int index = Pages.IndexOf(CurrentPage.Template) + 1;
 

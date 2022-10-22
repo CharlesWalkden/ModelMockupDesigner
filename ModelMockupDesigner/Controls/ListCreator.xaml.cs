@@ -25,11 +25,11 @@ namespace ModelMockupDesigner.Controls
     {
         #region Interface
 
-        public event EventHandler<DialogEventArgs>? OnClose;
+        public event EventHandler<DialogEventArgs> OnClose;
 
         #endregion
 
-        public ListCreatorViewModel? ViewModel { get => DataContext as ListCreatorViewModel; }
+        public ListCreatorViewModel ViewModel { get => DataContext as ListCreatorViewModel; }
         public DialogResult DialogResult { get; set; }
         public ListCreator()
         {

@@ -10,10 +10,10 @@ namespace ModelMockupDesigner.ViewModels
 {
     public class WizardCreatorViewModel : BaseViewModel
     {
-        public Project? Project { get; set; }
+        public Project Project { get; set; }
         public CollectionList<ComboBoxItem> CategoryList { get; set; }
-        public ComboBoxItem? CurrentCategorySelection { get; set; }
-        public string? WizardName
+        public ComboBoxItem CurrentCategorySelection { get; set; }
+        public string WizardName
         {
             get => wizardName;
             set
@@ -25,7 +25,7 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(WizardName));
             }
         }
-        public string? WizardDescription
+        public string WizardDescription
         {
             get => wizardDescription;
             set
@@ -37,7 +37,7 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(WizardDescription));
             }
         }
-        public WizardType? WizardType
+        public WizardType WizardType
         {
             get => wizardType;
             set
@@ -49,7 +49,7 @@ namespace ModelMockupDesigner.ViewModels
                 OnPropertyChanged(nameof(WizardType));
             }
         }
-        public WizardTheme? WizardTheme
+        public WizardTheme WizardTheme
         {
             get => wizardTheme;
             set
@@ -64,23 +64,23 @@ namespace ModelMockupDesigner.ViewModels
 
         #region Private Properties
 
-        private string? wizardName { get; set; }
-        private string? wizardDescription { get; set; }
-        private WizardType? wizardType { get; set; }
-        private WizardTheme? wizardTheme { get; set; }
+        private string wizardName { get; set; }
+        private string wizardDescription { get; set; }
+        private WizardType wizardType { get; set; }
+        private WizardTheme wizardTheme { get; set; }
 
         #endregion
 
         public WizardCreatorViewModel()
         {
-            CategoryList = new();
+            CategoryList = new CollectionList<ComboBoxItem>();
 
             // Setting defaults for binding. 
             WizardType = Enums.WizardType.Dynamic;
             WizardTheme = Enums.WizardTheme.V7;
         }
 
-        public void LoadCategoryList(List<ComboBoxItem>? categoryList)
+        public void LoadCategoryList(List<ComboBoxItem> categoryList)
         {
             if (categoryList != null)
                 CategoryList.AddRange(categoryList);

@@ -23,7 +23,7 @@ namespace ModelMockupDesigner.WizardPreview.Wizards
 
             foreach (DynamicWizardPanel panel in Template.WizardPanels)
             {
-                DynamicWizardPanelLayout panelLayout = new(panel);
+                DynamicWizardPanelLayout panelLayout = new DynamicWizardPanelLayout(panel);
                 await panelLayout.Build();
 
                 this.Children.Add(panelLayout);

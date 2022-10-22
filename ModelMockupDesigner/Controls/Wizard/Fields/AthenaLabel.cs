@@ -55,7 +55,7 @@ namespace ModelMockupDesigner.Controls
 
         public ElementType ElementType => ElementType.Label;
 
-        public BaseModel? Model => ControlModel;
+        public BaseModel Model => ControlModel;
 
         public bool DisplayGroupbox => ControlModel.DisplayGroupbox;
 

@@ -29,14 +29,14 @@ namespace ModelMockupDesigner.Models
 
         public void CreateNew()
         {
-            DynamicWizardColumn wizardColumn = new(this);
+            DynamicWizardColumn wizardColumn = new DynamicWizardColumn(this);
             wizardColumn.CreateNew();
 
             WizardColumns.Add(wizardColumn);
         }
         public Dictionary<string, string> GetEditableProperties()
         {
-            Dictionary<string, string> properties = new();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("Name", "Name");
 
             return properties;
@@ -49,12 +49,10 @@ namespace ModelMockupDesigner.Models
             throw new NotImplementedException();
         }
 
-        public override XmlNode? ToXml()
+        public override XmlNode ToXml()
         {
             throw new NotImplementedException();
         }
-
-        
 
         #endregion
     }

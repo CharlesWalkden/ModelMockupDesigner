@@ -61,7 +61,7 @@ namespace ModelMockupDesigner.Controls
 
         private void Checkbox_Unchecked(object sender, RoutedEventArgs e) 
         {
-            CheckBox? checkBox = sender as CheckBox;
+            CheckBox checkBox = sender as CheckBox;
             WizardTheme theme = WizardTheme.V7; // Default for now
 
             if (checkBox != null)
