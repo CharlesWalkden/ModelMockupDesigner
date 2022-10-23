@@ -712,5 +712,298 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style x:Key="touchButtonBack" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="MinWidth" Value="50"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Height="29" Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="wrapper">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.8"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.FontStyle)" Storyboard.TargetName="buttonContent">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <FontStyle>Normal</FontStyle>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="buttonContent">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="disabled">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="pressed">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid Background="Transparent" x:Name="wrapper" Margin="0">
+                            <Border x:Name="normal" Background="#FF24B0D1" CornerRadius="4"/>
+                            <Border x:Name="override" Background="{TemplateBinding Background}" CornerRadius="4"/>
+                            <Border x:Name="pressed" Background="#FFE87900" CornerRadius="4" Opacity="0"/>
+                            <Border x:Name="disabled" Background="#FFDDDDDD" CornerRadius="4" Opacity="0"/>
+                            <Border x:Name="border" BorderThickness="1" CornerRadius="4" BorderBrush="#33000000"/>
+                            <Border x:Name="indent" BorderThickness="1,1,0,0" CornerRadius="3" BorderBrush="#66FFFFFF" Margin="1"/>
+                            <Grid Margin="6,0" HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter x:Name="buttonContent" Content="{TemplateBinding Content}" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="7,0" HorizontalAlignment="Center" Grid.Column="1"/>
+                                <Grid Margin="5,0,5,0" Grid.Column="0">
+                                    <Path Data="M0,0 L-15,7.5 L0,15 z" Fill="White" Stretch="Fill" UseLayoutRounding="False" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="15" Height="16"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="touchButton" TargetType="Button">
+        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        <Setter Property="Height" Value="29"></Setter>
+        <Setter Property="Cursor" Value="Hand"></Setter>
+        <Setter Property="MinWidth" Value="50"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="FontWeight" Value="SemiBold"></Setter>
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="SnapsToDevicePixels" Value="True"></Setter>
+        <Setter Property="UseLayoutRounding" Value="True"></Setter>
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="wrapper">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.8"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.FontStyle)" Storyboard.TargetName="buttonContent">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <FontStyle>Normal</FontStyle>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="buttonContent">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="disabled">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="pressed">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid Background="Transparent" x:Name="wrapper" Margin="0">
+                            <Border x:Name="normal" Background="#FF24B0D1" CornerRadius="4"></Border>
+                            <Border x:Name="override" Background="{TemplateBinding Background}" CornerRadius="4"></Border>
+                            <Border x:Name="pressed" Background="#FFE87900" CornerRadius="4" Opacity="0"></Border>
+                            <Border x:Name="disabled" Background="#FFDDDDDD" CornerRadius="4" Opacity="0"></Border>
+                            <Border x:Name="border" BorderThickness="1" CornerRadius="4" BorderBrush="#33000000"></Border>
+                            <Border x:Name="indent" BorderThickness="1,1,0,0" CornerRadius="3" BorderBrush="#66FFFFFF" Margin="1"></Border>
+                            <ContentPresenter x:Name="buttonContent" Content="{TemplateBinding Content}" VerticalAlignment="Center" Margin="8,0" HorizontalAlignment="Center" SnapsToDevicePixels="True" />
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="touchButtonNext" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="MinWidth" Value="50"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Height="29" Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="wrapper">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.8"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.FontStyle)" Storyboard.TargetName="buttonContent">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <FontStyle>Normal</FontStyle>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="buttonContent">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="disabled">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="pressed">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid Background="Transparent" x:Name="wrapper" Margin="0">
+                            <Border x:Name="normal" Background="#FF24B0D1" CornerRadius="4"/>
+                            <Border x:Name="override" Background="{TemplateBinding Background}" CornerRadius="4"/>
+                            <Border x:Name="pressed" Background="#FFE87900" CornerRadius="4" Opacity="0"/>
+                            <Border x:Name="disabled" Background="#FFDDDDDD" CornerRadius="4" Opacity="0"/>
+                            <Border x:Name="border" BorderThickness="1" CornerRadius="4" BorderBrush="#33000000"/>
+                            <Border x:Name="indent" BorderThickness="1,1,0,0" CornerRadius="3" BorderBrush="#66FFFFFF" Margin="1"/>
+                            <Grid Margin="6,0" HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter x:Name="buttonContent" Content="{TemplateBinding Content}" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="7,0" HorizontalAlignment="Center" Grid.Column="0"/>
+                                <Grid Margin="5,0,5,0" Grid.Column="1">
+                                    <Path Data="M0,0 L15,7.5 L0,15 z" Fill="White" Stretch="Fill" UseLayoutRounding="False" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="15" Height="16"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="touchButtonCancel" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="MinWidth" Value="50"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Height="29" Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="wrapper">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.8"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.FontStyle)" Storyboard.TargetName="buttonContent">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <FontStyle>Normal</FontStyle>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="buttonContent">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="disabled">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="pressed">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid Background="Transparent" x:Name="wrapper" Margin="0">
+                            <Border x:Name="normal" Background="#FF24B0D1" CornerRadius="4"/>
+                            <Border x:Name="override" Background="{TemplateBinding Background}" CornerRadius="4"/>
+                            <Border x:Name="pressed" Background="#FFE87900" CornerRadius="4" Opacity="0"/>
+                            <Border x:Name="disabled" Background="#FFDDDDDD" CornerRadius="4" Opacity="0"/>
+                            <Border x:Name="border" BorderThickness="1" CornerRadius="4" BorderBrush="#33000000"/>
+                            <Border x:Name="indent" BorderThickness="1,1,0,0" CornerRadius="3" BorderBrush="#66FFFFFF" Margin="1"/>
+                            <Grid Margin="6,0" HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Path x:Name="Path" Width="19" Height="19" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" Fill="White" Data="F1 M 9.5,0C 14.7467,0 19,4.2533 19,9.5C 19,14.7467 14.7467,19 9.5,19C 4.25329,19 0,14.7467 0,9.5C 0,4.2533 4.25329,0 9.5,0 Z M 3.13604,13.7426L 5.25736,15.864L 9.5,11.6213L 13.7426,15.864L 15.864,13.7426L 11.6213,9.5L 15.864,5.25736L 13.7426,3.13604L 9.5,7.37868L 5.25736,3.13604L 3.13604,5.25736L 7.37868,9.5L 3.13604,13.7426 Z " SnapsToDevicePixels="False"/>
+                                </Grid>
+                                <ContentPresenter x:Name="buttonContent" Grid.Column="1" Content="{TemplateBinding Content}" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="7,0" HorizontalAlignment="Center" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

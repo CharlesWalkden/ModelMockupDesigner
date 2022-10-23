@@ -54,6 +54,7 @@ namespace ModelMockupDesigner.Controls
             {
                 EditorColumn editorColumn = new EditorColumn(this);
                 editorColumn.OnSelected += OnSelected;
+                editorColumn.OnWizardUpdated += OnWizardUpdated;
 
                 container.Children.Add(editorColumn);
 
@@ -79,6 +80,8 @@ namespace ModelMockupDesigner.Controls
                 container.Children.Remove(child);
                 child.ColumnParent = null;
                 UpdateColumnOrderIDs();
+
+                OnWizardUpdated?.Invoke(this, null);
             }
         }
         private async Task AddColumn()
@@ -93,10 +96,13 @@ namespace ModelMockupDesigner.Controls
 
             EditorColumn editorColumn = new EditorColumn(this);
             editorColumn.OnSelected += OnSelected;
+            editorColumn.OnWizardUpdated += OnWizardUpdated;
 
             container.Children.Add(editorColumn);
 
             await editorColumn.LoadModel(wizardColumn);
+
+            OnWizardUpdated?.Invoke(this, null);
         }
         private void AddColumn(int index, EditorColumn column)  
         {
@@ -105,6 +111,7 @@ namespace ModelMockupDesigner.Controls
                 SectionModel.WizardColumns.Add(column.Model as DynamicWizardColumn);
                 column.SetNewParent(this);
                 column.OnSelected += OnSelected;
+                column.OnWizardUpdated += OnWizardUpdated;
             }
 
             if (container.Children.Count == index)
@@ -115,6 +122,8 @@ namespace ModelMockupDesigner.Controls
             {
                 container.Children.Insert(index, column);
             }
+
+            OnWizardUpdated?.Invoke(this, null);
         }
         public int FindIndex(EditorColumn column)
         {
@@ -144,6 +153,7 @@ namespace ModelMockupDesigner.Controls
         #region Events
 
         public EventHandler<IIsSelectable> OnSelected;
+        public event EventHandler<DynamicWizard> OnWizardUpdated;
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderStackPanel.Background = Application.Current.Resources["SectionPinkBrush"] as SolidColorBrush;

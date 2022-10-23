@@ -63,6 +63,7 @@ namespace ModelMockupDesigner.Controls
             {
                 EditorPanel editorPanel = new EditorPanel(this);
                 editorPanel.OnSelected += OnSelected;
+                editorPanel.OnWizardUpdated += OnWizardUpdated;
 
                 container.Children.Add(editorPanel);
 
@@ -89,6 +90,8 @@ namespace ModelMockupDesigner.Controls
                 container.Children.Remove(child);
                 child.PanelParent = null;
                 UpdatePanelOrderIDs();
+
+                OnWizardUpdated?.Invoke(this, null);
             }
         }
 
@@ -104,10 +107,13 @@ namespace ModelMockupDesigner.Controls
 
             EditorPanel editorPanel = new EditorPanel(this);
             editorPanel.OnSelected += OnSelected;
+            editorPanel.OnWizardUpdated += OnWizardUpdated;
 
             container.Children.Add(editorPanel);
 
             await editorPanel.LoadModel(wizardPanel);
+
+            OnWizardUpdated?.Invoke(this, null);
         }
         private void AddPanel(int index, EditorPanel panel)
         {
@@ -130,6 +136,8 @@ namespace ModelMockupDesigner.Controls
             {
                 container.Children.Insert(index,panel);
             }
+
+            OnWizardUpdated?.Invoke(this, null);
         }
         public void AddPanelAtIndex(int index, EditorPanel panel)
         {
@@ -167,6 +175,7 @@ namespace ModelMockupDesigner.Controls
         #region Events
 
         public EventHandler<IIsSelectable> OnSelected;
+        public event EventHandler<DynamicWizard> OnWizardUpdated;
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderStackPanel.Background = Application.Current.Resources["ColumnGrayBrush"] as SolidColorBrush;

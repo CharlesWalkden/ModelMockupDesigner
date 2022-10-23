@@ -56,6 +56,17 @@ namespace ModelMockupDesigner.WizardPreview.Wizards
 
                 if (control != null)
                 {
+                    if (cell.Control.DisplayGroupbox &&
+                        cell.Control.ElementType != Enums.ElementType.DateTime && cell.Control.ElementType != Enums.ElementType.RadioList)
+                    {
+                        AthenaGroupBox groupBox = new AthenaGroupBox();
+                        //groupBox.Margin = new Thickness(5);
+                        groupBox.Initialise(cell.Control.Model);
+                        groupBox.SetContent(control);
+
+                        control = groupBox;
+                    }
+
                     this.Children.Add(control);
                     Grid.SetColumn(control, cell.Column);
                     Grid.SetRow(control, cell.Row);

@@ -80,6 +80,7 @@ namespace ModelMockupDesigner.Controls
             {
                 EditorCell editorCell = new EditorCell(this);
                 editorCell.OnSelected += OnSelected;
+                editorCell.OnWizardUpdated += OnWizardUpdated;
                 if (cellContent.Column == 0)
                     editorCell.Margin = new Thickness(0,5,5,5);
                 else
@@ -102,6 +103,8 @@ namespace ModelMockupDesigner.Controls
             {
                 _ = PanelModel.Cells.Remove((DynamicWizardCell)cell.Model);
                 container.Children.Remove(cell);
+
+                OnWizardUpdated?.Invoke(this, null);
             }
         }
         public void Unselect()
@@ -137,6 +140,7 @@ namespace ModelMockupDesigner.Controls
 
             EditorCell editorCell = new EditorCell(this);
             editorCell.OnSelected += OnSelected;
+            editorCell.OnWizardUpdated += OnWizardUpdated;
             if (column == 0)
                 editorCell.Margin = new Thickness(0, 5, 5, 5);
             else
@@ -175,6 +179,8 @@ namespace ModelMockupDesigner.Controls
                     await AddCell(column + 1, r);
                 }
             }
+
+            OnWizardUpdated?.Invoke(this, null);
         }
         private async Task AddRow(NewControl newControl = null)
         {
@@ -198,7 +204,8 @@ namespace ModelMockupDesigner.Controls
                     await AddCell(c, row + 1);
                 }
             }
-            
+
+            OnWizardUpdated?.Invoke(this, null);
         }
         
         #endregion
@@ -230,6 +237,7 @@ namespace ModelMockupDesigner.Controls
         #region Events
 
         public EventHandler<IIsSelectable> OnSelected;
+        public event EventHandler<DynamicWizard> OnWizardUpdated;
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderStackPanel.Background = Application.Current.Resources["PanelRedBrush"] as SolidColorBrush;

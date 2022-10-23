@@ -69,8 +69,6 @@ namespace ModelMockupDesigner
             };
 
             Window.Title = ScrollViewer.Content.GetType().ToString();
-            // Window Loaded
-            // Window Style
             Window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             Window.Content = ScrollViewer;
             Window.SizeToContent = SizeToContent.WidthAndHeight;
@@ -84,7 +82,7 @@ namespace ModelMockupDesigner
         private void Window_Closed(object sender, EventArgs e)
         {
             // If the result is none, this is the default and means we have not closed it, the user has with the X
-            if (DialogResult == null)   
+            if (DialogResult == DialogResult.None)   
             {
                 OnClose?.Invoke(this, new DialogEventArgs() { Result = DialogResult });
             }

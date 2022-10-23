@@ -6,5 +6,7 @@ namespace ModelMockupDesigner.Interfaces
     {
         Task Reload();
         Task LoadWizard(IWizardModel wizard);
+        double Width { get; set; }
+        double Height { get; set; }
     }
 }

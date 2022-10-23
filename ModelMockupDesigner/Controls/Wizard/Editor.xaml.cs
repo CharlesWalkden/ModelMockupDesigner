@@ -87,7 +87,7 @@ namespace ModelMockupDesigner
         }
         private async Task LoadDesignPreview()
         {
-            DialogLauncher<WizardDesignPreview> designPreview = new DialogLauncher<WizardDesignPreview>(this, ResizeMode.CanResize);
+            DialogLauncher<WizardDesignPreview> designPreview = new DialogLauncher<WizardDesignPreview>(this, ResizeMode.NoResize);
             designPreview.OnClose += OnWizardDesignPreviewClose;
             await designPreview.Control.LoadWizard(WizardModel);
             OnWizardUpdated += designPreview.Control.WizardDesignPreview_OnWizardUpdated;
@@ -109,6 +109,7 @@ namespace ModelMockupDesigner
             {
                 EditorSection editorSection = new EditorSection();
                 editorSection.OnSelected += UpdateCurrentSelection;
+                editorSection.OnWizardUpdated += OnWizardUpdated;
 
                 await editorSection.LoadModel(wizardSection);
 
@@ -233,7 +234,8 @@ namespace ModelMockupDesigner
 
             EditorSection page = new EditorSection();
             page.OnSelected += UpdateCurrentSelection;
-            
+            page.OnWizardUpdated += OnWizardUpdated;
+
             DynamicWizardSection newSectionModel = new DynamicWizardSection(WizardModel);
             await page.LoadModel(newSectionModel);
             

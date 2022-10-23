@@ -32,7 +32,12 @@ namespace ModelMockupDesigner
         public async void WizardDesignPreview_OnWizardUpdated(object sender, DynamicWizard e)
         {
             if (PreviewWizardLayout == null)
-                await LoadWizard(e);
+            {
+                if (e != null)
+                {
+                    await LoadWizard(e);
+                }
+            }
             else
             {
                 await PreviewWizardLayout.Reload();
@@ -44,7 +49,18 @@ namespace ModelMockupDesigner
             PreviewWizardLayout = new PreviewWizardLayout(wizard.WizardType);
             await PreviewWizardLayout.LoadWizard(wizard);
 
+            SetSize();
+
             root.Children.Add(PreviewWizardLayout);
+        }
+
+        private void SetSize()
+        {
+            if (PreviewWizardLayout != null)
+            {
+                this.Width = PreviewWizardLayout.GetWidth();
+                this.Height = PreviewWizardLayout.GetHeight();
+            }
         }
 
         #region Interface

@@ -101,6 +101,8 @@ namespace ModelMockupDesigner.Controls
                 CellControl = null;
                 overlay.Visibility = Visibility.Visible;
                 overlay.Background = Brushes.White;
+
+                OnWizardUpdated?.Invoke(this, null);
             }
         }
         private void AddCellControl(ICellControl control)
@@ -129,6 +131,8 @@ namespace ModelMockupDesigner.Controls
                     Root.Children.Add(newControl);
                     CellControl = control;
                 }
+
+                OnWizardUpdated?.Invoke(this, null);
             }
         }
         public async Task AddNewControl(ElementType elementType, ICellControl controlModel = null)
@@ -383,6 +387,7 @@ namespace ModelMockupDesigner.Controls
         #region Events
 
         public EventHandler<IIsSelectable> OnSelected;
+        public event EventHandler<DynamicWizard> OnWizardUpdated;
         private void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
         {
             if (CellControl != null)

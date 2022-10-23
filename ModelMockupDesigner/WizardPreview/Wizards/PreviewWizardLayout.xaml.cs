@@ -61,16 +61,23 @@ namespace ModelMockupDesigner
 
         public async Task DisplayPage(IWizardPageLayout pageLayout)
         {
-            container.Children.Clear();
+            wizardContainer.Children.Clear();
 
             if (pageLayout != null)
                 await pageLayout.Build();
 
             if (pageLayout is FrameworkElement frameworkElement)
-                container.Children.Add(frameworkElement);
+                wizardContainer.Children.Add(frameworkElement);
 
         }
-
+        public double GetHeight()
+        {
+            return Manager.Height;
+        }
+        public double GetWidth()
+        {
+            return Manager.Width;
+        }
         public void ShowNavButtons(bool showPrevious, bool showNext, bool showFinished)
         {
             if (showPrevious)

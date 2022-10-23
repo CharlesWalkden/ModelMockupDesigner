@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="ModelMockupDesigner.PreviewWizardLayout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:ModelMockupDesigner.WizardPreview"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" 
+             Width="auto" Height="auto" FontSize="13">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="800"/>
+            <ColumnDefinition Width="Auto" MaxWidth="300"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="*" x:Name="mainContentRow"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Background="#FF323D49" x:Name="upperNavButtonsContainer" Panel.ZIndex="10">
+                <Grid>
+                    <local:WizardHeader HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+
+                    <!--<controls:StandardFormHeader x:Name="standardHeader" HorizontalAlignment="Stretch"  VerticalAlignment="Top" OnClose="standardHeader_OnClose">
+                        <controls:StandardFormHeader.ToolbarContent>
+                            <pregnancyToolbar:PregnancyToolbar VerticalAlignment="Center" Visibility="Collapsed"/>
+                        </controls:StandardFormHeader.ToolbarContent>
+                    </controls:StandardFormHeader>-->
+
+
+                </Grid>
+            </Grid>
+            <Grid x:Name="darkLine" Grid.Row="2" Background="#FF323D49" Panel.ZIndex="10"/>
+            <!-- the grid below is used to pad the space so the stack panel can be correctly centered-->
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Name="wizardContainer" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" >
+
+                </StackPanel>
+            </ScrollViewer>
+            <Grid Grid.Row="4" Background="#FF323D49" x:Name="lowerNavButtonsContainer" Height="50">
+                <Grid  HorizontalAlignment="Stretch"  x:Name="navButtons">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition x:Name="saveButtonColumn" Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="previousButton" Click="previousButton_Click"  Margin="5,5" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{DynamicResource touchButtonBack}" Grid.Column="0" Visibility="Visible" Width="120">
+                        <Label Target="{Binding ElementName=previousButton}"  Foreground="White"  Margin="0" Padding="0" >_Previous</Label>
+                    </Button>
+
+                    <Button x:Name="nextButton" Click="nextButton_Click"  Margin="5,5" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource touchButtonNext}" Grid.Column="2" Visibility="Collapsed" Width="120">
+                        <Label Target="{Binding ElementName=nextButton}"  Foreground="White" Margin="0" Padding="0" x:Name="nextButtonLabel">Next</Label>
+                    </Button>
+                    <Button x:Name="finishButton" Margin="5,5" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource touchButtonNext}" Grid.Column="2" Visibility="Collapsed" Width="120">
+                        <Label Target="{Binding ElementName=finishButton}"  Foreground="White" Margin="0" Padding="0">Finish</Label>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</UserControl>

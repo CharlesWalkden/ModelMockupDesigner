@@ -20,7 +20,7 @@ namespace ModelMockupDesigner
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainContainer mainContainer = new MainContainer();
+       private MainContainer mainContainer = new MainContainer();
 
         public void SetMinHeight(double minHeight)
         {

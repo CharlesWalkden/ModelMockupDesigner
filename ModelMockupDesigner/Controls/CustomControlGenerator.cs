@@ -23,6 +23,27 @@ namespace ModelMockupDesigner.Controls
                         controlElement = new AthenaYesNoControl(control);
                         break;
                     }
+                case ElementType.DateTime:
+                    {
+                        controlElement = new AthenaDateTime(control);
+                        break;
+                    }
+                case ElementType.RadioList:
+                    {
+                        controlElement = new AthenaRadioList(control);
+                        break;
+                    }
+                case ElementType.Button:
+                case ElementType.CheckBox:
+                    {
+                        controlElement = new AthenaCheckBox(control);
+                        break;
+                    }
+                case ElementType.Label:
+                    {
+                        controlElement = new AthenaLabel(control);
+                        break;
+                    }
             }
 
             return Task.FromResult(controlElement);

@@ -19,6 +19,8 @@ namespace ModelMockupDesigner.WizardPreview
 
         private List<DynamicWizardSection> Pages { get; set; }
 
+        public double Width { get; set; } = 1020;
+        public double Height { get; set; } = 720;
         public DynamicWizardManager(PreviewWizardLayout ui)
         {
             Pages = new List<DynamicWizardSection>();
@@ -28,7 +30,15 @@ namespace ModelMockupDesigner.WizardPreview
         }
         public async Task Reload()
         {
-            await DisplayPage(0);
+            if (CurrentPage != null)
+            {
+                int index = Pages.IndexOf(CurrentPage.Template);
+                await DisplayPage(index);
+            }
+            else
+            {
+                await DisplayPage(0);
+            }
         }
         public async Task LoadWizard(IWizardModel wizard)
         {
