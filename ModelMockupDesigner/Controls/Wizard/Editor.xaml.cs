@@ -107,7 +107,7 @@ namespace ModelMockupDesigner
 
             foreach (DynamicWizardSection wizardSection in WizardModel.Sections)
             {
-                EditorSection editorSection = new EditorSection();
+                EditorSection editorSection = new EditorSection(ContentContainer);
                 editorSection.OnSelected += UpdateCurrentSelection;
                 editorSection.OnWizardUpdated += OnWizardUpdated;
 
@@ -232,7 +232,7 @@ namespace ModelMockupDesigner
             if (WizardModel == null)
                 return;
 
-            EditorSection page = new EditorSection();
+            EditorSection page = new EditorSection(ContentContainer);
             page.OnSelected += UpdateCurrentSelection;
             page.OnWizardUpdated += OnWizardUpdated;
 

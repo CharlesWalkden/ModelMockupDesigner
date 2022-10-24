@@ -1,4 +1,5 @@
-﻿using ModelMockupDesigner.Models;
+﻿using ModelMockupDesigner.Controls;
+using ModelMockupDesigner.Models;
 using ModelMockupDesigner.WizardPreview.Wizards;
 using System;
 using System.Collections.Generic;
@@ -32,8 +33,21 @@ namespace ModelMockupDesigner.WizardPreview
                 DynamicWizardColumnLayout columnLayout = new DynamicWizardColumnLayout(column);
                 await columnLayout.Build();
 
-                Children.Add(columnLayout);
-                SetColumn(columnLayout, column.Order);
+                FrameworkElement control;
+
+                if (column.DisplayGroupbox)
+                {
+                    AthenaGroupBox groupBox = new AthenaGroupBox();
+                    groupBox.Initialise(column);
+                    groupBox.SetContent(columnLayout);
+
+                    control = groupBox;
+                }
+                else
+                    control = columnLayout;
+
+                Children.Add(control);
+                SetColumn(control, column.Order);
             }
 
         }

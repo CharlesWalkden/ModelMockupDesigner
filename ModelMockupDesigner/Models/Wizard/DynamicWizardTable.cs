@@ -39,6 +39,8 @@ namespace ModelMockupDesigner.Models
             return properties;
         }
 
+        public BaseModel Model => this;
+
         #region Xml
 
         public override void LoadFromXml(XmlNode node)
@@ -60,7 +62,7 @@ namespace ModelMockupDesigner.Models
             throw new NotImplementedException();
         }
 
-        public BaseModel Model => throw new NotImplementedException();
+       
 
         #endregion
     }

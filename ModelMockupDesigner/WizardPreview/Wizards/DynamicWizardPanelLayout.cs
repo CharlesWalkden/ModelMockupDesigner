@@ -1,4 +1,5 @@
 ﻿using ModelMockupDesigner.Controls;
+using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace ModelMockupDesigner.WizardPreview.Wizards
     {
         // This will also be used for Tables.
 
-        public DynamicWizardPanel Template { get; set; }
+        public ICellParent Template { get; set; }
 
-        public DynamicWizardPanelLayout(DynamicWizardPanel template)
+        public DynamicWizardPanelLayout(ICellParent template)
         {
             Template = template;
         }
@@ -47,6 +48,10 @@ namespace ModelMockupDesigner.WizardPreview.Wizards
                 if (cell.Control is DynamicWizardTable)
                 {
                     // Create table
+                    DynamicWizardPanelLayout table = new DynamicWizardPanelLayout((ICellParent)cell.Control.Model);
+                    await table.Build();
+                    control = table;
+                    
                 }
                 else if (cell.Control is CustomControl customControl)
                 {

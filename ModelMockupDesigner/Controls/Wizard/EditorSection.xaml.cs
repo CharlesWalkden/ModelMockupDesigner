@@ -26,6 +26,7 @@ namespace ModelMockupDesigner.Controls
         #region Public Properties
 
         public BaseModel Model => SectionModel;
+        public AthenaGroupBox GroupBox { get; set; }
 
         #endregion
 
@@ -33,13 +34,16 @@ namespace ModelMockupDesigner.Controls
 
         private DynamicWizardSection SectionModel => DataContext as DynamicWizardSection;
 
+        private Grid Container { get; set; }
+
         #endregion
 
         #region Constructor
 
-        public EditorSection()
+        public EditorSection(Grid container)
         {
             InitializeComponent();
+            Container = container;
         }
 
         #endregion
@@ -48,6 +52,7 @@ namespace ModelMockupDesigner.Controls
 
         public async Task LoadModel(DynamicWizardSection sectionModel)
         {
+            sectionModel.DisplayChanged += OnGroupBoxDisplayChanged;
             DataContext = sectionModel;
 
             foreach (DynamicWizardColumn wizardColumn in sectionModel.WizardColumns)
@@ -83,6 +88,10 @@ namespace ModelMockupDesigner.Controls
 
                 OnWizardUpdated?.Invoke(this, null);
             }
+        }
+        public void RemoveFromUI(FrameworkElement element)
+        {
+            container.Children.Remove(element);
         }
         private async Task AddColumn()
         {
@@ -125,9 +134,9 @@ namespace ModelMockupDesigner.Controls
 
             OnWizardUpdated?.Invoke(this, null);
         }
-        public int FindIndex(EditorColumn column)
+        public int FindIndex(FrameworkElement element)
         {
-            return container.Children.IndexOf(column);
+            return container.Children.IndexOf(element);
         }
         public void UpdateColumnOrderIDs() 
         {
@@ -146,6 +155,23 @@ namespace ModelMockupDesigner.Controls
             AddColumn(index, column);
             UpdateColumnOrderIDs();
         }
+        public void AddElementAtIndex(int index, FrameworkElement element)
+        {
+            if (container.Children.Count == 0)
+            {
+                container.Children.Add(element);
+            }
+            else if (container.Children.Count == index)
+            {
+                container.Children.Insert(index - 1, element);
+            }
+            else
+            {
+                container.Children.Insert(index, element);
+            }
+
+            OnWizardUpdated?.Invoke(this, null);
+        }
 
         #endregion
 
@@ -154,6 +180,37 @@ namespace ModelMockupDesigner.Controls
 
         public EventHandler<IIsSelectable> OnSelected;
         public event EventHandler<DynamicWizard> OnWizardUpdated;
+        private void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
+        {
+            if (e.Display)
+            {
+                if (GroupBox == null)
+                {
+                    AthenaGroupBox gb = new AthenaGroupBox();
+                    //gb.Margin = new Thickness(5);
+                    gb.Initialise(e);
+                    Container.Children.Remove(this);
+                    gb.SetContent(this);
+                    Container.Children.Add(gb);
+
+                    GroupBox = gb;
+                }
+            }
+            else
+            {
+                if (GroupBox != null)
+                {
+                    GroupBox.RemoveContent(this);
+                    Container.Children.Remove(GroupBox);
+                    Container.Children.Add(this);
+                    GroupBox = null;
+                }
+            }
+
+            GroupBox?.Initialise(e);
+
+            OnWizardUpdated?.Invoke(this, null);
+        }
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderStackPanel.Background = Application.Current.Resources["SectionPinkBrush"] as SolidColorBrush;

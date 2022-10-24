@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ModelMockupDesigner.Controls"
              mc:Ignorable="d" 
              IsTabStop="False">
-    <Grid x:Name="LayoutRoot" Background="Transparent" Margin="0,-2,0,0">
+    <Grid x:Name="LayoutRoot" Background="Transparent" Margin="0,0,0,0">
 
         <Border x:Name="outerBorder" BorderBrush="#FFdddddd" BorderThickness="1" Margin="0,0,0,0" Padding="1" CornerRadius="4,4,4,4" Background="#FFFFFFFF">
             <Border.Effect>

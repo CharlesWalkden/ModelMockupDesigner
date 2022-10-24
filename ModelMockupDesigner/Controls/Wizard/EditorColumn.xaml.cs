@@ -28,6 +28,7 @@ namespace ModelMockupDesigner.Controls
 
         public BaseModel Model { get => ColumnModel; }
         public EditorSection ColumnParent { get => columnParent; set => columnParent = value; }
+        public AthenaGroupBox GroupBox { get; set; }
 
         #endregion
 
@@ -57,6 +58,7 @@ namespace ModelMockupDesigner.Controls
 
         public async Task LoadModel(DynamicWizardColumn columnModel)
         {
+            columnModel.DisplayChanged += OnGroupBoxDisplayChanged;
             DataContext = columnModel;
 
             foreach (DynamicWizardPanel wizardPanel in columnModel.WizardPanels)
@@ -93,6 +95,10 @@ namespace ModelMockupDesigner.Controls
 
                 OnWizardUpdated?.Invoke(this, null);
             }
+        }
+        public void RemoveFromUI(FrameworkElement panel) 
+        {
+            container.Children.Remove(panel);
         }
 
         private async Task AddPanel()
@@ -144,9 +150,26 @@ namespace ModelMockupDesigner.Controls
             AddPanel(index, panel);
             UpdatePanelOrderIDs();
         }
-        public int FindIndex(EditorPanel panel)
+        public void AddElementAtIndex(int index, FrameworkElement element)
         {
-            return container.Children.IndexOf(panel);
+            if (container.Children.Count == 0)
+            {
+                container.Children.Add(element);
+            }
+            else if (container.Children.Count == index)
+            {
+                container.Children.Insert(index - 1, element);
+            }
+            else
+            {
+                container.Children.Insert(index, element);
+            }
+
+            OnWizardUpdated?.Invoke(this, null);
+        }
+        public int FindIndex(FrameworkElement element)
+        {
+            return container.Children.IndexOf(element);
         }
         public void UpdatePanelOrderIDs()
         {
@@ -176,6 +199,40 @@ namespace ModelMockupDesigner.Controls
 
         public EventHandler<IIsSelectable> OnSelected;
         public event EventHandler<DynamicWizard> OnWizardUpdated;
+        private void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
+        {
+            if (e.Display)
+            {
+                if (GroupBox == null)
+                {
+                    int index = columnParent.FindIndex(this);
+
+                    AthenaGroupBox gb = new AthenaGroupBox();
+                    //gb.Margin = new Thickness(5);
+                    gb.Initialise(e);
+                    columnParent.RemoveFromUI(this);
+                    gb.SetContent(this);
+                    columnParent.AddElementAtIndex(index, gb);
+
+                    GroupBox = gb;
+                }
+            }
+            else
+            {
+                if (GroupBox != null)
+                {
+                    int index = columnParent.FindIndex(GroupBox);
+                    GroupBox.RemoveContent(this);
+                    columnParent.RemoveFromUI(GroupBox);
+                    columnParent.AddElementAtIndex(index, this);
+                    GroupBox = null;
+                }
+            }
+
+            GroupBox?.Initialise(e);
+
+            OnWizardUpdated?.Invoke(this, null);
+        }
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderStackPanel.Background = Application.Current.Resources["ColumnGrayBrush"] as SolidColorBrush;

@@ -13,7 +13,8 @@ namespace ModelMockupDesigner.Models
     {
         public event EventHandler<int> OnColumnCountChanged;
 
-        public event EventHandler OnControlUpdated; 
+        public event EventHandler OnControlUpdated;
+        
         public CustomControl(ElementType elementType, List<string> listOptions = null)
         {
             ElementType = elementType;

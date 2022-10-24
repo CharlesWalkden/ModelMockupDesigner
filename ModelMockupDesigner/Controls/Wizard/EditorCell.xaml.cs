@@ -138,6 +138,7 @@ namespace ModelMockupDesigner.Controls
         public async Task AddNewControl(ElementType elementType, ICellControl controlModel = null)
         {
             ICellControl cellControl = null;
+            CustomControl customControl = null;
 
             switch (elementType)
             {
@@ -166,6 +167,7 @@ namespace ModelMockupDesigner.Controls
 
                         EditorTable editorTable = new EditorTable(this);
                         editorTable.OnSelected += OnSelected;
+                        editorTable.OnWizardUpdated += OnWizardUpdated;
                         await editorTable.LoadModel(wizardTable);
 
                         cellControl = editorTable;
@@ -174,8 +176,6 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.YesNo:
                     {
-                        CustomControl customControl;
-
                         if (controlModel == null)
                         {
                             customControl = new CustomControl(ElementType.YesNo);
@@ -198,8 +198,6 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.RadioList:
                     {
-                        CustomControl customControl;
-
                         if (controlModel == null)
                         {
                             customControl = new CustomControl(ElementType.RadioList);
@@ -236,7 +234,6 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.Label:
                     {
-                        CustomControl customControl;
                         if (controlModel == null)
                         {
                             customControl = new CustomControl(ElementType.Label);
@@ -262,7 +259,6 @@ namespace ModelMockupDesigner.Controls
                 case ElementType.NumericTextBox:
                 case ElementType.DoubleTextBox:
                     {
-                        CustomControl customControl;
                         if (controlModel == null)
                         {
                             customControl = new CustomControl(elementType) ;
@@ -293,7 +289,6 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.DateTime:
                     {
-                        CustomControl customControl;
                         if (controlModel == null)
                         {
                             customControl = new CustomControl(ElementType.DateTime);
@@ -315,7 +310,6 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.CheckBox:
                     {
-                        CustomControl customControl;
                         if (controlModel == null)
                         {
                             customControl = new CustomControl(ElementType.CheckBox);
@@ -342,7 +336,6 @@ namespace ModelMockupDesigner.Controls
                     }
                 case ElementType.Button:
                     {
-                        CustomControl customControl;
                         if (controlModel == null)
                         {
                             customControl = new CustomControl(ElementType.Button);
@@ -425,6 +418,8 @@ namespace ModelMockupDesigner.Controls
                 }
 
                 GroupBox?.Initialise(e);
+
+                OnWizardUpdated?.Invoke(this, null);
             }
             
         }

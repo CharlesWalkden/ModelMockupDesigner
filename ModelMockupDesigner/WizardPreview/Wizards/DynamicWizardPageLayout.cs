@@ -1,10 +1,13 @@
-﻿using ModelMockupDesigner.Interfaces;
+﻿using ModelMockupDesigner.Controls;
+using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace ModelMockupDesigner.WizardPreview
@@ -25,7 +28,20 @@ namespace ModelMockupDesigner.WizardPreview
             DynamicWizardSectionLayout sectionLayout = new DynamicWizardSectionLayout(Template);
             await sectionLayout.Build();
 
-            this.Children.Add(sectionLayout);
+            FrameworkElement control;
+
+            if (Template.DisplayGroupbox)
+            {
+                AthenaGroupBox groupBox = new AthenaGroupBox();
+                groupBox.Initialise(Template);
+                groupBox.SetContent(sectionLayout);
+
+                control = groupBox;
+            }
+            else
+                control = sectionLayout;
+
+            this.Children.Add(control);
         }
     }
 }

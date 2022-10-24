@@ -30,6 +30,7 @@ namespace ModelMockupDesigner.Controls
         public EditorCell TableParent { get => tableParent; set => tableParent = value; }
         public ElementType ElementType { get => ElementType.Table; }
         public bool DisplayGroupbox { get => TableModel?.DisplayGroupbox ?? false; }
+        public List<DynamicWizardCell> Cells { get => TableModel.Cells; set => TableModel.Cells = value; }
 
         #endregion
 
@@ -72,6 +73,7 @@ namespace ModelMockupDesigner.Controls
             {
                 EditorCell editorCell = new EditorCell(this);
                 editorCell.OnSelected += OnSelected;
+                editorCell.OnWizardUpdated += OnWizardUpdated;
 
                 container.Children.Add(editorCell);
                 Grid.SetColumn(editorCell, cell.Column);
@@ -91,6 +93,8 @@ namespace ModelMockupDesigner.Controls
             {
                 _ = TableModel.Cells.Remove((DynamicWizardCell)cell.Model);
                 container.Children.Remove(cell);
+
+                OnWizardUpdated?.Invoke(this, null);
             }
         }
 
@@ -121,6 +125,7 @@ namespace ModelMockupDesigner.Controls
 
             EditorCell editorCell = new EditorCell(this);
             editorCell.OnSelected += OnSelected;
+            editorCell.OnWizardUpdated += OnWizardUpdated;
             await editorCell.LoadModel(wizardCell);
 
             if (elementType != ElementType.Unknown)
@@ -155,6 +160,8 @@ namespace ModelMockupDesigner.Controls
                     await AddCell(column + 1, r);
                 }
             }
+
+            OnWizardUpdated?.Invoke(this, null);
         }
         private async Task AddRow(NewControl newControl = null)
         {
@@ -179,6 +186,7 @@ namespace ModelMockupDesigner.Controls
                 }
             }
 
+            OnWizardUpdated?.Invoke(this, null);
         }
 
         #endregion
@@ -211,6 +219,7 @@ namespace ModelMockupDesigner.Controls
         #region Events
 
         public EventHandler<IIsSelectable> OnSelected;
+        public event EventHandler<DynamicWizard> OnWizardUpdated;
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderStackPanel.Background = Brushes.Green;

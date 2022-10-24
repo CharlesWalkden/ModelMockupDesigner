@@ -30,6 +30,8 @@ namespace ModelMockupDesigner.Controls
         public BaseModel Model { get => PanelModel; }
         public EditorColumn PanelParent { get => panelParent; set => panelParent = value; }
         public ElementType ElementType { get => ElementType.Panel; }
+        public List<DynamicWizardCell> Cells { get => PanelModel.Cells; set => PanelModel.Cells = value; }
+        public AthenaGroupBox GroupBox { get; set; }
 
         #endregion
 
@@ -58,6 +60,7 @@ namespace ModelMockupDesigner.Controls
 
         public async Task LoadModel(DynamicWizardPanel panelModel)
         {
+            panelModel.DisplayChanged += OnGroupBoxDisplayChanged;
             DataContext = panelModel;
             PanelModel = panelModel;
 
@@ -238,6 +241,40 @@ namespace ModelMockupDesigner.Controls
 
         public EventHandler<IIsSelectable> OnSelected;
         public event EventHandler<DynamicWizard> OnWizardUpdated;
+        private void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
+        {
+            if (e.Display)
+            {
+                if (GroupBox == null)
+                {
+                    int index = panelParent.FindIndex(this);
+
+                    AthenaGroupBox gb = new AthenaGroupBox();
+                    //gb.Margin = new Thickness(5);
+                    gb.Initialise(e);
+                    panelParent.RemoveFromUI(this);
+                    gb.SetContent(this);
+                    panelParent.AddElementAtIndex(index, gb);
+
+                    GroupBox = gb;
+                }
+            }
+            else
+            {
+                if (GroupBox != null)
+                {
+                    int index = panelParent.FindIndex(GroupBox);
+                    GroupBox.RemoveContent(this);
+                    panelParent.RemoveFromUI(GroupBox);
+                    PanelParent.AddElementAtIndex(index, this);
+                    GroupBox = null;
+                }
+            }
+
+            GroupBox?.Initialise(e);
+
+            OnWizardUpdated?.Invoke(this, null);
+        }
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderStackPanel.Background = Application.Current.Resources["PanelRedBrush"] as SolidColorBrush;
