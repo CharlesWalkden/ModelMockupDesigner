@@ -135,7 +135,7 @@ namespace ModelMockupDesigner.Controls
             newRow.Visibility = Visibility.Collapsed;
             newRow.Background = Brushes.Transparent;
         }
-        private async Task AddCell(int column, int row, ElementType elementType = ElementType.Unknown)
+        private async Task AddCell(int column, int row, ElementType elementType = ElementType.Unknown, EditorCell cell = null)
         {
             DynamicWizardCell wizardCell = new DynamicWizardCell(PanelModel) { Column = column, Row = row};
 
@@ -156,12 +156,19 @@ namespace ModelMockupDesigner.Controls
                 await editorCell.AddNewControl(elementType);
             }
 
+            if (cell != null)
+            {
+                ICellControl cellControl = cell.CellControl;
+                cell.DeleteControl();
+                await editorCell.LoadExistingCellContent(cellControl);
+            }
+
             container.Children.Add(editorCell);
             Grid.SetColumn(editorCell,column);
             Grid.SetRow(editorCell, row);
         }
-        private async Task AddColumn(NewControl newControl = null)
-         {
+        private async Task AddColumn(NewControl newControl = null, EditorCell cell = null)
+        {
             if (PanelModel == null)
                 return;
 
@@ -177,6 +184,11 @@ namespace ModelMockupDesigner.Controls
                     await AddCell(column + 1, r, newControl.ElementType);
                     newControl = null;
                 }
+                else if (cell != null)
+                {
+                    await AddCell(column + 1, r, cell:cell);
+                    cell = null;
+                }
                 else
                 {
                     await AddCell(column + 1, r);
@@ -185,7 +197,8 @@ namespace ModelMockupDesigner.Controls
 
             OnWizardUpdated?.Invoke(this, null);
         }
-        private async Task AddRow(NewControl newControl = null)
+
+        private async Task AddRow(NewControl newControl = null, EditorCell cell = null)
         {
             if (PanelModel == null)
                 return;
@@ -201,6 +214,10 @@ namespace ModelMockupDesigner.Controls
                 {
                     await AddCell(c, row + 1, newControl.ElementType);
                     newControl = null;
+                }
+                else if (cell != null)
+                {
+                    await AddCell(c, row + 1, cell:cell);
                 }
                 else
                 {
@@ -353,15 +370,22 @@ namespace ModelMockupDesigner.Controls
                 e.Effects = DragDropEffects.None;
             }
         }
+        
+        
         private async void Control_Drop(object sender, DragEventArgs e)
         {
             NewControl newControl = e.Data.GetData(typeof(NewControl)) as NewControl;
+            EditorCell cell = e.Data.GetData(typeof(EditorCell)) as EditorCell;
 
             if (sender == newColumn)
             {
                 if (newControl != null)
                 {
                     await AddColumn(newControl);
+                }
+                if (cell != null)
+                {
+                    await AddColumn(cell:cell);
                 }
 
             }
@@ -371,10 +395,19 @@ namespace ModelMockupDesigner.Controls
                 {
                     await AddRow(newControl);
                 }
+                if (cell != null)
+                {
+                    await AddRow(cell: cell);
+                }
             }
             newColumn.Visibility = Visibility.Collapsed;
             newRow.Visibility = Visibility.Collapsed;
         }
+
+
+
+
+
         private void HeaderStackPanel_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             ContextMenu contextMenu = new ContextMenu();

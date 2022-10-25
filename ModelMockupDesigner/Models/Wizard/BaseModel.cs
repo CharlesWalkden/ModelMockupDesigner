@@ -50,6 +50,8 @@ namespace ModelMockupDesigner.Models
         #region GroupBox
 
         public event EventHandler<GroupBoxDisplayChangedEventArgs> DisplayChanged;
+        public event EventHandler<DynamicWizard> OnWizardUpdated;
+         
         public bool DisplayGroupbox
         {
             get => displayGroupbox;
@@ -119,6 +121,7 @@ namespace ModelMockupDesigner.Models
         public void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            //OnWizardUpdated?.Invoke(this, new DynamicWizard());
         }
 
         public abstract void LoadFromXml(XmlNode node);

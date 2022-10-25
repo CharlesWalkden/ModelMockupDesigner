@@ -30,9 +30,11 @@ namespace ModelMockupDesigner.Controls
         public AthenaRadioList(CustomControl controlModel)
         {
             InitializeComponent();
-            controlModel.DisplayChanged += GroupBox_DisplayChanged;
-            controlModel.OnColumnCountChanged += ControlModel_OnColumnCountChanged;
             ControlModel = controlModel;
+            ControlModel.DisplayChanged += GroupBox_DisplayChanged;
+            ControlModel.OnColumnCountChanged += ControlModel_OnColumnCountChanged;
+
+            Unloaded += AthenaRadioList_Unloaded;
 
             if (controlModel.ListOptions != null)
             {
@@ -50,6 +52,12 @@ namespace ModelMockupDesigner.Controls
             RefreshListOptions(controlModel.ColumnCount);
             ShowGroupBox = ControlModel.DisplayGroupbox;
             Title = ControlModel.GroupBoxTitle;
+        }
+
+        private void AthenaRadioList_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ControlModel.DisplayChanged -= GroupBox_DisplayChanged;
+            ControlModel.OnColumnCountChanged -= ControlModel_OnColumnCountChanged;
         }
 
         private void ControlModel_OnColumnCountChanged(object sender, int e)

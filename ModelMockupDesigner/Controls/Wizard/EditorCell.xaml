@@ -19,7 +19,8 @@
               Drop="Control_Drop"
               MouseLeftButtonDown="Control_MouseLeftButtonDown"
               Panel.ZIndex="100"
-              ContextMenuOpening="Overlay_ContextMenuOpening">
+              ContextMenuOpening="Overlay_ContextMenuOpening"
+              MouseMove="overlay_MouseMove">
 
             </Grid>
 

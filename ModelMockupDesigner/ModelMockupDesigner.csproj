@@ -45,6 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\AthenaSmall.png" />
     <Resource Include="Images\GuardianSmall.png" />
     <Resource Include="Images\Icons\arrow-down.png" />

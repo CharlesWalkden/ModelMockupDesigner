@@ -30,9 +30,12 @@ namespace ModelMockupDesigner.WizardPreview
         }
         public async Task Reload()
         {
+
+            // TODO: Sort out some sort of garbage collection when refreshing this wizard. Old fields are hanging about causing massive ram usage spikes.
             if (CurrentPage != null)
             {
                 int index = Pages.IndexOf(CurrentPage.Template);
+                CurrentPage = null;
                 await DisplayPage(index);
             }
             else

@@ -40,14 +40,12 @@ namespace ModelMockupDesigner.WizardPreview.Wizards
                 ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             }
 
-
             foreach (DynamicWizardCell cell in Template.Cells)
             {
                 FrameworkElement control = null;
 
                 if (cell.Control is DynamicWizardTable)
                 {
-                    // Create table
                     DynamicWizardPanelLayout table = new DynamicWizardPanelLayout((ICellParent)cell.Control.Model);
                     await table.Build();
                     control = table;
@@ -55,7 +53,6 @@ namespace ModelMockupDesigner.WizardPreview.Wizards
                 }
                 else if (cell.Control is CustomControl customControl)
                 {
-                    // Create Control.
                     control = CustomControlGenerator.GetControl(customControl).Result;
                 }
 
@@ -65,11 +62,17 @@ namespace ModelMockupDesigner.WizardPreview.Wizards
                         cell.Control.ElementType != Enums.ElementType.DateTime && cell.Control.ElementType != Enums.ElementType.RadioList)
                     {
                         AthenaGroupBox groupBox = new AthenaGroupBox();
-                        //groupBox.Margin = new Thickness(5);
+                        groupBox.Margin = new Thickness(5);
                         groupBox.Initialise(cell.Control.Model);
                         groupBox.SetContent(control);
 
                         control = groupBox;
+                    }
+
+                    // Added this so controls will line up when groupboxes are next to each other.
+                    if (cell.Control.DisplayGroupbox && (cell.Control.ElementType == Enums.ElementType.DateTime || cell.Control.ElementType == Enums.ElementType.RadioList))
+                    {
+                        control.Margin = new Thickness(5);
                     }
 
                     this.Children.Add(control);

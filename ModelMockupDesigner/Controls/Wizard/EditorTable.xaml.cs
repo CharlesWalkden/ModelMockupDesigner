@@ -27,7 +27,7 @@ namespace ModelMockupDesigner.Controls
         #region Public Properties
 
         public BaseModel Model { get => TableModel; }
-        public EditorCell TableParent { get => tableParent; set => tableParent = value; }
+        public EditorCell ParentCell { get => tableParent; set => tableParent = value; } 
         public ElementType ElementType { get => ElementType.Table; }
         public bool DisplayGroupbox { get => TableModel?.DisplayGroupbox ?? false; }
         public List<DynamicWizardCell> Cells { get => TableModel.Cells; set => TableModel.Cells = value; }

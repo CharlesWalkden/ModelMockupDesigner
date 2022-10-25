@@ -62,6 +62,7 @@ namespace ModelMockupDesigner
         public async Task DisplayPage(IWizardPageLayout pageLayout)
         {
             wizardContainer.Children.Clear();
+            
 
             if (pageLayout != null)
                 await pageLayout.Build();

@@ -79,6 +79,19 @@ namespace ModelMockupDesigner.Controls
                 await AddNewControl(CellModel.Control.ElementType, CellModel.Control);
             }
         }
+        public async Task LoadExistingCellContent(ICellControl cellControl)
+        {
+            if (cellControl != null)
+            {
+                CellModel.Control = cellControl.Model as BaseControlModel;
+                if (CellModel.Control == null)
+                {
+                    CellModel.Control = cellControl.Model as DynamicWizardTable;
+                }
+
+                await AddNewControl(cellControl.ElementType, CellModel.Control);
+            }
+        }
 
         public void Unselect()
         {
@@ -226,6 +239,7 @@ namespace ModelMockupDesigner.Controls
                         }
 
                         AthenaRadioList athenaRadioList = new AthenaRadioList(customControl);
+                        customControl.OnWizardUpdated += OnWizardUpdated;
 
                         cellControl = athenaRadioList;
 
@@ -299,6 +313,8 @@ namespace ModelMockupDesigner.Controls
                         }
 
                         AthenaDateTime athenaDateTime = new AthenaDateTime(customControl);
+
+                        customControl.OnWizardUpdated += OnWizardUpdated;
 
                         cellControl = athenaDateTime;
 
@@ -375,6 +391,7 @@ namespace ModelMockupDesigner.Controls
                 overlay.Background = Brushes.Transparent;
             }
 
+            SelectControl();
         }
 
         #region Events
@@ -425,24 +442,26 @@ namespace ModelMockupDesigner.Controls
         }
         private void Control_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(NewControl)))
+            if (e.Data.GetDataPresent(typeof(NewControl)) || e.Data.GetDataPresent(typeof(EditorCell)))
             {
                 if (e.Data.GetData(typeof(NewControl)) is NewControl newControl)
                 {
                     if (newControl.ElementType == ElementType.Table && CellParent.ElementType == ElementType.Table)
                     {
+                        // Indicate we cant drop table into a table.
                         e.Effects = DragDropEffects.None;
                         return;
                     }
 
-                    if (Root.Children.Count > 1)
-                    {
-                        overlay.Background = Brushes.Transparent;
-                    }
-                    else
-                    {
-                        overlay.Background = Brushes.LightBlue;
-                    }
+                }
+
+                if (Root.Children.Count > 1)
+                {
+                    overlay.Background = Brushes.Transparent;
+                }
+                else
+                {
+                    overlay.Background = Brushes.LightBlue;
                 }
             }
         }
@@ -484,12 +503,52 @@ namespace ModelMockupDesigner.Controls
                 }
 
             }
-            overlay.Background = Brushes.Transparent;
+            if (e.Data.GetDataPresent(typeof(EditorCell)))
+            {
+                EditorCell cell = (EditorCell)e.Data.GetData(typeof(EditorCell));
+                if (cell.CellControl != null)
+                {
+                    if (CellControl != null)
+                    {
+                        if (CellControl == cell.CellControl)
+                        {
+                            // Don't want to drop on ourself.
+                            return;
+                        }
+
+                        if (MessageBox.Show("Are you sure you want to replace this control?", "Occupied", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
+                        {
+                            DeleteControl();
+                            ICellControl cellControl = cell.CellControl;
+
+                            cell.DeleteControl();
+
+                            await LoadExistingCellContent(cellControl);
+                        }
+                    }
+                    else
+                    {
+                        ICellControl cellControl = cell.CellControl;
+
+                        cell.DeleteControl();
+
+                        await LoadExistingCellContent(cellControl);
+                    }
+                }
+            }
+            if (CellControl != null)
+                overlay.Background = Brushes.Transparent;
+            else
+                overlay.Background = Brushes.White;
 
             // TESTING - This is here to collapse the overlay so we can interact with the control for testing.
             //overlay.Visibility = Visibility.Collapsed;
         }
         private void Control_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SelectControl();
+        }
+        private void SelectControl()
         {
             Container.Background = Brushes.Yellow;
             OnSelected?.Invoke(this, this);
@@ -540,6 +599,26 @@ namespace ModelMockupDesigner.Controls
                         }
                     default:
                         break;
+                }
+            }
+        }
+
+        private void overlay_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragDrop.DoDragDrop(this, this, DragDropEffects.Move | DragDropEffects.Copy);
+            }
+            else
+            {
+                FrameworkElement element = sender as FrameworkElement;
+
+                if (element != null)
+                {
+                    if (cellControl != null)
+                        element.Cursor = Cursors.Hand;
+                    else
+                        element.Cursor = Cursors.Arrow;
                 }
             }
         }

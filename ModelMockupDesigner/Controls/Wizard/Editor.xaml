@@ -216,8 +216,12 @@
                 </Grid>
                 <GridSplitter Grid.Row="0" Height="10" VerticalAlignment="Bottom" Background="{StaticResource EditorDarkGrayBrush}" Panel.ZIndex="9999" />
                 <Grid Grid.Row="1" Margin="5,0,0,0">
-                    
-                    <control:PropertyEditor CurrentSelection="{Binding CurrentSelection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <ScrollViewer 
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto"
+                              Background="{StaticResource WizardEditorBackgroundBrush}">
+                        <control:PropertyEditor CurrentSelection="{Binding CurrentSelection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    </ScrollViewer>
                 </Grid>
             </Grid>
 

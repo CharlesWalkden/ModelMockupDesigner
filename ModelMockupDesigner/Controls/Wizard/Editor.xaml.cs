@@ -87,11 +87,13 @@ namespace ModelMockupDesigner
         }
         private async Task LoadDesignPreview()
         {
-            DialogLauncher<WizardDesignPreview> designPreview = new DialogLauncher<WizardDesignPreview>(this, ResizeMode.NoResize);
+            DialogLauncher<WizardDesignPreview> designPreview = new DialogLauncher<WizardDesignPreview>(this, ResizeMode.NoResize, true) ;
             designPreview.OnClose += OnWizardDesignPreviewClose;
             await designPreview.Control.LoadWizard(WizardModel);
             OnWizardUpdated += designPreview.Control.WizardDesignPreview_OnWizardUpdated;
             designPreview.Show();
+
+            
 
             DesignPreview = designPreview.Control;
         }
@@ -245,7 +247,6 @@ namespace ModelMockupDesigner
 
             LoadPage(page.Model.OrderId);
 
-            // New page created, 
             OnWizardUpdated?.Invoke(this, WizardModel);
         }
         private void AddPage(EditorSection page)

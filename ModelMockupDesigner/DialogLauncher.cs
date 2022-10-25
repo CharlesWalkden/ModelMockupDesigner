@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Management;
+using System.Windows.Media;
 
 namespace ModelMockupDesigner
 {
@@ -42,8 +43,10 @@ namespace ModelMockupDesigner
         public ScrollViewer ScrollViewer = null;
 
         public DialogResult DialogResult;
-        public DialogLauncher(object owner, ResizeMode resizeMode)
+        public bool OpenOnDifferentScreen { get; set; }
+        public DialogLauncher(object owner, ResizeMode resizeMode, bool openOnDifferentScreen = false)
         {
+            OpenOnDifferentScreen = openOnDifferentScreen;
             Window.SnapsToDevicePixels = true;
             Window.UseLayoutRounding = true;
             Window.ResizeMode = resizeMode;
@@ -56,6 +59,10 @@ namespace ModelMockupDesigner
             else if (owner is UserControl)
             {
                 Window.Owner = Window.GetWindow((FrameworkElement)owner);
+                if (Window.Owner == null)
+                {
+                    Window.Owner = Application.Current.MainWindow;
+                }
             }
 
             Window.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(window_MouseLeftButtonDown);
@@ -69,7 +76,10 @@ namespace ModelMockupDesigner
             };
 
             Window.Title = ScrollViewer.Content.GetType().ToString();
-            Window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            if (openOnDifferentScreen)
+                Window.WindowStartupLocation = WindowStartupLocation.Manual;
+            else
+                Window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             Window.Content = ScrollViewer;
             Window.SizeToContent = SizeToContent.WidthAndHeight;
 
@@ -101,7 +111,17 @@ namespace ModelMockupDesigner
         }
         public void Show()
         {
-            
+            if (OpenOnDifferentScreen && System.Windows.Forms.Screen.AllScreens.Count() > 1)
+            {
+                System.Windows.Forms.Screen primary = System.Windows.Forms.Screen.FromRectangle(new System.Drawing.Rectangle((int)Window.Owner.Left, (int)Window.Owner.Top, (int)Window.Owner.Width, (int)Window.Owner.Height));
+
+                System.Windows.Forms.Screen second = System.Windows.Forms.Screen.AllScreens.FirstOrDefault(x => x.DeviceName != primary.DeviceName);
+
+                Window.Left = second.WorkingArea.Left + (second.WorkingArea.Width / 4);
+                Window.Top = second.WorkingArea.Top + (second.WorkingArea.Height / 6);
+
+            }
+
             Window.Show();
             
         }

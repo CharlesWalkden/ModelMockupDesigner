@@ -35,9 +35,10 @@ namespace ModelMockupDesigner.Controls
         public AthenaDateTime(CustomControl controlModel) 
         {
             InitializeComponent();
-            controlModel.DisplayChanged += GroupBox_DisplayChanged;
             DataContext = controlModel;
             ControlModel = controlModel;
+            ControlModel.DisplayChanged += GroupBox_DisplayChanged;
+            Unloaded += AthenaDateTime_Unloaded;
 
             datePicker.LostFocus += new RoutedEventHandler(datePicker_LostFocus);
             datePicker.GotFocus += new RoutedEventHandler(datePicker_GotFocus);
@@ -51,7 +52,12 @@ namespace ModelMockupDesigner.Controls
             ShowGroupBox = controlModel.DisplayGroupbox;
             Title = controlModel.GroupBoxTitle;
         }
-        
+
+        private void AthenaDateTime_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ControlModel.DisplayChanged -= GroupBox_DisplayChanged;
+        }
+
         public bool ShowGroupBox
         {
             set
