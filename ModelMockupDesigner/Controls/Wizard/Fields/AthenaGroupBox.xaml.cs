@@ -35,7 +35,6 @@ namespace ModelMockupDesigner.Controls
         }
         private FrameworkElement ContentControl { get; set; }
         public ElementType ElementType => ElementType.GroupBox;
-
         public BaseModel Model => ContentControl?.DataContext as BaseModel;
         public bool DisplayGroupbox { get => false; } 
         public void SetContent(FrameworkElement element)
@@ -63,6 +62,10 @@ namespace ModelMockupDesigner.Controls
             VerticalAlignment = e.VerticalAlignment.ToXaml();
             HorizontalAlignment = e.HorizontalAlignment.ToXaml();
             Text = e.GroupBoxTitle;
+        }
+        public FrameworkElement GetContent()
+        {
+            return ContentControl ?? null;
         }
     }
 }

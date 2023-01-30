@@ -119,7 +119,16 @@ namespace ModelMockupDesigner.Controls
         }
         private int GetIndex()
         {
-            return PanelParent?.FindIndex(this) ?? -1;
+            int index;
+            if (GroupBox != null)
+            {
+                index = PanelParent.FindIndex(GroupBox);
+            }
+            else
+            {
+                index = PanelParent.FindIndex(this);
+            }
+            return index;
         }
         private void AddPanelAtIndex(int index, EditorPanel panel)
         {
@@ -197,7 +206,6 @@ namespace ModelMockupDesigner.Controls
 
             OnWizardUpdated?.Invoke(this, null);
         }
-
         private async Task AddRow(NewControl newControl = null, EditorCell cell = null)
         {
             if (PanelModel == null)
@@ -239,13 +247,11 @@ namespace ModelMockupDesigner.Controls
             newColumn.Visibility = Visibility.Visible;
             newRow.Visibility = Visibility.Visible;
         }
-
         protected override void OnPreviewDragLeave(DragEventArgs e)
         {
             base.OnPreviewDragLeave(e);
             HideNewRowColumn();
         }
-
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
@@ -370,8 +376,6 @@ namespace ModelMockupDesigner.Controls
                 e.Effects = DragDropEffects.None;
             }
         }
-        
-        
         private async void Control_Drop(object sender, DragEventArgs e)
         {
             NewControl newControl = e.Data.GetData(typeof(NewControl)) as NewControl;
@@ -403,11 +407,6 @@ namespace ModelMockupDesigner.Controls
             newColumn.Visibility = Visibility.Collapsed;
             newRow.Visibility = Visibility.Collapsed;
         }
-
-
-
-
-
         private void HeaderStackPanel_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             ContextMenu contextMenu = new ContextMenu();

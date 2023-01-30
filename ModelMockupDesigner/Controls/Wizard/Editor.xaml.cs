@@ -247,7 +247,7 @@ namespace ModelMockupDesigner
 
             LoadPage(page.Model.OrderId);
 
-            OnWizardUpdated?.Invoke(this, WizardModel);
+            OnWizardUpdated?.Invoke(this, null);
         }
         private void AddPage(EditorSection page)
         {
@@ -438,6 +438,7 @@ namespace ModelMockupDesigner
         }
         private void OnWizardDesignPreviewClose(object sender, EventArgs e)
         {
+            //OnWizardUpdated -= DesignPreview.WizardDesignPreview_OnWizardUpdated;
             DesignPreview = null;
         }
 

@@ -44,6 +44,14 @@ namespace ModelMockupDesigner.Controls
                         controlElement = new AthenaLabel(control);
                         break;
                     }
+                case ElementType.TextBox:
+                case ElementType.MultiLineTextBox:
+                case ElementType.NumericTextBox:
+                case ElementType.DoubleTextBox:
+                    {
+                        controlElement = new AthenaTextBox(control);
+                        break;
+                    }
             }
 
             return Task.FromResult(controlElement);

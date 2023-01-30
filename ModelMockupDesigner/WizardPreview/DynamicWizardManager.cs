@@ -17,24 +17,19 @@ namespace ModelMockupDesigner.WizardPreview
 
         private DynamicWizardPageLayout CurrentPage;
 
-        private List<DynamicWizardSection> Pages { get; set; }
-
         public double Width { get; set; } = 1020;
         public double Height { get; set; } = 720;
         public DynamicWizardManager(PreviewWizardLayout ui)
         {
-            Pages = new List<DynamicWizardSection>();
             Ui = ui;
             Ui.OnNextPressed += Ui_OnNextPressed;
             Ui.OnPreviousPressed += Ui_OnPreviousPressed; 
         }
         public async Task Reload()
         {
-
-            // TODO: Sort out some sort of garbage collection when refreshing this wizard. Old fields are hanging about causing massive ram usage spikes.
             if (CurrentPage != null)
             {
-                int index = Pages.IndexOf(CurrentPage.Template);
+                int index = DynamicWizard.Sections.IndexOf(CurrentPage.Template);
                 CurrentPage = null;
                 await DisplayPage(index);
             }
@@ -49,14 +44,12 @@ namespace ModelMockupDesigner.WizardPreview
             {
                 DynamicWizard = dynamicWizard;
 
-                Pages = dynamicWizard.Sections;
-
                 await DisplayPage(0);
             }
         }
         private async Task DisplayPage(int index)
         {
-            DynamicWizardSection page = Pages[index];
+            DynamicWizardSection page = DynamicWizard.Sections[index];
 
             DynamicWizardPageLayout pageLayout = new DynamicWizardPageLayout(page);
 
@@ -68,19 +61,19 @@ namespace ModelMockupDesigner.WizardPreview
         }
         private async void Ui_OnPreviousPressed(object sender, EventArgs e)
         {
-            int index = Pages.IndexOf(CurrentPage.Template) - 1;
+            int index = DynamicWizard.Sections.IndexOf(CurrentPage.Template) - 1;
 
             await DisplayPage(index);
         }
         private async void Ui_OnNextPressed(object sender, EventArgs e)
         {
-            int index = Pages.IndexOf(CurrentPage.Template) + 1;
+            int index = DynamicWizard.Sections.IndexOf(CurrentPage.Template) + 1;
 
             await DisplayPage(index);
         }
         private void UpdateNavButtons()
         {
-            int index = Pages.IndexOf(CurrentPage.Template);
+            int index = DynamicWizard.Sections.IndexOf(CurrentPage.Template);
             bool showPrevious = false;
             bool showNext = false;
             bool showFinished = false;
@@ -91,7 +84,7 @@ namespace ModelMockupDesigner.WizardPreview
             }
 
             bool isLastPage = true;
-            if (index < Pages.Count - 1)
+            if (index < DynamicWizard.Sections.Count - 1)
             {
                 isLastPage = false;
             }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -79,7 +80,6 @@ namespace ModelMockupDesigner.Controls
             HeaderTextBlock.Background = Brushes.White;
             Border.Fill = Brushes.Transparent;
         }
-
         public void DeleteControl()
         {
             ColumnParent.Delete(this);
@@ -89,7 +89,15 @@ namespace ModelMockupDesigner.Controls
             if (ColumnModel != null && child.Model != null)
             {
                 _ = ColumnModel.WizardPanels.Remove((DynamicWizardPanel)child.Model);
-                container.Children.Remove(child);
+                if (child.Model.DisplayGroupbox)
+                {
+                    container.Children.Remove(GroupBox);
+                    GroupBox = null;
+                }
+                else
+                {
+                    container.Children.Remove(child);
+                }
                 child.PanelParent = null;
                 UpdatePanelOrderIDs();
 
@@ -100,7 +108,6 @@ namespace ModelMockupDesigner.Controls
         {
             container.Children.Remove(panel);
         }
-
         private async Task AddPanel()
         {
             if (ColumnModel == null)
@@ -174,8 +181,21 @@ namespace ModelMockupDesigner.Controls
         public void UpdatePanelOrderIDs()
         {
             int index = 0;
-            foreach (EditorPanel panel in container.Children)
+
+            foreach (FrameworkElement element in container.Children)
             {
+                EditorPanel panel = null;
+
+                if (element is EditorPanel)
+                {
+                    panel = element as EditorPanel;
+                    
+                }
+                else if (element is AthenaGroupBox box)
+                {
+                    panel = box.GetContent() as EditorPanel;
+                }
+
                 if (panel.Model != null)
                 {
                     panel.Model.OrderId = index;
@@ -183,10 +203,19 @@ namespace ModelMockupDesigner.Controls
                 }
             }
         }
-
         private int GetIndex()
         {
-            return ColumnParent.FindIndex(this);
+            int index;
+            if (GroupBox != null)
+            {
+                index = columnParent.FindIndex(GroupBox);
+            }
+            else
+            {
+                index = columnParent.FindIndex(this);
+            }
+
+            return index;
         }
         private void AddColumnAtIndex(int index, EditorColumn column)
         {
@@ -341,6 +370,5 @@ namespace ModelMockupDesigner.Controls
 
         #endregion
 
-        
     }
 }

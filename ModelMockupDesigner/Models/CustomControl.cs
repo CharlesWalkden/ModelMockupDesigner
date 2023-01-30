@@ -86,8 +86,8 @@ namespace ModelMockupDesigner.Models
                 OnControlUpdated?.Invoke(this, new EventArgs());
             }
         }
-        // Default min lines to 1.
-        private int minimumLines { get; set; } = 1;
+        // Default min lines to 0 which will default to 4.
+        private int minimumLines { get; set; } = 0;
         public int DoublePrecision
         {
             get => doublePrecision;

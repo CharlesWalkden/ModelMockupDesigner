@@ -69,6 +69,8 @@ namespace ModelMockupDesigner.Controls
 
         #endregion
 
+        #region Methods
+
         public async Task LoadModel(DynamicWizardCell wizardCell)
         {
             DataContext = wizardCell;
@@ -89,15 +91,13 @@ namespace ModelMockupDesigner.Controls
                     CellModel.Control = cellControl.Model as DynamicWizardTable;
                 }
 
-                await AddNewControl(cellControl.ElementType, CellModel.Control);
+                await AddNewControl(cellControl.ElementType, cellControl, false);
             }
         }
-
         public void Unselect()
         {
             Container.Background = Brushes.Transparent;
         }
-
         public void DeleteControl() 
         {
             if (CellControl != null)
@@ -110,7 +110,15 @@ namespace ModelMockupDesigner.Controls
             if (CellModel != null && cellControl.Model != null)
             {
                 _ = CellModel.Control = null;
-                Root.Children.Remove(cellControl as FrameworkElement);
+                if (cellControl.DisplayGroupbox)
+                {
+                    Root.Children.Remove(GroupBox);
+                    GroupBox = null;
+                }
+                else
+                {
+                    Root.Children.Remove(cellControl as FrameworkElement);
+                }
                 CellControl = null;
                 overlay.Visibility = Visibility.Visible;
                 overlay.Background = Brushes.White;
@@ -148,80 +156,87 @@ namespace ModelMockupDesigner.Controls
                 OnWizardUpdated?.Invoke(this, null);
             }
         }
-        public async Task AddNewControl(ElementType elementType, ICellControl controlModel = null)
+        public async Task AddNewControl(ElementType elementType, ICellControl controlModel = null, bool createNew = true)
         {
             ICellControl cellControl = null;
             CustomControl customControl = null;
 
-            switch (elementType)
+            if (createNew)
             {
-                case ElementType.Table:
-                    {
-                        DynamicWizardTable wizardTable;
-                        if (controlModel == null)
+                switch (elementType)
+                {
+                    case ElementType.Table:
                         {
-                            wizardTable = new DynamicWizardTable(CellModel);
-                            wizardTable.CreateNew();
-                        }
-                        else
-                        {
-                            wizardTable = controlModel as DynamicWizardTable;
-                        }
-
-                        if (CellModel != null)
-                        {
-                            CellModel.Control = wizardTable;
-                        }
-
-                        if (wizardTable != null)
-                        {
-                            wizardTable.DisplayChanged += OnGroupBoxDisplayChanged;
-                        }
-
-                        EditorTable editorTable = new EditorTable(this);
-                        editorTable.OnSelected += OnSelected;
-                        editorTable.OnWizardUpdated += OnWizardUpdated;
-                        await editorTable.LoadModel(wizardTable);
-
-                        cellControl = editorTable;
-
-                        break;
-                    }
-                case ElementType.YesNo:
-                    {
-                        if (controlModel == null)
-                        {
-                            customControl = new CustomControl(ElementType.YesNo);
-                        }
-                        else
-                        {
-                            customControl = (CustomControl)controlModel;
-                        }
-
-                        if (customControl != null)
-                        {
-                            customControl.DisplayChanged += OnGroupBoxDisplayChanged;
-                        }
-
-                        AthenaYesNoControl athenaYesNoControl = new AthenaYesNoControl(customControl);
-
-                        cellControl = athenaYesNoControl;
-
-                        break;
-                    }
-                case ElementType.RadioList:
-                    {
-                        if (controlModel == null)
-                        {
-                            customControl = new CustomControl(ElementType.RadioList);
-
-                            DialogLauncher<ListCreator> listCreator = new DialogLauncher<ListCreator>(this, ResizeMode.NoResize);
-                            listCreator.ShowDialog();
-                            if (listCreator.DialogResult == DialogResult.Accept)
+                            DynamicWizardTable wizardTable;
+                            if (controlModel == null)
                             {
-                                if (listCreator.Control.ViewModel != null)
+                                wizardTable = new DynamicWizardTable(CellModel);
+                                wizardTable.CreateNew();
+                            }
+                            else
+                            {
+                                wizardTable = controlModel as DynamicWizardTable;
+                            }
+
+                            if (CellModel != null)
+                            {
+                                CellModel.Control = wizardTable;
+                            }
+
+                            if (wizardTable != null)
+                            {
+                                wizardTable.DisplayChanged += OnGroupBoxDisplayChanged;
+                            }
+
+                            EditorTable editorTable = new EditorTable(this);
+                            editorTable.OnSelected += OnSelected;
+                            editorTable.OnWizardUpdated += OnWizardUpdated;
+                            await editorTable.LoadModel(wizardTable);
+
+                            cellControl = editorTable;
+
+                            break;
+                        }
+                    case ElementType.YesNo:
+                        {
+                            if (controlModel == null)
+                            {
+                                customControl = new CustomControl(ElementType.YesNo);
+                            }
+                            else
+                            {
+                                customControl = (CustomControl)controlModel;
+                            }
+
+                            if (customControl != null)
+                            {
+                                customControl.DisplayChanged += OnGroupBoxDisplayChanged;
+                            }
+
+                            AthenaYesNoControl athenaYesNoControl = new AthenaYesNoControl(customControl);
+
+                            cellControl = athenaYesNoControl;
+
+                            break;
+                        }
+                    case ElementType.RadioList:
+                        {
+                            if (controlModel == null)
+                            {
+                                customControl = new CustomControl(ElementType.RadioList);
+
+                                DialogLauncher<ListCreator> listCreator = new DialogLauncher<ListCreator>(this, ResizeMode.NoResize);
+                                listCreator.ShowDialog();
+                                if (listCreator.DialogResult == DialogResult.Accept)
                                 {
-                                    customControl.StoreListOption(listCreator.Control.ViewModel.GetListAsString());
+                                    if (listCreator.Control.ViewModel != null)
+                                    {
+                                        customControl.StoreListOption(listCreator.Control.ViewModel.GetListAsString());
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
                                 }
                                 else
                                 {
@@ -230,149 +245,154 @@ namespace ModelMockupDesigner.Controls
                             }
                             else
                             {
-                                break;
+                                customControl = controlModel as CustomControl;
                             }
+
+                            AthenaRadioList athenaRadioList = new AthenaRadioList(customControl);
+                            customControl.OnWizardUpdated += OnWizardUpdated;
+
+                            cellControl = athenaRadioList;
+
+                            break;
+
                         }
-                        else
+                    case ElementType.Label:
                         {
-                            customControl = controlModel as CustomControl;
+                            if (controlModel == null)
+                            {
+                                customControl = new CustomControl(ElementType.Label);
+                            }
+                            else
+                            {
+                                customControl = (CustomControl)controlModel;
+                            }
+
+                            if (customControl != null)
+                            {
+                                customControl.DisplayChanged += OnGroupBoxDisplayChanged;
+                            }
+
+                            AthenaLabel athenaLabel = new AthenaLabel(customControl);
+
+                            cellControl = athenaLabel;
+
+                            break;
+                        }
+                    case ElementType.TextBox:
+                    case ElementType.MultiLineTextBox:
+                    case ElementType.NumericTextBox:
+                    case ElementType.DoubleTextBox:
+                        {
+                            if (controlModel == null)
+                            {
+                                customControl = new CustomControl(elementType);
+                            }
+                            else
+                            {
+                                customControl = (CustomControl)controlModel;
+                            }
+
+                            if (customControl != null)
+                            {
+                                customControl.DisplayChanged += OnGroupBoxDisplayChanged;
+                            }
+
+                            AthenaTextBox athenaTextBox = new AthenaTextBox(customControl);
+
+                            cellControl = athenaTextBox;
+
+                            break;
                         }
 
-                        AthenaRadioList athenaRadioList = new AthenaRadioList(customControl);
-                        customControl.OnWizardUpdated += OnWizardUpdated;
+                    case ElementType.CheckBoxList:
+                        {
+                            break;
+                        }
+                    case ElementType.Date:
+                        {
+                            break;
+                        }
+                    case ElementType.Time:
+                        {
+                            break;
+                        }
+                    case ElementType.DateTime:
+                        {
+                            if (controlModel == null)
+                            {
+                                customControl = new CustomControl(ElementType.DateTime);
+                            }
+                            else
+                            {
+                                customControl = (CustomControl)controlModel;
+                            }
 
-                        cellControl = athenaRadioList;
+                            AthenaDateTime athenaDateTime = new AthenaDateTime(customControl);
 
+                            customControl.OnWizardUpdated += OnWizardUpdated;
+
+                            cellControl = athenaDateTime;
+
+                            break;
+                        }
+                    case ElementType.ApproxDate:
+                        {
+                            break;
+                        }
+                    case ElementType.CheckBox:
+                        {
+                            if (controlModel == null)
+                            {
+                                customControl = new CustomControl(ElementType.CheckBox);
+                            }
+                            else
+                            {
+                                customControl = (CustomControl)controlModel;
+                            }
+
+                            if (customControl != null)
+                            {
+                                customControl.DisplayChanged += OnGroupBoxDisplayChanged;
+                            }
+
+                            AthenaCheckBox athenaCheckBox = new AthenaCheckBox(customControl);
+
+                            cellControl = athenaCheckBox;
+
+                            break;
+                        }
+                    case ElementType.Image:
+                        {
+                            break;
+                        }
+                    case ElementType.Button:
+                        {
+                            if (controlModel == null)
+                            {
+                                customControl = new CustomControl(ElementType.Button);
+                            }
+                            else
+                            {
+                                customControl = (CustomControl)controlModel;
+                            }
+
+                            if (customControl != null)
+                            {
+                                customControl.DisplayChanged += OnGroupBoxDisplayChanged;
+                            }
+
+                            AthenaCheckBox athenaCheckBox = new AthenaCheckBox(customControl);
+
+                            cellControl = athenaCheckBox;
+                            break;
+                        }
+                    default:
                         break;
-
-                    }
-                case ElementType.Label:
-                    {
-                        if (controlModel == null)
-                        {
-                            customControl = new CustomControl(ElementType.Label);
-                        }
-                        else
-                        {
-                            customControl = (CustomControl)controlModel;
-                        }
-
-                        if (customControl != null)
-                        {
-                            customControl.DisplayChanged += OnGroupBoxDisplayChanged;
-                        }
-
-                        AthenaLabel athenaLabel = new AthenaLabel(customControl);
-
-                        cellControl = athenaLabel;
-
-                        break;
-                    }
-                case ElementType.TextBox:
-                case ElementType.MultiLineTextBox:
-                case ElementType.NumericTextBox:
-                case ElementType.DoubleTextBox:
-                    {
-                        if (controlModel == null)
-                        {
-                            customControl = new CustomControl(elementType) ;
-                        }
-                        else
-                        {
-                            customControl = (CustomControl)controlModel;
-                        }
-
-                        AthenaTextBox athenaTextBox = new AthenaTextBox(customControl);
-
-                        cellControl = athenaTextBox;
-
-                        break;
-                    }
-                
-                case ElementType.CheckBoxList:
-                    {
-                        break;
-                    }
-                case ElementType.Date:
-                    {
-                        break;
-                    }
-                case ElementType.Time:
-                    {
-                        break;
-                    }
-                case ElementType.DateTime:
-                    {
-                        if (controlModel == null)
-                        {
-                            customControl = new CustomControl(ElementType.DateTime);
-                        }
-                        else
-                        {
-                            customControl = (CustomControl)controlModel;
-                        }
-
-                        AthenaDateTime athenaDateTime = new AthenaDateTime(customControl);
-
-                        customControl.OnWizardUpdated += OnWizardUpdated;
-
-                        cellControl = athenaDateTime;
-
-                        break;
-                    }
-                case ElementType.ApproxDate:
-                    {
-                        break;
-                    }
-                case ElementType.CheckBox:
-                    {
-                        if (controlModel == null)
-                        {
-                            customControl = new CustomControl(ElementType.CheckBox);
-                        }
-                        else
-                        {
-                            customControl = (CustomControl)controlModel;
-                        }
-
-                        if (customControl != null)
-                        {
-                            customControl.DisplayChanged += OnGroupBoxDisplayChanged;
-                        }
-
-                        AthenaCheckBox athenaCheckBox = new AthenaCheckBox(customControl);
-
-                        cellControl = athenaCheckBox;
-
-                        break;
-                    }
-                case ElementType.Image:
-                    {
-                        break;
-                    }
-                case ElementType.Button:
-                    {
-                        if (controlModel == null)
-                        {
-                            customControl = new CustomControl(ElementType.Button);
-                        }
-                        else
-                        {
-                            customControl = (CustomControl)controlModel;
-                        }
-
-                        if (customControl != null)
-                        {
-                            customControl.DisplayChanged += OnGroupBoxDisplayChanged;
-                        }
-
-                        AthenaCheckBox athenaCheckBox = new AthenaCheckBox(customControl);
-
-                        cellControl = athenaCheckBox;
-                        break;
-                    }
-                default:
-                    break;
+                }
+            }
+            else
+            {
+                cellControl = controlModel;
             }
 
             if (cellControl != null)
@@ -393,6 +413,8 @@ namespace ModelMockupDesigner.Controls
 
             SelectControl();
         }
+
+        #endregion
 
         #region Events
 
@@ -602,12 +624,14 @@ namespace ModelMockupDesigner.Controls
                 }
             }
         }
-
         private void overlay_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                DragDrop.DoDragDrop(this, this, DragDropEffects.Move | DragDropEffects.Copy);
+                if (CellControl != null)
+                {
+                    DragDrop.DoDragDrop(this, this, DragDropEffects.Move | DragDropEffects.Copy);
+                }
             }
             else
             {

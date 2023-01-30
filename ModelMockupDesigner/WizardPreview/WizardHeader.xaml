@@ -18,7 +18,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Row="0" Grid.Column="0" Background="#FF323D49" x:Name="navButtonsContainer" Panel.ZIndex="10">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <ContentPresenter Content="{Binding ToolbarContent, ElementName=standardHeaderUserControl}" />
+                        <!--<ContentPresenter Content="{Binding ToolbarContent, ElementName=standardHeaderUserControl}" />-->
                         <TextBlock x:Name="windowTitle" Text="Wizard Design Preview" VerticalAlignment="Center" Margin="10,5,5,5"
                                    FontSize="17" FontWeight="SemiBold" Foreground="White"/>
                     </StackPanel>

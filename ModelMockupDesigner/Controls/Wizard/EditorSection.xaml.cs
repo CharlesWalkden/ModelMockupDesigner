@@ -3,6 +3,7 @@ using ModelMockupDesigner.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,6 @@ namespace ModelMockupDesigner.Controls
         #region Private Properties
 
         private DynamicWizardSection SectionModel => DataContext as DynamicWizardSection;
-
         private Grid Container { get; set; }
 
         #endregion
@@ -82,7 +82,15 @@ namespace ModelMockupDesigner.Controls
             if (SectionModel != null && child.Model != null)
             {
                 _ = SectionModel.WizardColumns.Remove((DynamicWizardColumn)child.Model);
-                container.Children.Remove(child);
+                if (child.Model.DisplayGroupbox)
+                {
+                    container.Children.Remove(GroupBox);
+                    GroupBox = null;
+                }
+                else
+                {
+                    container.Children.Remove(child);
+                }
                 child.ColumnParent = null;
                 UpdateColumnOrderIDs();
 
@@ -141,8 +149,19 @@ namespace ModelMockupDesigner.Controls
         public void UpdateColumnOrderIDs() 
         {
             int index = 0;
-            foreach (EditorColumn column in container.Children)
+            foreach (FrameworkElement element in container.Children)
             {
+                EditorColumn column = null;
+
+                if (element is EditorColumn)
+                {
+                    column = element as EditorColumn;
+                }
+                else if (element is AthenaGroupBox box)
+                {
+                    column = box.GetContent() as EditorColumn;
+                }
+
                 if (column.Model != null) 
                 {
                     column.Model.OrderId = index;
@@ -174,7 +193,6 @@ namespace ModelMockupDesigner.Controls
         }
 
         #endregion
-
 
         #region Events
 

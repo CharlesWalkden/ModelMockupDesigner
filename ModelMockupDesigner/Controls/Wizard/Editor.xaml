@@ -107,7 +107,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="Textbox"/>
+                        <TextBlock Text="Textbox" Background="MediumSeaGreen"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="0"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -115,7 +115,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="TextboxMultiLine"/>
+                        <TextBlock Text="TextboxMultiLine" Background="MediumSeaGreen"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -123,7 +123,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="TextboxDouble"/>
+                        <TextBlock Text="TextboxDouble" Background="MediumSeaGreen"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="0"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -131,7 +131,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="TextboxNumeric"/>
+                        <TextBlock Text="TextboxNumeric" Background="MediumSeaGreen"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="1"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"

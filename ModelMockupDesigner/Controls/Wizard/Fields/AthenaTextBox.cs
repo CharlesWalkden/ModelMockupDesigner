@@ -41,7 +41,7 @@ namespace ModelMockupDesigner.Controls
                 case ElementType.MultiLineTextBox:
                     {
                         MinWidth = 300;
-                        if (ControlModel.MinimumLines <= 1)
+                        if (ControlModel.MinimumLines == 0)
                         {
                             MinLines = 4;
                         }
@@ -57,12 +57,24 @@ namespace ModelMockupDesigner.Controls
                         break;
                     }
             }
+
+            UpdateMinimumSize();
         }
 
         private void CustomControl_OnControlUpdated(object sender, EventArgs e)
         {
-            MinLines = ControlModel.MinimumLines;
-            UpdateMinimumSize();
+            if (ControlModel.ElementType == ElementType.MultiLineTextBox)
+            {
+                if (ControlModel.MinimumLines == 0)
+                {
+                    MinLines = 4;
+                }
+                else
+                {
+                    MinLines = ControlModel.MinimumLines;
+                }
+            }
+            Initialise();
         }
 
         private string lastText;
@@ -136,7 +148,7 @@ namespace ModelMockupDesigner.Controls
             base.OnVisualParentChanged(oldParent);
             UpdateMinimumSize();
         }
-
+        
         private void UpdateMinimumSize()
         {
             if (ControlModel.MinimumCharacters > 0)
@@ -155,10 +167,12 @@ namespace ModelMockupDesigner.Controls
 
                 string temp = Text;
                 Text = lines;
+                
+                Measure(new Size(1, 1));
                 Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
 
                 MinWidth = DesiredSize.Width;
-                if (MinLines > 1)
+                if (MinLines > 0)
                     MinHeight = DesiredSize.Height;
                 Text = temp;
 
