@@ -48,7 +48,10 @@ namespace ModelMockupDesigner.Controls
         }
 
         #region Methods
-
+        public void Unload()
+        {
+            TableModel = null;
+        }
         public async Task LoadModel(DynamicWizardTable tableModel) 
         {
             DataContext = tableModel;

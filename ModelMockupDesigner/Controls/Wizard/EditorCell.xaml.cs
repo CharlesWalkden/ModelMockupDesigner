@@ -110,7 +110,7 @@ namespace ModelMockupDesigner.Controls
             if (CellModel != null && cellControl.Model != null)
             {
                 _ = CellModel.Control = null;
-                if (cellControl.DisplayGroupbox)
+                if (cellControl.DisplayGroupbox && GroupBox != null)
                 {
                     Root.Children.Remove(GroupBox);
                     GroupBox = null;
@@ -132,9 +132,9 @@ namespace ModelMockupDesigner.Controls
 
             if (control != null)
             {
-                // Dont add group box for datetime and radio list as the group box is already built into the control so just needs enabling.
+                // Dont add group box for datetime, date and radio list as the group box is already built into the control so just needs enabling.
                 if (control.DisplayGroupbox && 
-                    (control.ElementType != ElementType.DateTime && control.ElementType != ElementType.RadioList))
+                    (control.ElementType != ElementType.DateTime && control.ElementType != ElementType.RadioList && control.ElementType != ElementType.Date))
                 {
                     AthenaGroupBox groupBox = new AthenaGroupBox();
                     //groupBox.Margin = new Thickness(5);
@@ -310,10 +310,45 @@ namespace ModelMockupDesigner.Controls
                         }
                     case ElementType.Date:
                         {
+                            if (controlModel == null)
+                            {
+                                customControl = new CustomControl(ElementType.Date);
+                            }
+                            else
+                            {
+                                customControl = (CustomControl)controlModel;
+                            }
+
+                            AthenaDate athenaDate = new AthenaDate(customControl);
+
+                            customControl.OnWizardUpdated += OnWizardUpdated;
+
+                            cellControl = athenaDate;
+
                             break;
                         }
                     case ElementType.Time:
                         {
+                            if (controlModel == null)
+                            {
+                                customControl = new CustomControl(ElementType.Time);
+                            }
+                            else
+                            {
+                                customControl = (CustomControl)controlModel;
+                            }
+
+                            if (customControl != null)
+                            {
+                                customControl.DisplayChanged += OnGroupBoxDisplayChanged;
+                            }
+
+                            AthenaTime athenaTime = new AthenaTime(customControl);
+
+                            customControl.OnWizardUpdated += OnWizardUpdated;
+
+                            cellControl = athenaTime;
+
                             break;
                         }
                     case ElementType.DateTime:

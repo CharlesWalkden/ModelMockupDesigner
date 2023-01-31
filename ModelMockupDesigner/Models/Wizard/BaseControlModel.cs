@@ -52,6 +52,7 @@ namespace ModelMockupDesigner.Models
         public BaseModel Model => this;
 
         public string HeaderName => ElementType.ToString();
+        public void Unload() { }
 
         #endregion
 

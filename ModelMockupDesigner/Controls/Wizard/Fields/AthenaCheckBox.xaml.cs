@@ -51,5 +51,9 @@ namespace ModelMockupDesigner.Controls
                 checkBox.Visibility = Visibility.Collapsed;
             }
         }
+        public void Unload()
+        {
+            DataContext = null;
+        }
     }
 }

@@ -30,6 +30,7 @@ namespace ModelMockupDesigner.WizardPreview
             if (CurrentPage != null)
             {
                 int index = DynamicWizard.Sections.IndexOf(CurrentPage.Template);
+                CurrentPage.Unload();
                 CurrentPage = null;
                 await DisplayPage(index);
             }

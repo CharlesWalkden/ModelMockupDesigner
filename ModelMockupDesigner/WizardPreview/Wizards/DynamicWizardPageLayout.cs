@@ -20,7 +20,23 @@ namespace ModelMockupDesigner.WizardPreview
         {
             Template = template;
         }
-
+        public void Unload()
+        {
+            Template = null;
+            foreach (FrameworkElement element in Children)
+            {
+                if (element is DynamicWizardSectionLayout section)
+                {
+                    section.Unload();
+                }
+                else if (element is AthenaGroupBox groupBox)
+                {
+                    DynamicWizardSectionLayout groupBoxSection = (DynamicWizardSectionLayout)groupBox.GetContent();
+                    groupBoxSection.Unload();
+                    groupBox.Unload();
+                }
+            }
+        }
         public async Task Build() 
         {
             this.Children.Clear();

@@ -525,6 +525,16 @@ namespace ModelMockupDesigner
                             selectedType = ElementType.DateTime;
                             break;
                         }
+                    case "Date":
+                        {
+                            selectedType = ElementType.Date;
+                            break;
+                        }
+                    case "Time":
+                        {
+                            selectedType = ElementType.Time;
+                            break;
+                        }
                     case "Textbox":
                         {
                             selectedType = ElementType.TextBox;

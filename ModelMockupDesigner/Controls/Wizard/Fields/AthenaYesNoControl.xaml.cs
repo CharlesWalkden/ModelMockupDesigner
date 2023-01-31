@@ -30,7 +30,10 @@ namespace ModelMockupDesigner.Controls
         public bool DisplayGroupbox => ControlModel?.DisplayGroupbox ?? false;
 
         private CustomControl ControlModel => DataContext as CustomControl;
-
+        public void Unload()
+        {
+            DataContext = null;
+        }
         public AthenaYesNoControl(CustomControl customControlModel)
         {
             InitializeComponent();

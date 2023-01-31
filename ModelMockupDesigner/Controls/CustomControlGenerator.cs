@@ -28,6 +28,16 @@ namespace ModelMockupDesigner.Controls
                         controlElement = new AthenaDateTime(control);
                         break;
                     }
+                case ElementType.Date:
+                    {
+                        controlElement = new AthenaDate(control);
+                        break;
+                    }
+                case ElementType.Time:
+                    {
+                        controlElement = new AthenaTime(control);
+                        break;
+                    }
                 case ElementType.RadioList:
                     {
                         controlElement = new AthenaRadioList(control);

@@ -40,6 +40,7 @@ namespace ModelMockupDesigner.Models
         }
 
         public BaseModel Model => this;
+        
 
         #region Xml
 
@@ -61,8 +62,11 @@ namespace ModelMockupDesigner.Models
         {
             throw new NotImplementedException();
         }
+        public void Unload()
+        {
 
-       
+        }
+
 
         #endregion
     }

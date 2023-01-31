@@ -28,6 +28,15 @@ namespace ModelMockupDesigner.Controls
         public ElementType ElementType => ControlModel.ElementType;
         public BaseModel Model => ControlModel;
         public bool DisplayGroupbox => ControlModel.DisplayGroupbox;
+        public void Unload()
+        {
+            if (ControlModel != null)
+            {
+                ControlModel.DisplayChanged -= GroupBox_DisplayChanged;
+            }
+            DataContext = null;
+            ControlModel = null;
+        }
 
         private static Color ValidColour = Color.FromArgb(255, 1, 243, 62);
         private static Color InvalidColour = Color.FromArgb(255, 255, 72, 72);
@@ -55,7 +64,10 @@ namespace ModelMockupDesigner.Controls
 
         private void AthenaDateTime_Unloaded(object sender, RoutedEventArgs e)
         {
-            ControlModel.DisplayChanged -= GroupBox_DisplayChanged;
+            if (ControlModel != null)
+            {
+                ControlModel.DisplayChanged -= GroupBox_DisplayChanged;
+            }
         }
 
         public bool ShowGroupBox

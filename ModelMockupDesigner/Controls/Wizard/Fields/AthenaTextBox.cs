@@ -213,5 +213,10 @@ namespace ModelMockupDesigner.Controls
         }
         public BaseModel Model => ControlModel;
         public bool DisplayGroupbox => ControlModel.DisplayGroupbox;
+        public void Unload()
+        {
+            ControlModel.OnControlUpdated -= CustomControl_OnControlUpdated;
+            ControlModel = null;
+        }
     }
 }

@@ -4,6 +4,7 @@ using ModelMockupDesigner.Models;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Xml.Linq;
 
 namespace ModelMockupDesigner.Controls
 {
@@ -66,6 +67,11 @@ namespace ModelMockupDesigner.Controls
         public FrameworkElement GetContent()
         {
             return ContentControl ?? null;
+        }
+        public void Unload()
+        {
+            mainContent.Children.Remove(ContentControl);
+            ContentControl = null;
         }
     }
 }

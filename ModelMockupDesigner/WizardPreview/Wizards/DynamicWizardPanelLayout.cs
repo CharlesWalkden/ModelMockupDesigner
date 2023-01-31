@@ -21,7 +21,27 @@ namespace ModelMockupDesigner.WizardPreview.Wizards
         {
             Template = template;
         }
-
+        public void Unload()
+        {
+            Template = null;
+            foreach (FrameworkElement element in Children)
+            {
+                if (element is DynamicWizardPanelLayout panel)
+                {
+                    panel.Unload();
+                }
+                else if (element is AthenaGroupBox groupBox)
+                {
+                    ICellControl control = (ICellControl)groupBox.GetContent();
+                    control.Unload();
+                    groupBox.Unload();
+                }
+                else if (element is ICellControl control)
+                {
+                    control.Unload();
+                }
+            }
+        }
         public async Task Build()
         {
             Children.Clear();

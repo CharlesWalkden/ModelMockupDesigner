@@ -24,6 +24,7 @@ namespace ModelMockupDesigner.Controls
     public partial class AthenaRadioList : UserControl, ICellControl
     {
         public CustomControl ControlModel { get; set; }
+        
 
         private List<RadioButton> radioButtons = new List<RadioButton>();
         private List<StackPanel> StackPanels = new List<StackPanel>();
@@ -56,8 +57,11 @@ namespace ModelMockupDesigner.Controls
 
         private void AthenaRadioList_Unloaded(object sender, RoutedEventArgs e)
         {
-            ControlModel.DisplayChanged -= GroupBox_DisplayChanged;
-            ControlModel.OnColumnCountChanged -= ControlModel_OnColumnCountChanged;
+            if (ControlModel != null)
+            {
+                ControlModel.DisplayChanged -= GroupBox_DisplayChanged;
+                ControlModel.OnColumnCountChanged -= ControlModel_OnColumnCountChanged;
+            }
         }
 
         private void ControlModel_OnColumnCountChanged(object sender, int e)
@@ -156,8 +160,16 @@ namespace ModelMockupDesigner.Controls
 
         public BaseModel Model => ControlModel;
 
-        public bool DisplayGroupbox => ControlModel.DisplayGroupbox;
-
+        public bool DisplayGroupbox => ControlModel.DisplayGroupbox; 
+        public void Unload()
+        {
+            if (ControlModel != null)
+            {
+                ControlModel.DisplayChanged -= GroupBox_DisplayChanged;
+                ControlModel.OnColumnCountChanged -= ControlModel_OnColumnCountChanged;
+                ControlModel = null;
+            }
+        }
         #endregion
     }
 }
