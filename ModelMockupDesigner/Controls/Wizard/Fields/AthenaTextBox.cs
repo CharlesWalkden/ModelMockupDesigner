@@ -151,6 +151,9 @@ namespace ModelMockupDesigner.Controls
         
         private void UpdateMinimumSize()
         {
+            if (ControlModel == null)
+                return;
+
             if (ControlModel.MinimumCharacters > 0)
             {
                 string str = string.Empty;

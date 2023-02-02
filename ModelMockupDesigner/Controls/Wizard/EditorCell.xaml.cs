@@ -113,6 +113,8 @@ namespace ModelMockupDesigner.Controls
                 if (cellControl.DisplayGroupbox && GroupBox != null)
                 {
                     Root.Children.Remove(GroupBox);
+                    cellControl.Model.DisplayChanged -= OnGroupBoxDisplayChanged;
+                    GroupBox.RemoveContent(cellControl as FrameworkElement);
                     GroupBox = null;
                 }
                 else
@@ -143,6 +145,9 @@ namespace ModelMockupDesigner.Controls
 
                     newControl = groupBox;
                     GroupBox = groupBox;
+
+                    // Make sure we add the event to update groupbox
+                    control.Model.DisplayChanged += OnGroupBoxDisplayChanged;
                 }
                 else
                     newControl = control as FrameworkElement;

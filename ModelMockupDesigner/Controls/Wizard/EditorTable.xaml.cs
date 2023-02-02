@@ -259,6 +259,8 @@ namespace ModelMockupDesigner.Controls
         }
         private async void Control_Drop(object sender, DragEventArgs e)
         {
+            //TODO: allow dropping of existing fields, not just new ones.
+
             // Only allow this new control if its not a table. Don't want tables within tables.
             if (e.Data.GetData(typeof(NewControl)) is NewControl newControl && newControl.ElementType != ElementType.Table)
             {
