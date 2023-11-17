@@ -1,4 +1,5 @@
-﻿using ModelMockupDesigner.Models;
+﻿using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,17 @@ namespace ModelMockupDesigner.Data
 {
     public static class DataStore
     {
+        public static Dictionary<ElementType, bool> GetAllControls()
+        {
+            Dictionary<ElementType, bool> controls = new Dictionary<ElementType, bool>()
+            {
+                {ElementType.ApproxDate, true },
+                {ElementType.Grid, true },
+                {ElementType.Label, true }
+            };
+
+            return controls;
+        }
         public static List<Category> GetIntrapartumCategories()
         {
             List<Category> categories = new List<Category>()

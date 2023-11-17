@@ -1,4 +1,5 @@
 ﻿using ModelMockupDesigner.Controls;
+using ModelMockupDesigner.Data;
 using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -118,8 +120,36 @@ namespace ModelMockupDesigner
                 AddPage(editorSection);
             }
 
+            await LoadDragableControls();
+
             LoadPage(0);
         }
+
+        private async Task LoadDragableControls()
+        {
+            foreach (KeyValuePair<ElementType, bool> element in DataStore.GetAllControls())
+            {
+                if (element.Value)
+                {
+                    FrameworkElement control = await CustomControlGenerator.GetControl(new CustomControl(element.Key, scaleDown:true));
+                    if (control != null)
+                    {
+                        Border controlBorder = new Border();
+                        controlBorder.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                        controlBorder.BorderThickness = new Thickness(1);
+
+                        controlBorder.PreviewMouseDown += Border_PreviewMouseDown;
+                        controlBorder.PreviewMouseMove += Border_PreviewMouseMove;
+                        controlBorder.Tag = element.Key.ToString();
+                        controlBorder.Child = control;
+                        controlBorder.Child.IsEnabled = false;
+                        dragableControls.Children.Add(controlBorder);
+
+                    }
+                }
+            }            
+        }
+
         public void LoadPage(int pageIndex)
         {
             ContentContainer.Children.Clear();
@@ -479,16 +509,16 @@ namespace ModelMockupDesigner
         private void Border_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             Source = (Border)sender;
-            TextBlock child = null;
+            string controlName = "";
             if (Source != null)
             {
-                child = Source.Child as TextBlock;
+                controlName = Source.Tag.ToString();
             }
 
             ElementType selectedType = ElementType.Table;
-            if (child != null)
+            if (controlName != null)
             {
-                switch (child.Text)
+                switch (controlName)
                 {
                     case "Table":
                         {

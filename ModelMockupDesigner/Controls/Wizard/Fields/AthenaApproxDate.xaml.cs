@@ -42,12 +42,15 @@ namespace ModelMockupDesigner.Controls
         {
             InitializeComponent();
 
+            if (controlModel.ScaleDown)
+            {
+                this.LayoutTransform = new ScaleTransform(0.75, 0.75);
+            }
+
             DataContext = controlModel;
             ControlModel = controlModel;
             ControlModel.DisplayChanged += GroupBox_DisplayChanged;
             Unloaded += AthenaApproxDate_Unloaded;
-
-
 
 #if !SILVERLIGHT
             monthComboBox.IsEditable = false;

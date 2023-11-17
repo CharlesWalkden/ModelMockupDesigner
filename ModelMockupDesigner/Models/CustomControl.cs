@@ -15,10 +15,11 @@ namespace ModelMockupDesigner.Models
 
         public event EventHandler OnControlUpdated;
         
-        public CustomControl(ElementType elementType, List<string> listOptions = null)
+        public CustomControl(ElementType elementType, bool scaleDown = false, List<string> listOptions = null)
         {
             ElementType = elementType;
             ListOptions = listOptions;
+            ScaleDown = scaleDown;
 
             if (elementType == ElementType.DateTime || elementType == ElementType.RadioList)
             {
@@ -102,6 +103,21 @@ namespace ModelMockupDesigner.Models
             }
         }
         private int doublePrecision { get; set; }
+
+        public bool ScaleDown
+        {
+            get => scaleDown;
+            set
+            {
+                if (scaleDown == value)
+                    return;
+
+                scaleDown = value;
+                DisplayGroupbox = true;
+                GroupBoxTitle = ElementType.ToString();
+            }
+        }
+        private bool scaleDown;
 
         public override Dictionary<string, string> GetEditableProperties()
         {
