@@ -49,7 +49,7 @@ namespace ModelMockupDesigner.Windows
 
             for (int i = 0; i < mandatoryFields.Count; i++)
             {
-                sb.Append(mandatoryFields[i] + " ,");
+                sb.Append(mandatoryFields[i] + ", ");
             }
 
             if (mandatoryFields.Count > 0)

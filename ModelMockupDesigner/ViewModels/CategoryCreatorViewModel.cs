@@ -34,6 +34,23 @@ namespace ModelMockupDesigner.ViewModels
             }
         }
 
+        public List<string> ValidateData()
+        {
+            List<string> remaining = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(CategoryName))
+            {
+                remaining.Add(nameof(CategoryName));
+            }
+
+            if (string.IsNullOrWhiteSpace(CategoryDescription))
+            {
+                remaining.Add(nameof(CategoryDescription));
+            }
+
+            return remaining;
+        }
+
         #region Private Properties
 
         private string categoryName { get; set; }

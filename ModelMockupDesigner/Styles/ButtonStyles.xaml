@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     mc:Ignorable="d">
 
 
@@ -395,7 +396,7 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="gridImage">
-                            <Image Source="/Images/Icons/file-plus.png"/>
+                            <iconPacks:PackIconMaterial Kind="FilePlus" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="50" Width="50" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>
@@ -436,7 +437,7 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="gridImage">
-                            <Image Source="/Images/Icons/folder-open.png"/>
+                            <iconPacks:PackIconMaterial Kind="FolderOpen" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="50" Width="50" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>
@@ -477,7 +478,7 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="gridImage">
-                            <Image Source="/Images/Icons/file-export.png"/>
+                            <iconPacks:PackIconMaterial Kind="FileExport" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="50" Width="50" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>
@@ -518,7 +519,7 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="gridImage">
-                            <Image Source="/Images/Icons/tools.png"/>
+                            <iconPacks:PackIconMaterial Kind="Tools" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="50" Width="50" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>
@@ -559,7 +560,7 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="gridImage">
-                            <Image Source="/Images/Icons/exit-run.png"/>
+                            <iconPacks:PackIconMaterial Kind="ExitRun" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="50" Width="50" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>
