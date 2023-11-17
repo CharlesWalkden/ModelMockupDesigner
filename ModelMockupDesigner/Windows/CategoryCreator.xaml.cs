@@ -40,8 +40,24 @@ namespace ModelMockupDesigner.Windows
 
         private void Accept_Click(object sender, RoutedEventArgs e) 
         {
-            DialogResult = DialogResult.Accept;
-            OnClose?.Invoke(this, new DialogEventArgs(DialogResult));
+            List<string> mandatoryFields = ViewModel?.ValidateData() ?? new List<string>();
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < mandatoryFields.Count; i++)
+            {
+                sb.Append(mandatoryFields[i] + ", ");
+            }
+
+            if (mandatoryFields.Count > 0)
+            {
+                MessageBox.Show($"The following fields have not been recorded: {sb.ToString()}");
+            }
+            else
+            {
+                DialogResult = DialogResult.Accept;
+                OnClose?.Invoke(this, new DialogEventArgs(DialogResult));
+            }
         }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {

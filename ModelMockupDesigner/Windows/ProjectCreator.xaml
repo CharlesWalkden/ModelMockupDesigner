@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local="clr-namespace:ModelMockupDesigner"
              xmlns:controls="clr-namespace:ModelMockupDesigner.Controls"
              mc:Ignorable="d" 
@@ -22,28 +23,28 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Project Name:" FontSize="25" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="10,5,10,5"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Project Name:" FontSize="20" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="10,5,10,5"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ProjectName,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="28" HorizontalAlignment="Left" Margin="0,5,10,0"
                          Style="{StaticResource genericTextBox}"/>
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Project Description:" FontSize="25" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="top" Margin="10,0" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Project Description:" FontSize="20" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="top" Margin="10,0" />
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ProjectDescription,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="100" TextWrapping="Wrap"
                          AcceptsReturn="True" HorizontalAlignment="Left" Margin="0,5,0,0" Style="{StaticResource genericTextBox}"/>
 
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Customer Name:" FontSize="25" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="10,5,10,5" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Customer Name:" FontSize="20" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="10,5,10,5" />
                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CustomerName,UpdateSourceTrigger=PropertyChanged}" Width="400" Height="28" HorizontalAlignment="Left" Margin="0,5,0,0"
                          Style="{StaticResource genericTextBox}"/>
 
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="Project Template:" FontSize="25" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="10,5" />
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Project Template:" FontSize="20" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="10,5" />
                 <controls:ProjectTemplateSelector Grid.Row="3" Grid.Column="1" CurrentTemplate="{Binding ProjectTemplate, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"
                                                   Margin="0,5,0,0"/>
 
                 <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Width="50" Height="50" Margin="10,10,20,10" Click="Accept_Click" Style="{StaticResource IconButton}">
-                        <Image Source="/Images/Icons/check-bold.png"/>
+                        <iconPacks:PackIconMaterial Kind="CheckBold" VerticalAlignment="Center" HorizontalAlignment="Center" Height="25" Width="25" />
                     </Button>
                     <Button Width="50" Height="50" Margin="20,10,10,10"  Click="Cancel_Click" Style="{StaticResource IconButton}">
-                        <Image Source="/Images/Icons/close-thick.png"/>
+                        <iconPacks:PackIconMaterial Kind="CloseThick" VerticalAlignment="Center" HorizontalAlignment="Center" Height="25" Width="25" />
                     </Button>
                 </StackPanel>
             </Grid>

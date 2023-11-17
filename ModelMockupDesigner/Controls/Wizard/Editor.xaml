@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local="clr-namespace:ModelMockupDesigner"
              xmlns:control="clr-namespace:ModelMockupDesigner.Controls"
              mc:Ignorable="d" 
@@ -21,19 +22,19 @@
             <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="5" >
                 
                 <Button Style="{StaticResource IconButton}" Click="Save_Click">
-                    <Image Source="/Images/Icons/content-save-.png" />
+                    <iconPacks:PackIconMaterial Kind="ContentSave" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Save current wizard" />
                 </Button>
                 <Button Style="{StaticResource IconButton}" Click="NewPageButton_Click" x:Name="NewPageButton">
-                    <Image Source="/Images/Icons/file-document-plus-outline.png" />
+                    <iconPacks:PackIconMaterial Kind="FileDocument" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="New page" />
                 </Button>
                 <Button Style="{StaticResource IconButton}" Click="DeletePageButton_Click" x:Name="DeletePageButton">
-                    <Image Source="/Images/Icons/file-document-minus-outline.png" />
+                    <iconPacks:PackIconMaterial Kind="NoteMinus" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Delete current page" />
                 </Button>
                 <Button Style="{StaticResource IconButton}" Click="EditProperties_Click" x:Name="EditProperties">
-                    <Image Source="/Images/Icons/file-document-edit.png" />
+                    <iconPacks:PackIconMaterial Kind="FileDocumentEdit" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Edit wizard properties" />
                 </Button>
                 <Button Style="{StaticResource IconButton}" Click="OpenPreviewWindow_Click" x:Name="OpenPreviewWindow">
-                    <Image Source="/Images/Icons/open-in-app.png" />
+                    <iconPacks:PackIconMaterial Kind="OpenInApp" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Open wizard preview" />
                 </Button>
                 
             </StackPanel>
@@ -239,7 +240,7 @@
                             Margin="2,0,2,0" 
                             Click="NavFirstPageButton_Click" 
                             ToolTip="First Page">
-                        <Image Source="/Images/Icons/page-first.png"/>
+                        <iconPacks:PackIconMaterial Kind="PageFirst" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="15" Width="15" />
                     </Button>
 
                     <Button x:Name="NavPreviousButton"
@@ -247,7 +248,7 @@
                             Margin="2,0,2,0" 
                             Click="NavPreviousButton_Click" 
                             ToolTip="Previous page">
-                        <Image Source="/Images/Icons/chevron-left.png"/>
+                        <iconPacks:PackIconMaterial Kind="ChevronLeft" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="15" Width="15" />
                     </Button>
                     
                     <ComboBox x:Name="PageSelector" Grid.Column="3" Margin="5,1,5,0" Width="150"
@@ -260,7 +261,7 @@
                             Margin="2,0,2,0"
                             Click="NavNextButton_Click" 
                             ToolTip="Next Page">
-                        <Image Source="/Images/Icons/chevron-right.png"/>
+                        <iconPacks:PackIconMaterial Kind="ChevronRight" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="15" Width="15" />
                     </Button>
 
                     <Button x:Name="NavLastPageButton"
@@ -268,7 +269,7 @@
                             Margin="2,0,2,0"
                             Click="NavLastPageButton_Click"
                             ToolTip="Last Page">
-                        <Image Source="/Images/Icons/page-last.png"/>
+                        <iconPacks:PackIconMaterial Kind="PageLast" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="15" Width="15" />
                     </Button>
                     
                 </StackPanel>

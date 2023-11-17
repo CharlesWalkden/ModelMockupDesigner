@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local="clr-namespace:ModelMockupDesigner"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -21,13 +22,13 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
                     <TextBlock Text="Project Overview"  FontSize="12" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Top" />
                     <Button Width="30" Height="30" Margin="5" Style="{StaticResource IconButton}">
-                        <Image Source="/Images/Icons/content-save-.png"/>
+                        <iconPacks:PackIconMaterial Kind="ContentSave" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="20" Width="20" ToolTip="Save current project" />
                     </Button>
                     <Button Width="30" Height="30" Margin="5" Style="{StaticResource IconButton}">
-                        <Image Source="/Images/Icons/folder-open.png"/>
+                        <iconPacks:PackIconMaterial Kind="FolderOpen" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Load a project" />
                     </Button>
                     <Button Width="30" Height="30" Margin="5" Style="{StaticResource IconButton}" Command="{Binding CloseWizardSelectorCommand}">
-                        <Image Source="/Images/Icons/exit-run.png"/>
+                        <iconPacks:PackIconMaterial Kind="ExitRun" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Exit current project" />
                     </Button>
                 </StackPanel>
             </Border>
@@ -83,10 +84,10 @@
                                         <MenuItem Header="Create Wizard" Command="{Binding CreateNewWizardCommand}"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
-                                <Image Source="/Images/Icons/file-document-plus-outline.png"/>
+                                <iconPacks:PackIconMaterial Kind="FileDocument" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" />
                             </Button>
                             <Button Width="40" Height="40" Margin="5" Style="{StaticResource IconButton}" Command="{Binding DeleteCommand}">
-                                <Image Source="/Images/Icons/delete.png"/>
+                                <iconPacks:PackIconMaterial Kind="Delete" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" />
                             </Button>
                         </StackPanel>
                     </Grid>
@@ -109,7 +110,7 @@
                     <Grid Grid.Row="1">
                         <!-- Edit button -->
                         <Button Margin="0,0,5,0"  Width="40" Height="40" Command="{Binding EditWizardCommand}" Style="{StaticResource IconButton}" HorizontalAlignment="Right">
-                            <Image Source="/Images/Icons/folder-open.png"/>
+                            <iconPacks:PackIconMaterial Kind="FolderOpen" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" />
                         </Button>
                     </Grid>
                 </Grid>

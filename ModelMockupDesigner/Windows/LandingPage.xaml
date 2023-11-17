@@ -31,31 +31,31 @@
                 </ItemsControl.ItemsPanel>
                 <Grid Grid.Row="0" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Command="{Binding NewProjectCommand}" Style="{StaticResource CreateNewButton}"/>
+                        <Button Margin="15" Command="{Binding NewProjectCommand}" Style="{StaticResource CreateNewButton}" ToolTip="Create a new project"/>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Row="1" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Command="{Binding LoadProjectCommand}" Style="{StaticResource OpenButton}"/>
+                        <Button Margin="15" Command="{Binding LoadProjectCommand}" Style="{StaticResource OpenButton}" ToolTip="Load currently selected project"/>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Row="2" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Command="{Binding ExportProjectCommand}" Style="{StaticResource ExportButton}"/>
+                        <Button Margin="15" Command="{Binding ExportProjectCommand}" Style="{StaticResource ExportButton}" ToolTip="Export currently selected project"/>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Row="3" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Command="{Binding OpenSettingsCommand}" Style="{StaticResource SettingsButton}"/>
+                        <Button Margin="15" Command="{Binding OpenSettingsCommand}" Style="{StaticResource SettingsButton}" ToolTip="Open settings (currently disabled)"/>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Row="4" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Command="{Binding ExitApplicationCommand}" Style="{StaticResource ExitButton}"/>
+                        <Button Margin="15" Command="{Binding ExitApplicationCommand}" Style="{StaticResource ExitButton}" ToolTip="Exit application"/>
                     </Border>
                 </Grid>
 

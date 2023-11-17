@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local="clr-namespace:ModelMockupDesigner.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="800"  Width="400">
@@ -20,10 +21,10 @@
             </StackPanel>
             <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Width="50" Height="50" Margin="10,10,20,10" Click="Accept_Click" Style="{StaticResource IconButton}">
-                    <Image Source="/Images/Icons/check-bold.png"/>
+                    <iconPacks:PackIconMaterial Kind="CheckBold" VerticalAlignment="Center" HorizontalAlignment="Center" Height="25" Width="25" />
                 </Button>
                 <Button Width="50" Height="50" Margin="20,10,10,10"  Click="Close_Click" Style="{StaticResource IconButton}">
-                    <Image Source="/Images/Icons/close-thick.png"/>
+                    <iconPacks:PackIconMaterial Kind="CloseThick" VerticalAlignment="Center" HorizontalAlignment="Center" Height="25" Width="25"  />
                 </Button>
             </StackPanel>
         </StackPanel>
