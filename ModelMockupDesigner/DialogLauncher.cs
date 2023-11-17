@@ -50,7 +50,6 @@ namespace ModelMockupDesigner
             Window.SnapsToDevicePixels = true;
             Window.UseLayoutRounding = true;
             Window.ResizeMode = resizeMode;
-            Window.Closed += Window_Closed;
 
             if (owner is Window)
             {
@@ -89,19 +88,15 @@ namespace ModelMockupDesigner
             }
         }
 
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            // If the result is none, this is the default and means we have not closed it, the user has with the X
-            if (DialogResult == DialogResult.None)   
-            {
-                OnClose?.Invoke(this, new DialogEventArgs() { Result = DialogResult });
-            }
-        }
-
         private void DialogClient_Close(object sender, DialogEventArgs e)
         {
+            if (((ScrollViewer)Window.Content).Content is IDialogClient dialogClient)
+            {
+                dialogClient.OnClose -= new EventHandler<DialogEventArgs>(DialogClient_Close);
+            }
             DialogResult = e.Result;
             Close();
+
 
         }
         public void ShowDialog()
@@ -133,6 +128,7 @@ namespace ModelMockupDesigner
                     Window.DialogResult = false;
             }
 
+            Window.MouseLeftButtonDown -= new System.Windows.Input.MouseButtonEventHandler(window_MouseLeftButtonDown);
             try
             {
                 Window.Close();
@@ -141,7 +137,6 @@ namespace ModelMockupDesigner
             {
 
             }
-
             OnClose?.Invoke(this, new DialogEventArgs() { Result = DialogResult });
         }
 

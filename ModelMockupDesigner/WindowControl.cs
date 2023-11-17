@@ -55,6 +55,19 @@ namespace ModelMockupDesigner
                 }
             }
         }
+        public static IWindowStack GetTopWindow()
+        {
+            if (windowStack.Count > 0)
+            {
+                WindowIndex = windowStack.Count - 1;
+                if (windowStack[WindowIndex] is IWindowStack)
+                {
+                    return ((IWindowStack)windowStack[WindowIndex]);
+                }
+            }
+
+            return null;
+        }
         private static void CloseTopWindow_OnClosed(object sender, EventArgs e)
         {
             if (WindowIndex < windowStack.Count && MainWindow != null)

@@ -1,5 +1,6 @@
 ﻿using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
+using ModelMockupDesigner.WizardPreview;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -59,7 +60,6 @@ namespace ModelMockupDesigner.Controls
             {
                 EditorColumn editorColumn = new EditorColumn(this);
                 editorColumn.OnSelected += OnSelected;
-                editorColumn.OnWizardUpdated += OnWizardUpdated;
 
                 container.Children.Add(editorColumn);
 
@@ -77,7 +77,7 @@ namespace ModelMockupDesigner.Controls
         {
 
         }
-        public void Delete(EditorColumn child)
+        public async void Delete(EditorColumn child)
         {
             if (SectionModel != null && child.Model != null)
             {
@@ -94,7 +94,7 @@ namespace ModelMockupDesigner.Controls
                 child.ColumnParent = null;
                 UpdateColumnOrderIDs();
 
-                OnWizardUpdated?.Invoke(this, null);
+                await WizardPreviewManager.UpdatePreview();
             }
         }
         public void RemoveFromUI(FrameworkElement element)
@@ -113,22 +113,20 @@ namespace ModelMockupDesigner.Controls
 
             EditorColumn editorColumn = new EditorColumn(this);
             editorColumn.OnSelected += OnSelected;
-            editorColumn.OnWizardUpdated += OnWizardUpdated;
 
             container.Children.Add(editorColumn);
 
             await editorColumn.LoadModel(wizardColumn);
 
-            OnWizardUpdated?.Invoke(this, null);
+            await WizardPreviewManager.UpdatePreview();
         }
-        private void AddColumn(int index, EditorColumn column)  
+        private async void AddColumn(int index, EditorColumn column)  
         {
             if (SectionModel != null)
             {
                 SectionModel.WizardColumns.Add(column.Model as DynamicWizardColumn);
                 column.SetNewParent(this);
                 column.OnSelected += OnSelected;
-                column.OnWizardUpdated += OnWizardUpdated;
             }
             FrameworkElement columnOrGroupBox = column;
             if (column.Model.DisplayGroupbox)
@@ -145,7 +143,7 @@ namespace ModelMockupDesigner.Controls
                 container.Children.Insert(index, columnOrGroupBox);
             }
 
-            OnWizardUpdated?.Invoke(this, null);
+            await WizardPreviewManager.UpdatePreview();
         }
         public int FindIndex(FrameworkElement element)
         {
@@ -179,7 +177,7 @@ namespace ModelMockupDesigner.Controls
             AddColumn(index, column);
             UpdateColumnOrderIDs();
         }
-        public void AddElementAtIndex(int index, FrameworkElement element)
+        public async void AddElementAtIndex(int index, FrameworkElement element)
         {
             if (container.Children.Count == 0)
             {
@@ -194,7 +192,7 @@ namespace ModelMockupDesigner.Controls
                 container.Children.Insert(index, element);
             }
 
-            OnWizardUpdated?.Invoke(this, null);
+            await WizardPreviewManager.UpdatePreview();
         }
 
         #endregion
@@ -202,8 +200,7 @@ namespace ModelMockupDesigner.Controls
         #region Events
 
         public EventHandler<IIsSelectable> OnSelected;
-        public event EventHandler<DynamicWizard> OnWizardUpdated;
-        private void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
+        private async void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
         {
             if (e.Display)
             {
@@ -232,7 +229,7 @@ namespace ModelMockupDesigner.Controls
 
             GroupBox?.Initialise(e);
 
-            OnWizardUpdated?.Invoke(this, null);
+            await WizardPreviewManager.UpdatePreview();
         }
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

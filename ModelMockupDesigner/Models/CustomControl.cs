@@ -1,5 +1,6 @@
 ﻿using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
+using ModelMockupDesigner.WizardPreview;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,6 @@ namespace ModelMockupDesigner.Models
     {
         public event EventHandler<int> OnColumnCountChanged;
 
-        public event EventHandler OnControlUpdated;
-        
         public CustomControl(ElementType elementType, bool scaleDown = false, List<string> listOptions = null)
         {
             ElementType = elementType;
@@ -70,7 +69,7 @@ namespace ModelMockupDesigner.Models
 
                 minimumCharacters = value;
                 OnPropertyChanged(nameof(MinimumCharacters));
-                OnControlUpdated?.Invoke(this, new EventArgs());
+                WizardPreviewManager.UpdatePreview();
             }
         }
         private int minimumCharacters { get; set; }
@@ -84,7 +83,7 @@ namespace ModelMockupDesigner.Models
 
                 minimumLines = value;
                 OnPropertyChanged(nameof(MinimumLines));
-                OnControlUpdated?.Invoke(this, new EventArgs());
+                WizardPreviewManager.UpdatePreview();
             }
         }
         // Default min lines to 0 which will default to 4.
@@ -99,7 +98,7 @@ namespace ModelMockupDesigner.Models
 
                 doublePrecision = value;
                 OnPropertyChanged(nameof(DoublePrecision));
-                OnControlUpdated?.Invoke(this, new EventArgs());
+                WizardPreviewManager.UpdatePreview();
             }
         }
         private int doublePrecision { get; set; }

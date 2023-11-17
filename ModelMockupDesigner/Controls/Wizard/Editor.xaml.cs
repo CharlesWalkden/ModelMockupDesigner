@@ -4,6 +4,7 @@ using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
 using ModelMockupDesigner.ViewModels;
+using ModelMockupDesigner.WizardPreview;
 using ModelMockupDesigner.WizardPreview.Wizards;
 using System;
 using System.Collections.Generic;
@@ -38,10 +39,6 @@ namespace ModelMockupDesigner
 
         public List<EditorSection> Pages { get; set; }
         public EditorSection CurrentPage { get; set; }
-
-        public WizardDesignPreview DesignPreview;
-
-        public event EventHandler<DynamicWizard> OnWizardUpdated;
 
         public Editor()
         {
@@ -89,15 +86,7 @@ namespace ModelMockupDesigner
         }
         private async Task LoadDesignPreview()
         {
-            DialogLauncher<WizardDesignPreview> designPreview = new DialogLauncher<WizardDesignPreview>(this, ResizeMode.NoResize, true) ;
-            designPreview.OnClose += OnWizardDesignPreviewClose;
-            await designPreview.Control.LoadWizard(WizardModel);
-            OnWizardUpdated += designPreview.Control.WizardDesignPreview_OnWizardUpdated;
-            designPreview.Show();
-
-            
-
-            DesignPreview = designPreview.Control;
+            await WizardPreviewManager.LoadWizardPreview(WizardModel);
         }
         private async Task LoadUI()
         {
@@ -113,7 +102,6 @@ namespace ModelMockupDesigner
             {
                 EditorSection editorSection = new EditorSection(ContentContainer);
                 editorSection.OnSelected += UpdateCurrentSelection;
-                editorSection.OnWizardUpdated += OnWizardUpdated;
 
                 await editorSection.LoadModel(wizardSection);
 
@@ -266,7 +254,6 @@ namespace ModelMockupDesigner
 
             EditorSection page = new EditorSection(ContentContainer);
             page.OnSelected += UpdateCurrentSelection;
-            page.OnWizardUpdated += OnWizardUpdated;
 
             DynamicWizardSection newSectionModel = new DynamicWizardSection(WizardModel);
             await page.LoadModel(newSectionModel);
@@ -277,7 +264,7 @@ namespace ModelMockupDesigner
 
             LoadPage(page.Model.OrderId);
 
-            OnWizardUpdated?.Invoke(this, null);
+            await WizardPreviewManager.UpdatePreview(WizardModel);
         }
         private void AddPage(EditorSection page)
         {
@@ -331,7 +318,7 @@ namespace ModelMockupDesigner
                 LoadPage(pageIndex);
             }
         }
-        private void DeleteCurrentPage()
+        private async void DeleteCurrentPage()
         {
             if (CurrentPage != null && Pages != null && WizardModel != null)
             {
@@ -340,7 +327,7 @@ namespace ModelMockupDesigner
                 _ = WizardModel.Sections.Remove(CurrentPage.Model as DynamicWizardSection);
 
                 // Wizard Section/Page has been deleted. Update Preview.
-                OnWizardUpdated?.Invoke(this, WizardModel);
+                await WizardPreviewManager.UpdatePreview();
             }
         }
         private int GetNextPageOrderNumber()
@@ -354,9 +341,8 @@ namespace ModelMockupDesigner
         {
             // Save wizard.
             // TODO: Save Xml
-            if (DesignPreview != null)
-                DesignPreview.Close();
-                
+            WizardPreviewManager.ClosePreview();
+
             WindowControl.CloseTopWindow();
         }
         private void DeletePageButton_Click(object sender, RoutedEventArgs e)
@@ -412,11 +398,11 @@ namespace ModelMockupDesigner
                 LoadPage(index);
             }
         }
-        private void UpdateWizardDesignPreview()
+        private async void UpdateWizardDesignPreview()
         {
             if (WizardModel != null)
             {
-                OnWizardUpdated?.Invoke(this, WizardModel);
+                await WizardPreviewManager.UpdatePreview();
             }
         }
         private void EditProperties_Click(object sender, RoutedEventArgs e)
@@ -459,17 +445,9 @@ namespace ModelMockupDesigner
         }
         private async void OpenPreviewWindow_Click(object sender, RoutedEventArgs e)
         {
-            if (DesignPreview == null)
-            {
-                await LoadDesignPreview();
-            }
-            
+            await WizardPreviewManager.LoadWizardPreview(WizardModel);
+
             e.Handled = true;
-        }
-        private void OnWizardDesignPreviewClose(object sender, EventArgs e)
-        {
-            //OnWizardUpdated -= DesignPreview.WizardDesignPreview_OnWizardUpdated;
-            DesignPreview = null;
         }
 
         #region Interface

@@ -2,6 +2,7 @@
 using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
+using ModelMockupDesigner.WizardPreview;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -105,7 +106,7 @@ namespace ModelMockupDesigner.Controls
                 Delete(CellControl);
             }
         }
-        public void Delete(ICellControl cellControl)
+        public async void Delete(ICellControl cellControl)
         {
             if (CellModel != null && cellControl.Model != null)
             {
@@ -125,10 +126,10 @@ namespace ModelMockupDesigner.Controls
                 overlay.Visibility = Visibility.Visible;
                 overlay.Background = Brushes.White;
 
-                OnWizardUpdated?.Invoke(this, null);
+                await WizardPreviewManager.UpdatePreview();
             }
         }
-        private void AddCellControl(ICellControl control)
+        private async void AddCellControl(ICellControl control)
         {
             FrameworkElement newControl = control as FrameworkElement;
 
@@ -162,7 +163,7 @@ namespace ModelMockupDesigner.Controls
                     CellControl = control;
                 }
 
-                OnWizardUpdated?.Invoke(this, null);
+                await WizardPreviewManager.UpdatePreview();
             }
         }
         public async Task AddNewControl(ElementType elementType, ICellControl controlModel = null, bool createNew = true)
@@ -199,7 +200,6 @@ namespace ModelMockupDesigner.Controls
 
                             EditorTable editorTable = new EditorTable(this);
                             editorTable.OnSelected += OnSelected;
-                            editorTable.OnWizardUpdated += OnWizardUpdated;
                             await editorTable.LoadModel(wizardTable);
 
                             cellControl = editorTable;
@@ -258,7 +258,6 @@ namespace ModelMockupDesigner.Controls
                             }
 
                             AthenaRadioList athenaRadioList = new AthenaRadioList(customControl);
-                            customControl.OnWizardUpdated += OnWizardUpdated;
 
                             cellControl = athenaRadioList;
 
@@ -330,8 +329,6 @@ namespace ModelMockupDesigner.Controls
 
                             AthenaDate athenaDate = new AthenaDate(customControl);
 
-                            customControl.OnWizardUpdated += OnWizardUpdated;
-
                             cellControl = athenaDate;
 
                             break;
@@ -354,8 +351,6 @@ namespace ModelMockupDesigner.Controls
 
                             AthenaTime athenaTime = new AthenaTime(customControl);
 
-                            customControl.OnWizardUpdated += OnWizardUpdated;
-
                             cellControl = athenaTime;
 
                             break;
@@ -372,8 +367,6 @@ namespace ModelMockupDesigner.Controls
                             }
 
                             AthenaDateTime athenaDateTime = new AthenaDateTime(customControl);
-
-                            customControl.OnWizardUpdated += OnWizardUpdated;
 
                             cellControl = athenaDateTime;
 
@@ -392,7 +385,6 @@ namespace ModelMockupDesigner.Controls
 
                             AthenaApproxDate athenaApproxDate = new AthenaApproxDate(customControl);
 
-                            customControl.OnWizardUpdated += OnWizardUpdated;
 
                             cellControl = athenaApproxDate;
 
@@ -478,8 +470,7 @@ namespace ModelMockupDesigner.Controls
         #region Events
 
         public EventHandler<IIsSelectable> OnSelected;
-        public event EventHandler<DynamicWizard> OnWizardUpdated;
-        private void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
+        private async void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
         {
             if (CellControl != null)
             {
@@ -517,7 +508,7 @@ namespace ModelMockupDesigner.Controls
 
                 GroupBox?.Initialise(e);
 
-                OnWizardUpdated?.Invoke(this, null);
+                await WizardPreviewManager.UpdatePreview();
             }
             
         }

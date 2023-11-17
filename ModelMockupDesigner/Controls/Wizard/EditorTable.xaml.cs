@@ -76,7 +76,6 @@ namespace ModelMockupDesigner.Controls
             {
                 EditorCell editorCell = new EditorCell(this);
                 editorCell.OnSelected += OnSelected;
-                editorCell.OnWizardUpdated += OnWizardUpdated;
 
                 container.Children.Add(editorCell);
                 Grid.SetColumn(editorCell, cell.Column);
@@ -128,7 +127,6 @@ namespace ModelMockupDesigner.Controls
 
             EditorCell editorCell = new EditorCell(this);
             editorCell.OnSelected += OnSelected;
-            editorCell.OnWizardUpdated += OnWizardUpdated;
             await editorCell.LoadModel(wizardCell);
 
             if (elementType != ElementType.Unknown)

@@ -29,21 +29,6 @@ namespace ModelMockupDesigner
             InitializeComponent();
         }
 
-        public async void WizardDesignPreview_OnWizardUpdated(object sender, DynamicWizard e)
-        {
-            if (PreviewWizardLayout == null)
-            {
-                if (e != null)
-                {
-                    await LoadWizard(e);
-                }
-            }
-            else
-            {
-                await PreviewWizardLayout.Reload();
-            }
-        }
-
         public async Task LoadWizard(IWizardModel wizard)
         {
             PreviewWizardLayout = new PreviewWizardLayout(wizard.WizardType);

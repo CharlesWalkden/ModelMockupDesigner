@@ -1,5 +1,6 @@
 ﻿using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
+using ModelMockupDesigner.WizardPreview;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -66,7 +67,6 @@ namespace ModelMockupDesigner.Controls
             {
                 EditorPanel editorPanel = new EditorPanel(this);
                 editorPanel.OnSelected += OnSelected;
-                editorPanel.OnWizardUpdated += OnWizardUpdated;
 
                 container.Children.Add(editorPanel);
 
@@ -84,7 +84,7 @@ namespace ModelMockupDesigner.Controls
         {
             ColumnParent.Delete(this);
         }
-        public void Delete(EditorPanel child)
+        public async void Delete(EditorPanel child)
         {
             if (ColumnModel != null && child.Model != null)
             {
@@ -101,7 +101,7 @@ namespace ModelMockupDesigner.Controls
                 child.PanelParent = null;
                 UpdatePanelOrderIDs();
 
-                OnWizardUpdated?.Invoke(this, null);
+                await WizardPreviewManager.UpdatePreview();
             }
         }
         public void RemoveFromUI(FrameworkElement panel) 
@@ -120,15 +120,14 @@ namespace ModelMockupDesigner.Controls
 
             EditorPanel editorPanel = new EditorPanel(this);
             editorPanel.OnSelected += OnSelected;
-            editorPanel.OnWizardUpdated += OnWizardUpdated;
 
             container.Children.Add(editorPanel);
 
             await editorPanel.LoadModel(wizardPanel);
 
-            OnWizardUpdated?.Invoke(this, null);
+            await WizardPreviewManager.UpdatePreview();
         }
-        private void AddPanel(int index, EditorPanel panel)
+        private async void AddPanel(int index, EditorPanel panel)
         {
             if (ColumnModel != null)
             {
@@ -155,14 +154,14 @@ namespace ModelMockupDesigner.Controls
                 container.Children.Insert(index, panelOrGroupBox);
             }
 
-            OnWizardUpdated?.Invoke(this, null);
+            await WizardPreviewManager.UpdatePreview();
         }
         public void AddPanelAtIndex(int index, EditorPanel panel)
         {
             AddPanel(index, panel);
             UpdatePanelOrderIDs();
         }
-        public void AddElementAtIndex(int index, FrameworkElement element)
+        public async void AddElementAtIndex(int index, FrameworkElement element)
         {
             if (container.Children.Count == 0)
             {
@@ -177,7 +176,7 @@ namespace ModelMockupDesigner.Controls
                 container.Children.Insert(index, element);
             }
 
-            OnWizardUpdated?.Invoke(this, null);
+            await WizardPreviewManager.UpdatePreview();
         }
         public int FindIndex(FrameworkElement element)
         {
@@ -232,8 +231,7 @@ namespace ModelMockupDesigner.Controls
         #region Events
 
         public EventHandler<IIsSelectable> OnSelected;
-        public event EventHandler<DynamicWizard> OnWizardUpdated;
-        private void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
+        private async void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
         {
             if (e.Display)
             {
@@ -265,7 +263,7 @@ namespace ModelMockupDesigner.Controls
 
             GroupBox?.Initialise(e);
 
-            OnWizardUpdated?.Invoke(this, null);
+            await WizardPreviewManager.UpdatePreview();
         }
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

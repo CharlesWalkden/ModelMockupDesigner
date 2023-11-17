@@ -1,6 +1,7 @@
 ﻿using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
+using ModelMockupDesigner.WizardPreview;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -83,7 +84,6 @@ namespace ModelMockupDesigner.Controls
             {
                 EditorCell editorCell = new EditorCell(this);
                 editorCell.OnSelected += OnSelected;
-                editorCell.OnWizardUpdated += OnWizardUpdated;
                 if (cellContent.Column == 0)
                     editorCell.Margin = new Thickness(0,5,5,5);
                 else
@@ -100,14 +100,14 @@ namespace ModelMockupDesigner.Controls
         {
             PanelParent?.Delete(this);
         }
-        public void Delete(EditorCell cell)
+        public async void Delete(EditorCell cell)
         {
             if (PanelModel != null && cell.Model != null)
             {
                 _ = PanelModel.Cells.Remove((DynamicWizardCell)cell.Model);
                 container.Children.Remove(cell);
 
-                OnWizardUpdated?.Invoke(this, null);
+                await WizardPreviewManager.UpdatePreview();
             }
         }
         public void Unselect()
@@ -152,7 +152,6 @@ namespace ModelMockupDesigner.Controls
 
             EditorCell editorCell = new EditorCell(this);
             editorCell.OnSelected += OnSelected;
-            editorCell.OnWizardUpdated += OnWizardUpdated;
             if (column == 0)
                 editorCell.Margin = new Thickness(0, 5, 5, 5);
             else
@@ -204,7 +203,7 @@ namespace ModelMockupDesigner.Controls
                 }
             }
 
-            OnWizardUpdated?.Invoke(this, null);
+            await WizardPreviewManager.UpdatePreview();
         }
         private async Task AddRow(NewControl newControl = null, EditorCell cell = null)
         {
@@ -233,7 +232,7 @@ namespace ModelMockupDesigner.Controls
                 }
             }
 
-            OnWizardUpdated?.Invoke(this, null);
+            await WizardPreviewManager.UpdatePreview();
         }
         
         #endregion
@@ -263,8 +262,7 @@ namespace ModelMockupDesigner.Controls
         #region Events
 
         public EventHandler<IIsSelectable> OnSelected;
-        public event EventHandler<DynamicWizard> OnWizardUpdated;
-        private void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
+        private async void OnGroupBoxDisplayChanged(object sender, GroupBoxDisplayChangedEventArgs e)
         {
             if (e.Display)
             {
@@ -296,7 +294,7 @@ namespace ModelMockupDesigner.Controls
 
             GroupBox?.Initialise(e);
 
-            OnWizardUpdated?.Invoke(this, null);
+            await WizardPreviewManager.UpdatePreview();
         }
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

@@ -23,8 +23,6 @@ namespace ModelMockupDesigner.Controls
             GotFocus += AthenaTextBox_GotFocus;
             LostFocus += AthenaTextBox_LostFocus;
 
-            customControl.OnControlUpdated += CustomControl_OnControlUpdated;
-
             Initialise();
         }
         public AthenaTextBox()
@@ -233,7 +231,6 @@ namespace ModelMockupDesigner.Controls
         public bool DisplayGroupbox => ControlModel.DisplayGroupbox;
         public void Unload()
         {
-            ControlModel.OnControlUpdated -= CustomControl_OnControlUpdated;
             ControlModel = null;
         }
     }
