@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ModelMockupDesigner.Controls"
              mc:Ignorable="d" 
              IsTabStop="False">
-    <Grid x:Name="LayoutRoot" Background="Transparent" Margin="0,0,0,0">
+    <Grid x:Name="LayoutRoot" Background="Transparent" Margin="0,-2,0,0">
 
         <Border x:Name="outerBorder" BorderBrush="#FFdddddd" BorderThickness="1" Margin="0,0,0,0" Padding="1" CornerRadius="4,4,4,4" Background="#FFFFFFFF">
             <Border.Effect>
@@ -17,7 +17,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <!--<Button Focusable="False" IsTabStop="False" Background="Transparent"/>-->
+                <Button Focusable="False" IsTabStop="False" Background="Transparent" Style="{StaticResource noFocusButtonT}"/>
                 <Border x:Name="labelBackground" Height="20" Margin="0" VerticalAlignment="Top" Background="#FF24A4C8" CornerRadius="3,3,0,0" >
                     <Grid>
                         <TextBlock x:Name="label" Height="20" VerticalAlignment="Center" TextAlignment="Left" Margin="3,0,3,0" HorizontalAlignment="Left" FontFamily="Segoe UI" Foreground="#FFFFFFFF" FontSize="13.333" Visibility="Visible"></TextBlock>

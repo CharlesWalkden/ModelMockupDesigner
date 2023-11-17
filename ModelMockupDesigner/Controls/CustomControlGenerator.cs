@@ -33,6 +33,11 @@ namespace ModelMockupDesigner.Controls
                         controlElement = new AthenaDate(control);
                         break;
                     }
+                case ElementType.ApproxDate:
+                    {
+                        controlElement = new AthenaApproxDate(control);
+                        break;
+                    }
                 case ElementType.Time:
                     {
                         controlElement = new AthenaTime(control);

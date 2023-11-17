@@ -570,7 +570,15 @@
     
     <!--#endregion-->
 
-
+    <Style x:Key="noFocusButtonT" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="grid" Background="Transparent"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="touchToggleButton" TargetType="ToggleButton">
         <Setter Property="HorizontalAlignment" Value="Left"></Setter>
         <Setter Property="Cursor" Value="Hand"></Setter>

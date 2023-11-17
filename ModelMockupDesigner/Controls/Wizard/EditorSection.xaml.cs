@@ -81,11 +81,11 @@ namespace ModelMockupDesigner.Controls
         {
             if (SectionModel != null && child.Model != null)
             {
+                child.OnSelected -= OnSelected;
                 _ = SectionModel.WizardColumns.Remove((DynamicWizardColumn)child.Model);
                 if (child.Model.DisplayGroupbox)
                 {
-                    container.Children.Remove(GroupBox);
-                    GroupBox = null;
+                    container.Children.Remove(child.GroupBox);
                 }
                 else
                 {
@@ -130,14 +130,19 @@ namespace ModelMockupDesigner.Controls
                 column.OnSelected += OnSelected;
                 column.OnWizardUpdated += OnWizardUpdated;
             }
+            FrameworkElement columnOrGroupBox = column;
+            if (column.Model.DisplayGroupbox)
+            {
+                columnOrGroupBox = column.GroupBox;
+            }
 
             if (container.Children.Count == index)
             {
-                container.Children.Insert(index - 1, column);
+                container.Children.Insert(index - 1, columnOrGroupBox);
             }
             else
             {
-                container.Children.Insert(index, column);
+                container.Children.Insert(index, columnOrGroupBox);
             }
 
             OnWizardUpdated?.Invoke(this, null);

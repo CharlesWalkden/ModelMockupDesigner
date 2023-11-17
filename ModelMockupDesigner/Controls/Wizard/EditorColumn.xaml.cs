@@ -88,11 +88,11 @@ namespace ModelMockupDesigner.Controls
         {
             if (ColumnModel != null && child.Model != null)
             {
+                child.OnSelected -= OnSelected;
                 _ = ColumnModel.WizardPanels.Remove((DynamicWizardPanel)child.Model);
                 if (child.Model.DisplayGroupbox)
                 {
-                    container.Children.Remove(GroupBox);
-                    GroupBox = null;
+                    container.Children.Remove(child.GroupBox);
                 }
                 else
                 {
@@ -136,18 +136,23 @@ namespace ModelMockupDesigner.Controls
                 panel.SetNewParent(this);
                 panel.OnSelected += OnSelected;
             }
+            FrameworkElement panelOrGroupBox = panel;
+            if (panel.Model.DisplayGroupbox)
+            {
+                panelOrGroupBox = panel.GroupBox;
+            }
 
             if (container.Children.Count == 0)
             {
-                container.Children.Add(panel);
+                container.Children.Add(panelOrGroupBox);
             }
             else if (container.Children.Count == index)
             {
-                container.Children.Insert(index -1, panel);
+                container.Children.Insert(index -1, panelOrGroupBox);
             }
             else
             {
-                container.Children.Insert(index,panel);
+                container.Children.Insert(index, panelOrGroupBox);
             }
 
             OnWizardUpdated?.Invoke(this, null);

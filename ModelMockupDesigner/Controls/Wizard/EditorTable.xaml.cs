@@ -120,7 +120,7 @@ namespace ModelMockupDesigner.Controls
             newRow.Background = Brushes.Transparent;
         }
 
-        private async Task AddCell(int column, int row, ElementType elementType = ElementType.Unknown)
+        private async Task AddCell(int column, int row, ElementType elementType = ElementType.Unknown, EditorCell cell = null)
         {
             DynamicWizardCell wizardCell = new DynamicWizardCell(TableModel) { Column = column, Row = row };
 
@@ -136,12 +136,19 @@ namespace ModelMockupDesigner.Controls
                 await editorCell.AddNewControl(elementType);
             }
 
+            if (cell != null)
+            {
+                ICellControl cellControl = cell.CellControl;
+                cell.DeleteControl();
+                await editorCell.LoadExistingCellContent(cellControl);
+            }
+
             container.Children.Add(editorCell);
             Grid.SetColumn(editorCell, column);
             Grid.SetRow(editorCell, row);
 
         }
-        private async Task AddColumn(NewControl newControl = null)
+        private async Task AddColumn(NewControl newControl = null, EditorCell cell = null)
         {
             if (TableModel == null)
                 return;
@@ -158,6 +165,10 @@ namespace ModelMockupDesigner.Controls
                     await AddCell(column + 1, r, newControl.ElementType);
                     newControl = null;
                 }
+                else if (cell != null)
+                {
+                    await AddCell(column + 1, r, cell: cell);
+                }
                 else
                 {
                     await AddCell(column + 1, r);
@@ -166,7 +177,7 @@ namespace ModelMockupDesigner.Controls
 
             OnWizardUpdated?.Invoke(this, null);
         }
-        private async Task AddRow(NewControl newControl = null)
+        private async Task AddRow(NewControl newControl = null, EditorCell cell = null)
         {
             if (TableModel == null)
                 return;
@@ -182,6 +193,10 @@ namespace ModelMockupDesigner.Controls
                 {
                     await AddCell(c, row + 1, newControl.ElementType);
                     newControl = null;
+                }
+                else if (cell != null)
+                {
+                    await AddCell(c, row + 1, cell: cell);
                 }
                 else
                 {
@@ -259,27 +274,39 @@ namespace ModelMockupDesigner.Controls
         }
         private async void Control_Drop(object sender, DragEventArgs e)
         {
-            //TODO: allow dropping of existing fields, not just new ones.
+            NewControl newControl = e.Data.GetData(typeof(NewControl)) as NewControl;
+            EditorCell cell = e.Data.GetData(typeof(EditorCell)) as EditorCell;
 
-            // Only allow this new control if its not a table. Don't want tables within tables.
-            if (e.Data.GetData(typeof(NewControl)) is NewControl newControl && newControl.ElementType != ElementType.Table)
+            // If we are dragging a table into another table, do nothing and end it here.
+            if (newControl?.ElementType == ElementType.Table || cell?.CellControl?.ElementType == ElementType.Table)
             {
-                if (sender == newColumn)
-                {
-                    if (newControl != null)
-                    {
-                        await AddColumn(newControl);
-                    }
+                return;
+            }
 
-                }
-                if (sender == newRow)
+            if (sender == newColumn)
+            {
+                if (newControl != null)
                 {
-                    if (newControl != null)
-                    {
-                        await AddRow(newControl);
-                    }
+                    await AddColumn(newControl);
+                }
+                if (cell != null)
+                {
+                    await AddColumn(cell: cell);
+                }
+
+            }
+            if (sender == newRow)
+            {
+                if (newControl != null)
+                {
+                    await AddRow(newControl);
+                }
+                if (cell != null)
+                {
+                    await AddRow(cell: cell);
                 }
             }
+            
             newColumn.Visibility = Visibility.Collapsed;
             newRow.Visibility = Visibility.Collapsed;
         }

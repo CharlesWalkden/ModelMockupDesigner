@@ -44,6 +44,7 @@ namespace ModelMockupDesigner.Enums
         Image,  
         DateTime, 
         ApproxDate, 
+        ApproxDateTextBox,
         TextSuggestion, 
         Button, 
 

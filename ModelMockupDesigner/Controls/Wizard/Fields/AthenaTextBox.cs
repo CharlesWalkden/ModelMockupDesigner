@@ -27,10 +27,18 @@ namespace ModelMockupDesigner.Controls
 
             Initialise();
         }
+        public AthenaTextBox()
+        {
+            Initialise(ElementType.ApproxDateTextBox);
+        }
+
         private void Initialise()
         {
-            ElementType = ControlModel.ElementType;
-            switch (ElementType)
+            Initialise(ControlModel.ElementType);
+        }
+        private void Initialise(ElementType elementType)
+        {
+            switch (elementType)
             {
                 case ElementType.DoubleTextBox:
                 case ElementType.NumericTextBox:
@@ -49,6 +57,11 @@ namespace ModelMockupDesigner.Controls
                         {
                             MinLines = ControlModel.MinimumLines;
                         }
+                        break;
+                    }
+                case ElementType.ApproxDateTextBox:
+                    {
+                        MinWidth = 60;
                         break;
                     }
                 default:
@@ -184,7 +197,7 @@ namespace ModelMockupDesigner.Controls
         }
         public ElementType ElementType
         {
-            get => ControlModel.ElementType;
+            get => ControlModel?.ElementType ?? ElementType.Unknown;
             set
             {
                 //VerticalContentAlignment = VerticalAlignment.Center;
@@ -192,7 +205,9 @@ namespace ModelMockupDesigner.Controls
                 VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
                 //Alignment = ContentAlignment.MiddleLeft;
                 AcceptsReturn = false;
-                switch (ControlModel.ElementType)
+
+                ElementType elementType = ControlModel?.ElementType ?? value;
+                switch (elementType)
                 {
                     case ElementType.TextBox:
                         // Prevent the control from increasing in size as text is typed into it

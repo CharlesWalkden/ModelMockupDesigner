@@ -113,7 +113,6 @@ namespace ModelMockupDesigner.Controls
                 if (cellControl.DisplayGroupbox && GroupBox != null)
                 {
                     Root.Children.Remove(GroupBox);
-                    cellControl.Model.DisplayChanged -= OnGroupBoxDisplayChanged;
                     GroupBox.RemoveContent(cellControl as FrameworkElement);
                     GroupBox = null;
                 }
@@ -121,6 +120,7 @@ namespace ModelMockupDesigner.Controls
                 {
                     Root.Children.Remove(cellControl as FrameworkElement);
                 }
+                cellControl.Model.DisplayChanged -= OnGroupBoxDisplayChanged;
                 CellControl = null;
                 overlay.Visibility = Visibility.Visible;
                 overlay.Background = Brushes.White;
@@ -130,27 +130,31 @@ namespace ModelMockupDesigner.Controls
         }
         private void AddCellControl(ICellControl control)
         {
-            FrameworkElement newControl = null;
+            FrameworkElement newControl = control as FrameworkElement;
 
             if (control != null)
             {
+                newControl.Margin = new Thickness(5);
                 // Dont add group box for datetime, date and radio list as the group box is already built into the control so just needs enabling.
-                if (control.DisplayGroupbox && 
-                    (control.ElementType != ElementType.DateTime && control.ElementType != ElementType.RadioList && control.ElementType != ElementType.Date))
+                if (control.DisplayGroupbox &&
+                    (control.ElementType != ElementType.DateTime && control.ElementType != ElementType.RadioList && control.ElementType != ElementType.Date && control.ElementType != ElementType.ApproxDate))
                 {
                     AthenaGroupBox groupBox = new AthenaGroupBox();
-                    //groupBox.Margin = new Thickness(5);
                     groupBox.Initialise(control.Model);
-                    groupBox.SetContent(control as FrameworkElement);
+                    newControl.Margin = new Thickness(5);
+                    groupBox.SetContent(newControl);
 
                     newControl = groupBox;
                     GroupBox = groupBox;
 
-                    // Make sure we add the event to update groupbox
+                }
+                
+
+                // Make sure we add the event to update groupbox - Only for fields that need it.
+                if (control.ElementType != ElementType.DateTime && control.ElementType != ElementType.RadioList && control.ElementType != ElementType.Date && control.ElementType != ElementType.ApproxDate)
+                {
                     control.Model.DisplayChanged += OnGroupBoxDisplayChanged;
                 }
-                else
-                    newControl = control as FrameworkElement;
 
                 if (newControl != null)
                 {
@@ -377,6 +381,21 @@ namespace ModelMockupDesigner.Controls
                         }
                     case ElementType.ApproxDate:
                         {
+                            if (controlModel == null)
+                            {
+                                customControl = new CustomControl(ElementType.ApproxDate);
+                            }
+                            else
+                            {
+                                customControl = (CustomControl)controlModel;
+                            }
+
+                            AthenaApproxDate athenaApproxDate = new AthenaApproxDate(customControl);
+
+                            customControl.OnWizardUpdated += OnWizardUpdated;
+
+                            cellControl = athenaApproxDate;
+
                             break;
                         }
                     case ElementType.CheckBox:

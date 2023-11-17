@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="ModelMockupDesigner.Controls.AthenaApproxDate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ModelMockupDesigner.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid x:Name="LayoutRoot">
+        <local:AthenaGroupBox x:Name="titleText"/>
+        <Grid x:Name="grid" Margin="10,31,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" x:Name="rd1"/>
+                <RowDefinition Height="20" x:Name="rd2"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90" x:Name="cd1"/>
+                <ColumnDefinition Width="130" x:Name="cd2"/>
+                <ColumnDefinition Width="70" x:Name="cd3"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="dayLabel" Text="Day (optional)" Width="Auto" HorizontalAlignment="Center" Foreground="#FF333333" />
+            <local:AthenaTextBox x:Name="dayTextBox" KeyDown="textBox_KeyDown" MaxLength="2" VerticalAlignment="Center" HorizontalContentAlignment="Center" Width="80" Text="" Grid.Row="1" IsTabStop="True"/>
+            <TextBlock x:Name="monthLabel" Text="Month (optional)" Width="Auto" HorizontalAlignment="Center" Foreground="#FF333333" Grid.Column="1" />
+            <ComboBox x:Name="monthComboBox" VerticalContentAlignment="Top" VerticalAlignment="Center" Width="120" Grid.Column="1" Grid.Row="1" IsTabStop="True"/>
+            <TextBlock x:Name="yearLabel" Text="Year" Width="Auto" HorizontalAlignment="Center" Foreground="#FF333333" Grid.Column="2" />
+            <local:AthenaTextBox x:Name="yearTextBox" KeyDown="textBox_KeyDown" MaxLength="4" VerticalAlignment="Center" HorizontalContentAlignment="Center" Width="60" Text="" Grid.Column="2" Grid.Row="1" IsTabStop="True"/>
+        </Grid>
+    </Grid>
+</UserControl>

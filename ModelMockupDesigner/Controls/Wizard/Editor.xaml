@@ -163,7 +163,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="Date"/>
+                        <TextBlock Text="Date" Background="MediumSeaGreen"/>
                     </Border>
                     <Border Grid.Row="5" Grid.Column="1"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -171,7 +171,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="Time"/>
+                        <TextBlock Text="Time" Background="MediumSeaGreen"/>
                     </Border>
                     <Border Grid.Row="6" Grid.Column="0"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"
@@ -179,7 +179,7 @@
                         HorizontalAlignment="Left"
                         PreviewMouseMove="Border_PreviewMouseMove"
                         PreviewMouseDown="Border_PreviewMouseDown">
-                        <TextBlock Text="DateTime" Background="MediumSeaGreen"/>
+                        <TextBlock Text="DateTime" Background="MediumSeaGreen" />
                     </Border>
                     <Border Grid.Row="6" Grid.Column="1"
                         BorderBrush="black" BorderThickness="2" Margin="2" Height="20" Width="100"

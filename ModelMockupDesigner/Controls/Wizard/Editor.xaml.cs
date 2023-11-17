@@ -555,6 +555,11 @@ namespace ModelMockupDesigner
                             selectedType = ElementType.NumericTextBox;
                             break;
                         }
+                    case "ApproxDate":
+                        {
+                            selectedType = ElementType.ApproxDate;
+                            break;
+                        }
                     default:
                         {
                             selectedType = ElementType.Unknown;

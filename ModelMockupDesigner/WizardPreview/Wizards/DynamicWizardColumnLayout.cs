@@ -38,7 +38,7 @@ namespace ModelMockupDesigner.WizardPreview.Wizards
         public async Task Build()
         {
             this.Children.Clear();
-
+            bool first = true;
             foreach (DynamicWizardPanel panel in Template.WizardPanels)
             {
                 DynamicWizardPanelLayout panelLayout = new DynamicWizardPanelLayout(panel);
@@ -52,12 +52,29 @@ namespace ModelMockupDesigner.WizardPreview.Wizards
                     groupBox.Initialise(panel);
                     groupBox.SetContent(panelLayout);
 
+                    if (!first)
+                    {
+                        groupBox.Margin = new Thickness(0, 10, 0, 0);
+                    }
+
                     control = groupBox;
                 }
                 else
+                {
                     control = panelLayout;
+                    if (!first)
+                    {
+                        control.Margin = new Thickness(0, 10, 0, 0);
+                    }
+                    else
+                    {
+                        control.Margin = new Thickness(0);
+                    }
+                }
 
                 this.Children.Add(control);
+
+                first = false;
             }
         }
     }
