@@ -40,10 +40,10 @@
                                                   Margin="0,5,0,0"/>
 
                 <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Width="50" Height="50" Margin="10,10,20,10" Click="Accept_Click" Style="{StaticResource IconButton}">
+                    <Button Width="50" Height="50" Margin="10,10,20,10" Click="Accept_Click" Style="{StaticResource IconButton}" Background="Transparent">
                         <iconPacks:PackIconMaterial Kind="CheckBold" VerticalAlignment="Center" HorizontalAlignment="Center" Height="25" Width="25" />
                     </Button>
-                    <Button Width="50" Height="50" Margin="20,10,10,10"  Click="Cancel_Click" Style="{StaticResource IconButton}">
+                    <Button Width="50" Height="50" Margin="20,10,10,10"  Click="Cancel_Click" Style="{StaticResource IconButton}" Background="Transparent">
                         <iconPacks:PackIconMaterial Kind="CloseThick" VerticalAlignment="Center" HorizontalAlignment="Center" Height="25" Width="25" />
                     </Button>
                 </StackPanel>

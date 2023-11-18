@@ -282,6 +282,16 @@
 
     <!--#region Icon Buttons -->
 
+    <Style x:Key="buttonFocusVisual" TargetType="Button">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid  Background="Transparent"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="{x:Type Button}" x:Key="IconButton" >
         <Setter Property="Background" Value="LightSlateGray"/>
         <Setter Property="Foreground" Value="White"/>
@@ -297,66 +307,67 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <ContentPresenter>
-                        <ContentPresenter.Effect>
-                            <DropShadowEffect x:Name="shadow"
+                    <Grid Background="Transparent">
+                        <ContentPresenter>
+                            <ContentPresenter.Effect>
+                                <DropShadowEffect x:Name="shadow"
                                               ShadowDepth="2"
                                               Opacity="0.7"
                                               BlurRadius="3"/>
-                        </ContentPresenter.Effect>
-                        <ContentPresenter.RenderTransform>
-                            <TranslateTransform x:Name="translation"
+                            </ContentPresenter.Effect>
+                            <ContentPresenter.RenderTransform>
+                                <TranslateTransform x:Name="translation"
                                                 X="-1" Y="-1"/>
-                        </ContentPresenter.RenderTransform>
+                            </ContentPresenter.RenderTransform>
+                        </ContentPresenter>
+                    </Grid>
 
-                    </ContentPresenter>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
                                                 Duration="0:0:0"
                                                 To="0"
                                                 Storyboard.TargetName="shadow"
                                                 Storyboard.TargetProperty="(DropShadowEffect.ShadowDepth)"/>
-                                                                    <DoubleAnimation
+                                            <DoubleAnimation
                                                 Duration="0:0:0"
                                                 To="0"
                                                 Storyboard.TargetName="translation"
                                                 Storyboard.TargetProperty="(TranslateTransform.X)"/>
-                                                                    <DoubleAnimation
+                                            <DoubleAnimation
                                                 Duration="0:0:0"
                                                 To="0"
                                                 Storyboard.TargetName="translation"
                                                 Storyboard.TargetProperty="(TranslateTransform.Y)"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
                                                 Duration="0:0:0"
                                                 To="2"
                                                 Storyboard.TargetName="shadow"
                                                 Storyboard.TargetProperty="(DropShadowEffect.ShadowDepth)"/>
-                                        <DoubleAnimation
+                                            <DoubleAnimation
                                                 Duration="0:0:0"
                                                 To="-1"
                                                 Storyboard.TargetName="translation"
                                                 Storyboard.TargetProperty="(TranslateTransform.X)"/>
-                                        <DoubleAnimation
+                                            <DoubleAnimation
                                                 Duration="0:0:0"
                                                 To="-1"
                                                 Storyboard.TargetName="translation"
                                                 Storyboard.TargetProperty="(TranslateTransform.Y)"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                        
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -395,8 +406,8 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid x:Name="gridImage">
-                            <iconPacks:PackIconMaterial Kind="FilePlus" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="50" Width="50" />
+                        <Grid x:Name="gridImage" Background="Transparent">
+                            <iconPacks:PackIconMaterial  Kind="FilePlus" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="50" Width="50"/>
                         </Grid>
                     </Grid>
                 </ControlTemplate>
@@ -436,7 +447,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid x:Name="gridImage">
+                        <Grid x:Name="gridImage"  Background="Transparent">
                             <iconPacks:PackIconMaterial Kind="FolderOpen" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="50" Width="50" />
                         </Grid>
                     </Grid>
@@ -477,7 +488,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid x:Name="gridImage">
+                        <Grid x:Name="gridImage" Background="Transparent">
                             <iconPacks:PackIconMaterial Kind="FileExport" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="50" Width="50" />
                         </Grid>
                     </Grid>
@@ -518,7 +529,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid x:Name="gridImage">
+                        <Grid x:Name="gridImage" Background="Transparent">
                             <iconPacks:PackIconMaterial Kind="Tools" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="50" Width="50" />
                         </Grid>
                     </Grid>
@@ -559,7 +570,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid x:Name="gridImage">
+                        <Grid x:Name="gridImage" Background="Transparent">
                             <iconPacks:PackIconMaterial Kind="ExitRun" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="50" Width="50" />
                         </Grid>
                     </Grid>
