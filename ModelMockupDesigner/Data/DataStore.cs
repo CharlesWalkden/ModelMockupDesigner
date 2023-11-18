@@ -15,6 +15,10 @@ namespace ModelMockupDesigner.Data
             Dictionary<ElementType, bool> controls = new Dictionary<ElementType, bool>()
             {
                 {ElementType.ApproxDate, true },
+                {ElementType.Date, true },
+                {ElementType.DateTime, true },
+                {ElementType.YesNo, true },
+                {ElementType.TextBox, true },
                 {ElementType.Grid, true },
                 {ElementType.Label, true }
             };

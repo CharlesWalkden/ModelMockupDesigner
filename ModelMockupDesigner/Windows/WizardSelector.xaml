@@ -77,6 +77,7 @@
                     <Grid Grid.Row="1">
                         <!-- Create or delete current selected wizard. -->
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                            <TextBlock Grid.Row="0" Text="Data Items:"  FontSize="12" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
                             <Button x:Name="createButton" Width="40" Height="40" Margin="5" Style="{StaticResource IconButton}" MouseLeftButtonUp="createButton_MouseLeftButtonUp" PreviewMouseLeftButtonDown="createButton_PreviewMouseLeftButtonDown">
                                 <Button.ContextMenu>
                                     <ContextMenu>
@@ -84,10 +85,13 @@
                                         <MenuItem Header="Create Wizard" Command="{Binding CreateNewWizardCommand}"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
-                                <iconPacks:PackIconMaterial Kind="FileDocument" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" />
+                                <iconPacks:PackIconMaterial Kind="FilePlus" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Create new data item" />
+                            </Button>
+                            <Button Width="40" Height="40" Margin="5" Style="{StaticResource IconButton}">
+                                <iconPacks:PackIconMaterial Kind="FolderOpen" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Load current selected wizard" />
                             </Button>
                             <Button Width="40" Height="40" Margin="5" Style="{StaticResource IconButton}" Command="{Binding DeleteCommand}">
-                                <iconPacks:PackIconMaterial Kind="Delete" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" />
+                                <iconPacks:PackIconMaterial Kind="Delete" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Delete current selected " />
                             </Button>
                         </StackPanel>
                     </Grid>

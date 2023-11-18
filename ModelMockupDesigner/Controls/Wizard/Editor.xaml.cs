@@ -125,6 +125,11 @@ namespace ModelMockupDesigner
                         Border controlBorder = new Border();
                         controlBorder.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                         controlBorder.BorderThickness = new Thickness(1);
+                        controlBorder.Margin = new Thickness(2);
+                        controlBorder.Opacity = 0.5;
+
+                        controlBorder.MouseEnter += ControlBorder_MouseEnter;
+                        controlBorder.MouseLeave += ControlBorder_MouseLeave;
 
                         controlBorder.PreviewMouseDown += Border_PreviewMouseDown;
                         controlBorder.PreviewMouseMove += Border_PreviewMouseMove;
@@ -136,6 +141,22 @@ namespace ModelMockupDesigner
                     }
                 }
             }            
+        }
+
+        private void ControlBorder_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender is Border border)
+            {
+                border.Opacity = 0.5;
+            }
+        }
+
+        private void ControlBorder_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender is Border border)
+            {
+                border.Opacity = 1.0;
+            }
         }
 
         public void LoadPage(int pageIndex)

@@ -323,7 +323,10 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                            <Trigger Property="IsPressed" Value="True">
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="StackPanel.Opacity" Value="0.5" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
                                 <Trigger.EnterActions>
                                     <BeginStoryboard>
                                         <Storyboard>

@@ -20,7 +20,7 @@ namespace ModelMockupDesigner.Models
             ListOptions = listOptions;
             ScaleDown = scaleDown;
 
-            if (elementType == ElementType.DateTime || elementType == ElementType.RadioList)
+            if (elementType == ElementType.DateTime || elementType == ElementType.RadioList || elementType == ElementType.YesNo || elementType == ElementType.TextBox)
             {
                 DisplayGroupbox = true;
                 GroupBoxTitle = "TODO: Set GroupBox Title";
