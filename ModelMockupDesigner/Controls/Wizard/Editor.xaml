@@ -36,6 +36,9 @@
                 <Button Style="{StaticResource IconButton}" Click="OpenPreviewWindow_Click" x:Name="OpenPreviewWindow">
                     <iconPacks:PackIconMaterial  Margin="5" Kind="OpenInApp" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Open wizard preview" />
                 </Button>
+                <Button Style="{StaticResource IconButton}" Click="GenerateXML_Click"  x:Name="GenerateXML">
+                    <iconPacks:PackIconMaterial  Margin="5" Kind="ArrowRightBoldBoxOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Generate XML" />
+                </Button>
                 
             </StackPanel>
             

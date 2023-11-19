@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="ModelMockupDesigner.Windows.XMLGenerator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:ModelMockupDesigner"
+             xmlns:controls="clr-namespace:ModelMockupDesigner.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             MinHeight="600" MinWidth="1000" >
+    <Grid Background="{StaticResource EditorLightGrayBrush}">
+        <Border BorderBrush="Black" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}" Margin="5" CornerRadius="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Editor Fields:" FontSize="20" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="10,5"/>
+                        <ListBox x:Name="EditorFieldsList" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Width="300" Height="500" Margin="10,10,0,0" />
+                    </StackPanel>
+                    <Grid Grid.Row="2" Margin="0 0 0 5" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Style="{StaticResource IconButton}" x:Name="LoadFieldsButton" Click="LoadFieldsButton_Click"  Margin="0 0 5 0" Content="Load Fields" />
+                        <Button Grid.Column="1" Style="{StaticResource IconButton}" x:Name="ClearFieldsButton" Click="ClearFieldsButton_Click"  Margin="0 0 5 0" Content="Clear Fields" />
+
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" >
+
+                        <!-- Header -->
+                        <TextBlock Text="Field Details:" FontSize="20" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="0,5"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0" >
+
+                                <TextBlock Foreground="White" Text="Name"/>
+                                <TextBox x:Name="FieldNameTextbox" Text="{Binding FieldNameEntered, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource genericTextBox}"/>
+
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" >
+
+                                <TextBlock Foreground="White" Text="Type"/>
+                                <TextBox x:Name="FieldTypeDropdown" Text="{Binding FieldTypeDropdown, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource genericTextBox}"/>
+
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+
+                                <TextBlock Foreground="White" Text="DB Name"/>
+                                <TextBox x:Name="DatabaseName" Text="{Binding DatabaseNameEntered, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource genericTextBox}"/>
+
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+
+                                <TextBlock Foreground="White" Text="Size"/>
+                                <TextBox x:Name="SizeTextbox" Text="{Binding SizeTextboxEntered , UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource genericTextBox}"/>
+
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+
+                                <TextBlock Foreground="White" Text="Units"/>
+                                <TextBox x:Name="UnitsTextbox" Text="{Binding UnitsTextboxEntered, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource genericTextBox}"/>
+
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+
+                                <TextBlock Foreground="White" Text="List Items"/>
+                                <ListBox x:Name="ListitemsList" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Width="320" Height="100" Margin="0,0,0,0" />
+
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </StackPanel>
+
+                    <Grid Grid.Row="2" Margin="0 0 0 5" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Style="{StaticResource IconButton}" x:Name="GenerateSelected" Click="GenerateSelected_Click"  Margin="0 0 5 0" Content="Generate (Selected)" />
+                        <Button Grid.Column="1" Style="{StaticResource IconButton}" x:Name="GenerateAll" Click="GenerateAll_Click"  Margin="0 0 5 0" Content="Generate (All)" />
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel >
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="XML Output:" FontSize="20" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" Margin="10,5"/>
+                    <TextBox x:Name="XMLOutputTextbox" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Width="300" Height="500" TextWrapping="Wrap" AcceptsReturn="True" Margin="10,10,0,0" Style="{StaticResource genericTextBox}"/>
+                </StackPanel>
+                    <Grid Grid.Row="2" Margin="0 0 0 5" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Style="{StaticResource IconButton}" x:Name="ClearOutputButton" Click="ClearOutputButton_Click" Margin="0 0 5 0" Content="Clear Output" />
+                    </Grid>
+                </Grid>
+            </Grid>
+            
+        </Border>
+    </Grid>
+</UserControl>

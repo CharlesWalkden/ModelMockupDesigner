@@ -499,7 +499,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="{x:Type Button}" x:Key="SettingsButton" >
+    <Style TargetType="{x:Type Button}" x:Key="ToolsButton" >
         <Setter Property="Background" Value="Black"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="BorderThickness" Value="0"/>

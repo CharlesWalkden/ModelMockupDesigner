@@ -4,6 +4,7 @@ using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
 using ModelMockupDesigner.ViewModels;
+using ModelMockupDesigner.Windows;
 using ModelMockupDesigner.WizardPreview;
 using ModelMockupDesigner.WizardPreview.Wizards;
 using System;
@@ -22,6 +23,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using ComboBoxItem = ModelMockupDesigner.Models.ComboBoxItem;
 
 namespace ModelMockupDesigner
@@ -602,5 +604,10 @@ namespace ModelMockupDesigner
 
         #endregion
 
+        private void GenerateXML_Click(object sender, RoutedEventArgs e)
+        {
+            DialogLauncher<XMLGenerator> xmlGenerator = new DialogLauncher<XMLGenerator>(WindowControl.GetTopWindow(), System.Windows.ResizeMode.NoResize, true);
+            xmlGenerator.Show();
+        }
     }
 }

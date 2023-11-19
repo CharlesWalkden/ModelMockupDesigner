@@ -27,14 +27,14 @@ namespace ModelMockupDesigner.ViewModels
             NewProjectCommand = new RelayCommand(NewProject);
             LoadProjectCommand = new RelayCommand(LoadProject);
             ExportProjectCommand = new RelayCommand(ExportProject);
-            OpenSettingsCommand = new RelayCommand(OpenSettings);
+            OpenToolsCommand = new RelayCommand(OpenSettings);
             ExitApplicationCommand = new RelayCommand(ExitApplication);
         }
 
         public ICommand NewProjectCommand { get; set; } 
         public ICommand LoadProjectCommand { get; set; } 
         public ICommand ExportProjectCommand { get; set; } 
-        public ICommand OpenSettingsCommand { get; set; } 
+        public ICommand OpenToolsCommand { get; set; } 
         public ICommand ExitApplicationCommand { get; set; }
 
         public List<RecentProjectListItemViewModel> ConvertToViewModel(IEnumerable<Project> projects)

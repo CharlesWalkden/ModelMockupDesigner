@@ -49,7 +49,7 @@
 
                 <Grid Grid.Row="3" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Button Margin="15" Command="{Binding OpenSettingsCommand}" Style="{StaticResource SettingsButton}" ToolTip="Open settings (currently disabled)"/>
+                        <Button Margin="15" Command="{Binding OpenToolsCommand}" Style="{StaticResource ToolsButton}" ToolTip="Open tools (currently disabled)"/>
                     </Border>
                 </Grid>
 
