@@ -22,22 +22,22 @@
             <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="5"  >
                 
                 <Button Style="{StaticResource IconButton}" Click="Save_Click">
-                    <iconPacks:PackIconMaterial Margin="5" Kind="ContentSave" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Save current wizard" />
+                    <iconPacks:PackIconMaterial Margin="5" Kind="ContentSave" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Background="Transparent" Height="25" Width="25" ToolTip="Save current wizard" />
                 </Button>
                 <Button Style="{StaticResource IconButton}" Click="NewPageButton_Click" x:Name="NewPageButton">
-                    <iconPacks:PackIconMaterial  Margin="5" Kind="FileDocument" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="New page" />
+                    <iconPacks:PackIconMaterial  Margin="5" Kind="NotePlus" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Background="Transparent" Height="25" Width="25" ToolTip="New page" />
                 </Button>
                 <Button Style="{StaticResource IconButton}" Click="DeletePageButton_Click" x:Name="DeletePageButton">
-                    <iconPacks:PackIconMaterial  Margin="5" Kind="NoteMinus" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Delete current page" />
+                    <iconPacks:PackIconMaterial  Margin="5" Kind="NoteMinus" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Background="Transparent" Height="25" Width="25" ToolTip="Delete current page" />
                 </Button>
                 <Button Style="{StaticResource IconButton}" Click="EditProperties_Click" x:Name="EditProperties">
-                    <iconPacks:PackIconMaterial  Margin="5" Kind="FileDocumentEdit" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Edit wizard properties" />
+                    <iconPacks:PackIconMaterial  Margin="5" Kind="FileDocumentEdit" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}"  Background="Transparent" Height="25" Width="25" ToolTip="Edit wizard properties" />
                 </Button>
                 <Button Style="{StaticResource IconButton}" Click="OpenPreviewWindow_Click" x:Name="OpenPreviewWindow">
-                    <iconPacks:PackIconMaterial  Margin="5" Kind="OpenInApp" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Open wizard preview" />
+                    <iconPacks:PackIconMaterial  Margin="5" Kind="OpenInApp" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25"  Background="Transparent" Width="25" ToolTip="Open wizard preview" />
                 </Button>
                 <Button Style="{StaticResource IconButton}" Click="GenerateXML_Click"  x:Name="GenerateXML">
-                    <iconPacks:PackIconMaterial  Margin="5" Kind="ArrowRightBoldBoxOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Generate XML" />
+                    <iconPacks:PackIconMaterial  Margin="5" Kind="ArrowRightBoldBoxOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}"  Background="Transparent" Height="25" Width="25" ToolTip="Generate XML" />
                 </Button>
                 
             </StackPanel>
@@ -51,7 +51,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
+            <ScrollViewer Background="{StaticResource WizardEditorBackgroundBrush}">
             <Grid Grid.Column="0" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -59,11 +59,11 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid  Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
                         <StackPanel x:Name="editorFields">
                             <TextBlock Text="Editor Fields" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" />
                         </StackPanel>
@@ -74,8 +74,7 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
-                <!--<StackPanel Grid.Row="0" x:Name="dragableControls" />-->
-                <Grid Grid.Row="1">
+                <!--<Grid Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
@@ -235,17 +234,18 @@
                         PreviewMouseDown="Border_PreviewMouseDown">
                         <TextBlock Text="Button" Background="MediumSeaGreen"/>
                     </Border>
-                </Grid>
+                </Grid>-->
                 <GridSplitter Grid.Row="1" Height="10" VerticalAlignment="Bottom" Background="{StaticResource EditorDarkGrayBrush}" Panel.ZIndex="9999" />
                 <Grid Grid.Row="2" Margin="5,0,0,0">
-                    <ScrollViewer 
+                        <ScrollViewer 
                               VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Auto"
                               Background="{StaticResource WizardEditorBackgroundBrush}">
-                        <control:PropertyEditor CurrentSelection="{Binding CurrentSelection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <control:PropertyEditor CurrentSelection="{Binding CurrentSelection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </ScrollViewer>
                 </Grid>
             </Grid>
+            </ScrollViewer>
 
             <GridSplitter Grid.Column="0" Width="5" HorizontalAlignment="right" Background="{StaticResource EditorDarkGrayBrush}" />
 

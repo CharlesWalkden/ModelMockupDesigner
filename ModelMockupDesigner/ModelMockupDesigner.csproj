@@ -81,8 +81,4 @@
     </Resource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controls\Wizard\PreviewFields\" />
-  </ItemGroup>
-
 </Project>

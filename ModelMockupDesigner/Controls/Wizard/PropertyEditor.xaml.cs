@@ -55,7 +55,7 @@ namespace ModelMockupDesigner.Controls
                     AddProperty(boxContent, "GroupVerticalAlignment", "Vertical");
                 }
 
-                // Have this becasue things will have different properties to edit. Elements + controls etc
+                // Have this because things will have different properties to edit. Elements + controls etc
                 Dictionary<string, string> properties = currentSelection.GetEditableProperties();
 
                 if (properties.Count > 0)

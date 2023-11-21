@@ -573,7 +573,7 @@ namespace ModelMockupDesigner
                             selectedType = ElementType.Label;
                             break;
                         }
-                    case "Checkbox":
+                    case "CheckBox":
                         {
                             selectedType = ElementType.CheckBox;
                             break;
@@ -598,22 +598,22 @@ namespace ModelMockupDesigner
                             selectedType = ElementType.Time;
                             break;
                         }
-                    case "Textbox":
+                    case "TextBox":
                         {
                             selectedType = ElementType.TextBox;
                             break;
                         }
-                    case "TextboxMultiLine":
+                    case "TextBoxMultiLine":
                         {
                             selectedType = ElementType.MultiLineTextBox;
                             break;
                         }
-                    case "TextboxDouble":
+                    case "TextBoxDouble":
                         {
                             selectedType = ElementType.DoubleTextBox;
                             break;
                         }
-                    case "TextboxNumeric":
+                    case "TextBoxNumeric":
                         {
                             selectedType = ElementType.NumericTextBox;
                             break;
