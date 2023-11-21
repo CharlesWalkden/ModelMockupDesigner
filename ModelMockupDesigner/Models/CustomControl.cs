@@ -23,7 +23,7 @@ namespace ModelMockupDesigner.Models
             if (elementType == ElementType.DateTime || elementType == ElementType.RadioList || elementType == ElementType.YesNo || elementType == ElementType.TextBox)
             {
                 DisplayGroupbox = true;
-                GroupBoxTitle = "TODO: Set GroupBox Title";
+                GroupBoxTitle = elementType.ToString();
             }
         }
 

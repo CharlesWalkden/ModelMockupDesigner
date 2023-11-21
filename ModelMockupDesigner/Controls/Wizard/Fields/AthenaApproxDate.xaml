@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ModelMockupDesigner.Controls"
+             xmlns:converter="clr-namespace:ModelMockupDesigner.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot" HorizontalAlignment="{Binding HorizontalAlignment, Converter={converter:ToXamlConverter}, UpdateSourceTrigger=PropertyChanged}" 
+          VerticalAlignment="{Binding VerticalAlignment, Converter={converter:ToXamlConverter}, UpdateSourceTrigger=PropertyChanged}">
         <local:AthenaGroupBox x:Name="titleText"/>
         <Grid x:Name="grid" Margin="10,31,0,0">
             <Grid.RowDefinitions>

@@ -117,17 +117,33 @@ namespace ModelMockupDesigner
 
         private async Task LoadDragableControls()
         {
-            foreach (KeyValuePair<ElementType, bool> element in DataStore.GetAllControls())
+            foreach (KeyValuePair<ElementType, ElementDefinition> element in DataStore.GetAllControls())
             {
-                if (element.Value)
+                if (element.Value.Required)
                 {
-                    FrameworkElement control = await CustomControlGenerator.GetControl(new CustomControl(element.Key, scaleDown:true));
+                    CustomControl controlModel = new CustomControl(element.Key, scaleDown: element.Value.Scale);
+
+                    controlModel.DisplayGroupbox = true;
+
+                    controlModel.HorizontalAlignment = HorizontalAlignmentTypes.Left;
+
+                    FrameworkElement control = await CustomControlGenerator.GetControl(controlModel);
                     if (control != null)
                     {
+                        if (controlModel.ElementType != ElementType.DateTime && controlModel.ElementType != ElementType.RadioList && controlModel.ElementType != ElementType.Date && controlModel.ElementType != ElementType.ApproxDate)
+                        {
+                            AthenaGroupBox groupBox = new AthenaGroupBox();
+                            groupBox.Initialise(controlModel);
+                            control.Margin = new Thickness(5);
+                            groupBox.SetContent(control);
+                            control = groupBox;
+                        }
                         Border controlBorder = new Border();
-                        controlBorder.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                        controlBorder.BorderThickness = new Thickness(1);
+                        controlBorder.BorderBrush = new SolidColorBrush(Color.FromRgb(50, 62, 73));
+                        controlBorder.Background = Brushes.Transparent;
+                        controlBorder.BorderThickness = new Thickness(2);
                         controlBorder.Margin = new Thickness(2);
+                        controlBorder.Padding = new Thickness(2);
                         controlBorder.Opacity = 0.5;
 
                         controlBorder.MouseEnter += ControlBorder_MouseEnter;
@@ -138,7 +154,23 @@ namespace ModelMockupDesigner
                         controlBorder.Tag = element.Key.ToString();
                         controlBorder.Child = control;
                         controlBorder.Child.IsEnabled = false;
-                        dragableControls.Children.Add(controlBorder);
+                        switch (element.Value.DesignGroup)
+                        {
+                            case DesignGroup.Layout:
+                                {
+                                    editorLayout.Children.Add(controlBorder);
+                                    break;
+                                }
+
+                            case DesignGroup.Fields:
+                                {
+                                    editorFields.Children.Add(controlBorder);
+                                    break;
+                                }
+
+                            default:
+                                break;
+                        }
 
                     }
                 }

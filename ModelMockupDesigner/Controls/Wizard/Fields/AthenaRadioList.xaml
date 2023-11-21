@@ -4,11 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ModelMockupDesigner.Controls"
+             xmlns:converter="clr-namespace:ModelMockupDesigner.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <local:AthenaGroupBox x:Name="groupBoxTitle" />
-        <ScrollViewer x:Name="layoutRoot" Margin="0" Padding="0" VerticalScrollBarVisibility="Auto" BorderThickness="0" >
+        <ScrollViewer x:Name="layoutRoot" Margin="0" Padding="0" VerticalScrollBarVisibility="Auto" BorderThickness="0" HorizontalAlignment="{Binding HorizontalAlignment, Converter={converter:ToXamlConverter}, UpdateSourceTrigger=PropertyChanged}" 
+          VerticalAlignment="{Binding VerticalAlignment, Converter={converter:ToXamlConverter}, UpdateSourceTrigger=PropertyChanged}">
             <Grid x:Name="listParent">
                 
             </Grid>

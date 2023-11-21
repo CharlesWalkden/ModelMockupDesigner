@@ -10,21 +10,27 @@ namespace ModelMockupDesigner.Data
 {
     public static class DataStore
     {
-        public static Dictionary<ElementType, bool> GetAllControls()
+        public static Dictionary<ElementType, ElementDefinition> GetAllControls()
         {
-            Dictionary<ElementType, bool> controls = new Dictionary<ElementType, bool>()
+            Dictionary<ElementType, ElementDefinition> controls = new Dictionary<ElementType, ElementDefinition>()
             {
-                {ElementType.ApproxDate, true },
-                {ElementType.Date, true },
-                {ElementType.DateTime, true },
-                {ElementType.YesNo, true },
-                {ElementType.TextBox, true },
-                {ElementType.Grid, true },
-                {ElementType.Label, true }
+                {ElementType.ApproxDate, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+                {ElementType.Date,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+                {ElementType.DateTime,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+                {ElementType.CheckBox,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+                {ElementType.CheckBoxList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+                {ElementType.DropDownList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+                {ElementType.YesNo,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+                {ElementType.TextBox,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+                {ElementType.RadioList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+                {ElementType.Time,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+                {ElementType.Grid, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Layout} },
+                {ElementType.Label, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Layout} }
             };
 
             return controls;
         }
+
         public static List<Category> GetIntrapartumCategories()
         {
             List<Category> categories = new List<Category>()

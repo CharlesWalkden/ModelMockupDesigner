@@ -58,7 +58,23 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" x:Name="dragableControls" />
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid  Grid.Row="0">
+                        <StackPanel x:Name="editorFields">
+                            <TextBlock Text="Editor Fields" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <StackPanel x:Name="editorLayout">
+                            <TextBlock Text="Editor Layout" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <!--<StackPanel Grid.Row="0" x:Name="dragableControls" />-->
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
