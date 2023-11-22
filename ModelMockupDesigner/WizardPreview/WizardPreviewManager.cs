@@ -11,7 +11,7 @@ namespace ModelMockupDesigner.WizardPreview
 {
     public class WizardPreviewManager
     {
-        public static WizardDesignPreview WizardPreview { get; set; }
+        private static WizardDesignPreview WizardPreview { get; set; }
         public async static Task LoadWizardPreview(IWizardModel wizardModel) 
         {
             DialogLauncher<WizardDesignPreview> designPreview = new DialogLauncher<WizardDesignPreview>(WindowControl.GetTopWindow(), System.Windows.ResizeMode.NoResize, true);
@@ -45,5 +45,7 @@ namespace ModelMockupDesigner.WizardPreview
         {
             WizardPreview.Close();
         }
+
+        public static bool IsClosed => WizardPreview == null;
     }
 }

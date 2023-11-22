@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelMockupDesigner.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
@@ -12,6 +13,7 @@ namespace ModelMockupDesigner.Data
         public bool Required { get; set; }
         public bool Scale { get; set; }
         public DesignGroup DesignGroup { get; set; }
+        public List<ElementType> InterchangeableTypes { get; set; }
     }
 
     public enum DesignGroup

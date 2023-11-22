@@ -2,6 +2,7 @@
 using ModelMockupDesigner.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,22 +11,73 @@ namespace ModelMockupDesigner.Data
 {
     public static class DataStore
     {
-        public static Dictionary<ElementType, ElementDefinition> GetAllControls()
+        public static Dictionary<ElementType, ElementDefinition> AllControls = new Dictionary<ElementType, ElementDefinition>()
         {
-            Dictionary<ElementType, ElementDefinition> controls = new Dictionary<ElementType, ElementDefinition>()
+            {ElementType.ApproxDate, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
+                InterchangeableTypes = new List<ElementType>()
+                {
+                    ElementType.Date,
+                    ElementType.DateTime,
+                    ElementType.Time
+                }
+            }},
+            {ElementType.Date,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
+                InterchangeableTypes = new List<ElementType>()
+                {
+                    ElementType.ApproxDate,
+                    ElementType.DateTime,
+                    ElementType.Time
+                }
+            }},
+            {ElementType.DateTime,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
+                InterchangeableTypes = new List<ElementType>()
+                {
+                    ElementType.Date,
+                    ElementType.Time,
+                    ElementType.ApproxDate
+                }
+            }},
+            {ElementType.CheckBox,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+            {ElementType.CheckBoxList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+            {ElementType.DropDownList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+            {ElementType.YesNo,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+            {ElementType.TextBox,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+            {ElementType.RadioList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+            {ElementType.Time,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+            {ElementType.Grid, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Layout} },
+            {ElementType.Label, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Layout} }
+        };
+    
+        public static Dictionary<ElementType, List<ElementType>> GetControlGroups()
+        {
+            Dictionary<ElementType, List<ElementType>> controls = new Dictionary<ElementType, List<ElementType>>()
             {
-                {ElementType.ApproxDate, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-                {ElementType.Date,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-                {ElementType.DateTime,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-                {ElementType.CheckBox,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-                {ElementType.CheckBoxList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-                {ElementType.DropDownList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-                {ElementType.YesNo,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-                {ElementType.TextBox,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-                {ElementType.RadioList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-                {ElementType.Time,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-                {ElementType.Grid, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Layout} },
-                {ElementType.Label, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Layout} }
+                {ElementType.YesNo, new List<ElementType>()
+                    {
+                        ElementType.CheckBox,
+                    } 
+                },
+                { ElementType.Date, new List<ElementType>()
+                    {
+                        ElementType.DateTime,
+                        ElementType.ApproxDate,
+                        ElementType.ApproxDateTextBox,
+                        ElementType.Time
+                    }
+                },
+                {ElementType.TextBox, new List<ElementType>()
+                    {
+                        ElementType.TextSuggestion,
+                        ElementType.MultiLineTextBox,
+                        ElementType.NumericTextBox,
+                    }
+                },
+                {ElementType.RadioList, new List<ElementType>()
+                    {
+                        ElementType.CheckBoxList
+                    }
+                }
+
             };
 
             return controls;

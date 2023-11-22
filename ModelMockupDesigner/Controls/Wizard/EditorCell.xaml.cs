@@ -166,7 +166,7 @@ namespace ModelMockupDesigner.Controls
                 await WizardPreviewManager.UpdatePreview();
             }
         }
-        public async Task AddNewControl(ElementType elementType, ICellControl controlModel = null, bool createNew = true)
+        public async Task AddNewControl(ElementType elementType, ICellControl controlModel = null, bool createNew = true, bool selectableControl = true)
         {
             ICellControl cellControl = null;
             CustomControl customControl = null;
@@ -383,9 +383,21 @@ namespace ModelMockupDesigner.Controls
                                 customControl = (CustomControl)controlModel;
                             }
 
+                            if (selectableControl)
+                            {
+                                DialogLauncher<ControlSelector> controlSelector = new DialogLauncher<ControlSelector>(this, ResizeMode.NoResize);
+                                controlSelector.Control.ViewModel.OriginalElement = elementType;
+                                controlSelector.ShowDialog();
+                                if (controlSelector.DialogResult == DialogResult.Accept)
+                                {
+                                    ElementType selectedControl = controlSelector.Control.ViewModel.SelectedControl;
+
+                                    await AddNewControl(selectedControl, customControl, true, false);
+                                }
+                                break;
+                            }
+
                             AthenaApproxDate athenaApproxDate = new AthenaApproxDate(customControl);
-
-
                             cellControl = athenaApproxDate;
 
                             break;

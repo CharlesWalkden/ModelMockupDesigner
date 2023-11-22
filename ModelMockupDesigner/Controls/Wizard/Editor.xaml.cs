@@ -117,15 +117,31 @@ namespace ModelMockupDesigner
 
         private async Task LoadDragableControls()
         {
-            foreach (KeyValuePair<ElementType, ElementDefinition> element in DataStore.GetAllControls())
+            foreach (KeyValuePair<ElementType, ElementDefinition> element in DataStore.AllControls)
             {
                 if (element.Value.Required)
                 {
                     CustomControl controlModel = new CustomControl(element.Key, scaleDown: element.Value.Scale);
 
                     controlModel.DisplayGroupbox = true;
-
                     controlModel.HorizontalAlignment = HorizontalAlignmentTypes.Left;
+
+                    if (controlModel.ElementType == ElementType.CheckBoxList || controlModel.ElementType == ElementType.RadioList)
+                    {
+                        controlModel.ListOptions = new List<string>()
+                        {
+                            "Option 1",
+                            "Option 2",
+                            "Option 3",
+                            "Option 4",
+                            "Option 5",
+                            "Option 6",
+                            "Option 7",
+                            "Option 8",
+                            "Option 9",
+                        };
+                        controlModel.ColumnCount = 3;
+                    }
 
                     FrameworkElement control = await CustomControlGenerator.GetControl(controlModel);
                     if (control != null)
@@ -500,7 +516,10 @@ namespace ModelMockupDesigner
         }
         private async void OpenPreviewWindow_Click(object sender, RoutedEventArgs e)
         {
-            await WizardPreviewManager.LoadWizardPreview(WizardModel);
+            if (WizardPreviewManager.IsClosed)
+            {
+                await WizardPreviewManager.LoadWizardPreview(WizardModel);
+            }
 
             e.Handled = true;
         }
