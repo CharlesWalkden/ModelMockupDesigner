@@ -19,6 +19,7 @@ namespace ModelMockupDesigner.Controls
         public AthenaTextBox(CustomControl customControl)
         {
             ControlModel = customControl;
+            DataContext = ControlModel;
             TextChanged += AthenaTextBox_TextChanged;
             GotFocus += AthenaTextBox_GotFocus;
             LostFocus += AthenaTextBox_LostFocus;

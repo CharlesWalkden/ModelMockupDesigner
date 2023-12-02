@@ -18,6 +18,22 @@ namespace ModelMockupDesigner.Models
         {
             ElementType = elementType;
             ListOptions = listOptions;
+
+            if (ListOptions == null && (ElementType == ElementType.CheckBoxList || ElementType == ElementType.RadioList
+                || ElementType == ElementType.DropDownList))
+            {
+                // If we don't have list options and the elementtype is a list, add some default ones.
+                ListOptions = new List<string>()
+                {
+                    "Option 1",
+                    "Option 2",
+                    "Option 3",
+                    "Option 4",
+                    "Option 5",
+                    "Option 6"
+                };
+            }
+
             ScaleDown = scaleDown;
 
             if (elementType == ElementType.DateTime || elementType == ElementType.RadioList || elementType == ElementType.YesNo || elementType == ElementType.TextBox)

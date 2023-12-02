@@ -66,10 +66,13 @@ namespace ModelMockupDesigner.Controls
                 controlBorder.MouseLeave += ControlBorder_MouseLeave;
 
                 FrameworkElement control = await CustomControlGenerator.GetControl(new Models.CustomControl(element));
-                controlBorder.Child = control;
-                controlBorder.Child.IsEnabled = false;
-                // TODO: Wrap the control, make it look pretty.
-                root.Children.Add(controlBorder);
+                if (control != null)
+                {
+                    controlBorder.Child = control;
+                    controlBorder.Child.IsEnabled = false;
+                    // TODO: Wrap the control, make it look pretty.
+                    root.Children.Add(controlBorder);
+                }
             }
         }
 

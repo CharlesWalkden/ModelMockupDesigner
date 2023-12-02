@@ -53,6 +53,8 @@ namespace ModelMockupDesigner.Controls
             RefreshListOptions(controlModel.ColumnCount);
             ShowGroupBox = ControlModel.DisplayGroupbox;
             Title = ControlModel.GroupBoxTitle;
+
+            DataContext = ControlModel;
         }
 
         private void AthenaRadioList_Unloaded(object sender, RoutedEventArgs e)

@@ -1,4 +1,5 @@
 ﻿using ModelMockupDesigner.Controls;
+using ModelMockupDesigner.Data;
 using ModelMockupDesigner.Enums;
 using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
@@ -168,8 +169,27 @@ namespace ModelMockupDesigner.Controls
         }
         public async Task AddNewControl(ElementType elementType, ICellControl controlModel = null, bool createNew = true, bool selectableControl = true)
         {
+            ElementType controlElement = elementType;
             ICellControl cellControl = null;
             CustomControl customControl = null;
+
+            // If the control we are creating has an interchangeable type, launch the control selector and allow the user to select which control they want.
+            // Then update the controlElement with the selected control and then continue to create the control as we normally would.
+            if (DataStore.AllControls[elementType].InterchangeableTypes?.Count() > 0)
+            {
+                DialogLauncher<ControlSelector> controlSelector = new DialogLauncher<ControlSelector>(this, ResizeMode.NoResize);
+                controlSelector.Control.ViewModel.OriginalElement = elementType;
+                controlSelector.ShowDialog();
+                if (controlSelector.DialogResult == DialogResult.Accept)
+                {
+                    controlElement = controlSelector.Control.ViewModel.SelectedControl;
+                }
+                else
+                {
+                    // Return here as the user has canceled the control selection so lets not add a control to the cell.
+                    return;
+                }
+            }
 
             if (createNew)
             {
@@ -381,20 +401,6 @@ namespace ModelMockupDesigner.Controls
                             else
                             {
                                 customControl = (CustomControl)controlModel;
-                            }
-
-                            if (selectableControl)
-                            {
-                                DialogLauncher<ControlSelector> controlSelector = new DialogLauncher<ControlSelector>(this, ResizeMode.NoResize);
-                                controlSelector.Control.ViewModel.OriginalElement = elementType;
-                                controlSelector.ShowDialog();
-                                if (controlSelector.DialogResult == DialogResult.Accept)
-                                {
-                                    ElementType selectedControl = controlSelector.Control.ViewModel.SelectedControl;
-
-                                    await AddNewControl(selectedControl, customControl, true, false);
-                                }
-                                break;
                             }
 
                             AthenaApproxDate athenaApproxDate = new AthenaApproxDate(customControl);

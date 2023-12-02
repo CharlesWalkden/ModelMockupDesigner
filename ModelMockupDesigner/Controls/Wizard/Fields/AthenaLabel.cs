@@ -23,6 +23,7 @@ namespace ModelMockupDesigner.Controls
         public AthenaLabel(CustomControl controlModel)
         {
             ControlModel = controlModel;
+            DataContext = ControlModel;
 
             this.FontSize = 13.333;
             this.Background = new SolidColorBrush(Colors.Transparent);

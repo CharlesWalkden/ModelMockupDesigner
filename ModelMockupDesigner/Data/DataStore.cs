@@ -37,13 +37,54 @@ namespace ModelMockupDesigner.Data
                     ElementType.ApproxDate
                 }
             }},
-            {ElementType.CheckBox,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-            {ElementType.CheckBoxList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-            {ElementType.DropDownList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-            {ElementType.YesNo,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-            {ElementType.TextBox,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-            {ElementType.RadioList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
-            {ElementType.Time,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields} },
+            {ElementType.Time,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
+                InterchangeableTypes = new List<ElementType>()
+                {
+                    ElementType.Date,
+                    ElementType.ApproxDate,
+                    ElementType.DateTime
+                }
+            }},
+            {ElementType.CheckBox,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
+                InterchangeableTypes = new List<ElementType>()
+                {
+                    ElementType.YesNo
+                }
+            }},
+            {ElementType.YesNo,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
+                InterchangeableTypes = new List<ElementType>()
+                {
+                    ElementType.CheckBox
+                }
+            }},
+            {ElementType.TextBox,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
+                InterchangeableTypes = new List <ElementType>()
+                {
+                    ElementType.MultiLineTextBox,
+                    ElementType.NumericTextBox
+                }
+            }},
+            {ElementType.CheckBoxList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
+                InterchangeableTypes = new List<ElementType>()
+                {
+                    ElementType.RadioList,
+                    ElementType.DropDownList
+                }
+            }},
+            {ElementType.RadioList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
+                InterchangeableTypes = new List<ElementType>()
+                {
+                    ElementType.CheckBoxList,
+                    ElementType.DropDownList
+                }
+            }},
+            {ElementType.DropDownList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
+                InterchangeableTypes = new List<ElementType>()
+                {
+                    ElementType.CheckBoxList,
+                    ElementType.RadioList
+                }
+            }},
             {ElementType.Grid, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Layout} },
             {ElementType.Label, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Layout} }
         };
