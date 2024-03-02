@@ -85,7 +85,7 @@ namespace ModelMockupDesigner.Models
 
                 minimumCharacters = value;
                 OnPropertyChanged(nameof(MinimumCharacters));
-                WizardPreviewManager.UpdatePreview();
+                _ = WizardPreviewManager.UpdatePreview();
             }
         }
         private int minimumCharacters { get; set; }
@@ -99,7 +99,7 @@ namespace ModelMockupDesigner.Models
 
                 minimumLines = value;
                 OnPropertyChanged(nameof(MinimumLines));
-                WizardPreviewManager.UpdatePreview();
+                _ = WizardPreviewManager.UpdatePreview();
             }
         }
         // Default min lines to 0 which will default to 4.
@@ -114,7 +114,7 @@ namespace ModelMockupDesigner.Models
 
                 doublePrecision = value;
                 OnPropertyChanged(nameof(DoublePrecision));
-                WizardPreviewManager.UpdatePreview();
+                _ = WizardPreviewManager.UpdatePreview();
             }
         }
         private int doublePrecision { get; set; }
@@ -136,10 +136,12 @@ namespace ModelMockupDesigner.Models
 
         public override Dictionary<string, string> GetEditableProperties()
         {
-            Dictionary<string, string> properties = new Dictionary<string, string>();
-            properties.Add("Name", "Name");
-            properties.Add("Horizontal", "HorizontalAlignment");
-            properties.Add("Vertical", "VerticalAlignment");
+            Dictionary<string, string> properties = new Dictionary<string, string>
+            {
+                { "Name", "Name" },
+                { "Horizontal", "HorizontalAlignment" },
+                { "Vertical", "VerticalAlignment" }
+            };
             
             if (ElementType == ElementType.RadioList)
             {

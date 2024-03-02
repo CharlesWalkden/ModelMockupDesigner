@@ -36,8 +36,10 @@ namespace ModelMockupDesigner.Models
         }
         public Dictionary<string, string> GetEditableProperties()
         {
-            Dictionary<string, string> properties = new Dictionary<string, string>();
-            properties.Add("Name", "Name");
+            Dictionary<string, string> properties = new Dictionary<string, string>
+            {
+                { "Name", "Name" }
+            };
 
             return properties;
         }

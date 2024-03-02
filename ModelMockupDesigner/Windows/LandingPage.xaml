@@ -22,39 +22,39 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ItemsControl x:Name="buttons" Grid.Column="0" Margin="3,0,5,0">
+            <ItemsControl x:Name="buttons" Grid.Column="0" Margin="0,-5.5,5,0">
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Rows="5"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                <Grid Grid.Row="0" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
-                    <Border BorderBrush="Black" BorderThickness="1">
+                <Grid Grid.Row="0" Width="100" Height="100" >
+                    <Border BorderBrush="DimGray" CornerRadius="5,0,0,0" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}">
                         <Button Margin="15" Command="{Binding NewProjectCommand}" Style="{StaticResource CreateNewButton}" ToolTip="Create a new project"/>
                     </Border>
                 </Grid>
 
-                <Grid Grid.Row="1" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
-                    <Border BorderBrush="Black" BorderThickness="1">
+                <Grid Grid.Row="1" Width="100" Height="100" >
+                    <Border BorderBrush="DimGray" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}">
                         <Button Margin="15" Command="{Binding LoadProjectCommand}" Style="{StaticResource OpenButton}" ToolTip="Load currently selected project"/>
                     </Border>
                 </Grid>
 
-                <Grid Grid.Row="2" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
-                    <Border BorderBrush="Black" BorderThickness="1">
+                <Grid Grid.Row="2" Width="100" Height="100" >
+                    <Border BorderBrush="DimGray" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}">
                         <Button Margin="15" Command="{Binding ExportProjectCommand}" Style="{StaticResource ExportButton}" ToolTip="Export currently selected project"/>
                     </Border>
                 </Grid>
 
-                <Grid Grid.Row="3" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
-                    <Border BorderBrush="Black" BorderThickness="1">
+                <Grid Grid.Row="3" Width="100" Height="100" >
+                    <Border BorderBrush="DimGray" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}">
                         <Button Margin="15" Command="{Binding OpenToolsCommand}" Style="{StaticResource ToolsButton}" ToolTip="Open tools (currently disabled)"/>
                     </Border>
                 </Grid>
 
-                <Grid Grid.Row="4" Width="100" Height="100" Background="{StaticResource EditorDarkGrayBrush}">
-                    <Border BorderBrush="Black" BorderThickness="1">
+                <Grid Grid.Row="4" Width="100" Height="100" >
+                    <Border BorderBrush="DimGray" Margin="-.5" BorderThickness="1" CornerRadius="0,0,0,5" Background="{StaticResource EditorDarkGrayBrush}">
                         <Button Margin="15" Command="{Binding ExitApplicationCommand}" Style="{StaticResource ExitButton}" ToolTip="Exit application"/>
                     </Border>
                 </Grid>
@@ -65,7 +65,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="5" Background="{StaticResource EditorDarkGrayBrush}">
+                <Border Grid.Row="1" BorderBrush="DimGray" CornerRadius="0,5,5,0" BorderThickness="1"  Margin="0,0,0,5" Background="{StaticResource EditorDarkGrayBrush}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>

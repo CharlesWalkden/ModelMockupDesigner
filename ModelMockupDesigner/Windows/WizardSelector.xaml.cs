@@ -1,9 +1,13 @@
-﻿using ModelMockupDesigner.Interfaces;
+﻿using ModelMockupDesigner.Enums;
+using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
 using ModelMockupDesigner.ViewModels;
+using ModelMockupDesigner.WizardPreview;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace ModelMockupDesigner
 {
@@ -31,14 +36,33 @@ namespace ModelMockupDesigner
             get => currentSelection;
             set
             {
-                currentSelection = value;
 
-                if (value != null && value is WizardTreeViewItem wizard)
+                if (value is WizardTreeViewItem)
                 {
-                    // Show preview.
+                    previewSlidingButton.Visibility = Visibility.Visible;
                 }
+                else
+                {
+                    previewSlidingButton.Visibility = Visibility.Hidden;
+                }
+                currentSelection = value;
             }
         }
+
+        public bool ToggleEditorPreview
+        {
+            get => toggleEditorPreview;
+            set
+            {
+                if (toggleEditorPreview == value) return;
+
+                toggleEditorPreview = value;
+                UpdatePreview(value);
+            }
+        }
+
+        private bool toggleEditorPreview;
+
         private TreeViewItem currentSelection { get; set; }
 
         public WizardSelector(Project project)
@@ -92,7 +116,6 @@ namespace ModelMockupDesigner
             SetupTreeView();
         }
 
-
         #region Interface
 
         public event EventHandler OnClosed;
@@ -108,16 +131,20 @@ namespace ModelMockupDesigner
         {
             SetupTreeView();
         }
-        private void mainTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private async void mainTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (e.NewValue is TreeViewItem treeViewItem)
             {
                 CurrentSelection = treeViewItem;
+
+                await UpdatePreview(treeViewItem, ToggleEditorPreview);
             }
             else
             {
                 CurrentSelection = null;
+                ClearPreview();
             }
+
         }
 
         private void createButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -153,6 +180,43 @@ namespace ModelMockupDesigner
                 if (mainTreeView.SelectedItem is TreeViewItem item)
                     item.IsSelected = false;
             }
+        }
+
+        private async Task UpdatePreview(bool editor)
+        {
+            await UpdatePreview(CurrentSelection, editor);
+        }
+        private async Task UpdatePreview(TreeViewItem selection, bool editor) 
+        {
+            if (selection is WizardTreeViewItem selectedWizard)
+            {
+                switch (selectedWizard.Wizard.WizardType)
+                {
+                    case WizardType.Dynamic:
+                        {
+                            if (selectedWizard.Wizard is DynamicWizard dynamicWizard)
+                            {
+                                previewImage.Source = await WizardScreenshotManager.TakeWizardSnapshot(dynamicWizard, editor, 0);
+                            }
+                            break;
+                        }
+                    default:
+                        notSupportedText.Visibility = Visibility.Visible;
+                        break;
+                }
+
+            }
+            else
+            {
+                // Clear preview as the user has not selected a wizard.
+                ClearPreview();
+            }
+        }
+
+        private void ClearPreview()
+        {
+            previewImage.Source = null;
+            notSupportedText.Visibility = Visibility.Collapsed;
         }
     }
 
@@ -235,6 +299,7 @@ namespace ModelMockupDesigner
                 return false;
             }
         }
+
     }
 
     public class WizardTreeViewItem : TreeViewItem

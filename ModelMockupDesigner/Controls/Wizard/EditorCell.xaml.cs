@@ -175,25 +175,28 @@ namespace ModelMockupDesigner.Controls
 
             // If the control we are creating has an interchangeable type, launch the control selector and allow the user to select which control they want.
             // Then update the controlElement with the selected control and then continue to create the control as we normally would.
-            if (DataStore.AllControls[elementType].InterchangeableTypes?.Count() > 0)
+            if (DataStore.AllControls.TryGetValue(elementType, out ElementDefinition elementDefinition) && controlModel == null)
             {
-                DialogLauncher<ControlSelector> controlSelector = new DialogLauncher<ControlSelector>(this, ResizeMode.NoResize);
-                controlSelector.Control.ViewModel.OriginalElement = elementType;
-                controlSelector.ShowDialog();
-                if (controlSelector.DialogResult == DialogResult.Accept)
+                if (elementDefinition.InterchangeableTypes?.Count() > 0)
                 {
-                    controlElement = controlSelector.Control.ViewModel.SelectedControl;
-                }
-                else
-                {
-                    // Return here as the user has canceled the control selection so lets not add a control to the cell.
-                    return;
+                    DialogLauncher<ControlSelector> controlSelector = new DialogLauncher<ControlSelector>(this, ResizeMode.NoResize);
+                    controlSelector.Control.ViewModel.OriginalElement = elementType;
+                    controlSelector.ShowDialog();
+                    if (controlSelector.DialogResult == DialogResult.Accept)
+                    {
+                        controlElement = controlSelector.Control.ViewModel.SelectedControl;
+                    }
+                    else
+                    {
+                        // Return here as the user has canceled the control selection so lets not add a control to the cell.
+                        return;
+                    }
                 }
             }
 
             if (createNew)
             {
-                switch (elementType)
+                switch (controlElement)
                 {
                     case ElementType.Table:
                         {

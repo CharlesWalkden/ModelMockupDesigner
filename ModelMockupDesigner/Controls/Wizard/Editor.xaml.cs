@@ -121,10 +121,11 @@ namespace ModelMockupDesigner
             {
                 if (element.Value.Required)
                 {
-                    CustomControl controlModel = new CustomControl(element.Key, scaleDown: element.Value.Scale);
-
-                    controlModel.DisplayGroupbox = true;
-                    controlModel.HorizontalAlignment = HorizontalAlignmentTypes.Left;
+                    CustomControl controlModel = new CustomControl(element.Key, scaleDown: element.Value.Scale)
+                    {
+                        DisplayGroupbox = true,
+                        HorizontalAlignment = HorizontalAlignmentTypes.Left
+                    };
 
                     if (controlModel.ElementType == ElementType.CheckBoxList || controlModel.ElementType == ElementType.RadioList)
                     {
@@ -154,22 +155,24 @@ namespace ModelMockupDesigner
                             groupBox.SetContent(control);
                             control = groupBox;
                         }
-                        Border controlBorder = new Border();
-                        controlBorder.BorderBrush = new SolidColorBrush(Color.FromRgb(50, 62, 73));
-                        controlBorder.Background = Brushes.Transparent;
-                        controlBorder.BorderThickness = new Thickness(2);
-                        controlBorder.Margin = new Thickness(2);
-                        controlBorder.Padding = new Thickness(2);
-                        controlBorder.Opacity = 0.5;
+                        Border controlBorder = new Border
+                        {
+                            BorderBrush = new SolidColorBrush(Color.FromRgb(50, 62, 73)),
+                            Background = Brushes.Transparent,
+                            BorderThickness = new Thickness(2),
+                            Margin = new Thickness(2),
+                            Padding = new Thickness(2),
+                            Opacity = 0.5,
+                            Tag = element.Key.ToString(),
+                            Child = control
+                        };
+                        controlBorder.Child.IsEnabled = false;
 
                         controlBorder.MouseEnter += ControlBorder_MouseEnter;
                         controlBorder.MouseLeave += ControlBorder_MouseLeave;
-
                         controlBorder.PreviewMouseDown += Border_PreviewMouseDown;
                         controlBorder.PreviewMouseMove += Border_PreviewMouseMove;
-                        controlBorder.Tag = element.Key.ToString();
-                        controlBorder.Child = control;
-                        controlBorder.Child.IsEnabled = false;
+                        
                         switch (element.Value.DesignGroup)
                         {
                             case DesignGroup.Layout:
@@ -508,10 +511,7 @@ namespace ModelMockupDesigner
             if (sender is DialogLauncher<WizardCreator> wizardCreator && wizardCreator.Control != null && wizardCreator.Control.DialogResult == DialogResult.Accept &&
                 wizardCreator.Control.ViewModel != null)
             {
-                if (WizardModel != null)
-                {
-                    WizardModel.LoadFromWizardCreator(wizardCreator.Control.ViewModel);
-                }
+                WizardModel?.LoadFromWizardCreator(wizardCreator.Control.ViewModel);
             }
         }
         private async void OpenPreviewWindow_Click(object sender, RoutedEventArgs e)
@@ -659,6 +659,12 @@ namespace ModelMockupDesigner
         {
             DialogLauncher<XMLGenerator> xmlGenerator = new DialogLauncher<XMLGenerator>(WindowControl.GetTopWindow(), System.Windows.ResizeMode.NoResize, true);
             xmlGenerator.Show();
+        }
+
+        public FrameworkElement GetContentContainer()
+        {
+            scrollViewContentContainer.Content = null;
+            return ContentContainer;
         }
     }
 }

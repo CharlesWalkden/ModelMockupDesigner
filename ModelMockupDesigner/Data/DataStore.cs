@@ -16,6 +16,7 @@ namespace ModelMockupDesigner.Data
             {ElementType.ApproxDate, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
                 InterchangeableTypes = new List<ElementType>()
                 {
+                    ElementType.ApproxDate,
                     ElementType.Date,
                     ElementType.DateTime,
                     ElementType.Time
@@ -24,6 +25,7 @@ namespace ModelMockupDesigner.Data
             {ElementType.Date,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
                 InterchangeableTypes = new List<ElementType>()
                 {
+                    ElementType.Date,
                     ElementType.ApproxDate,
                     ElementType.DateTime,
                     ElementType.Time
@@ -40,6 +42,7 @@ namespace ModelMockupDesigner.Data
             {ElementType.Time,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
                 InterchangeableTypes = new List<ElementType>()
                 {
+                    ElementType.Time,
                     ElementType.Date,
                     ElementType.ApproxDate,
                     ElementType.DateTime
@@ -48,18 +51,21 @@ namespace ModelMockupDesigner.Data
             {ElementType.CheckBox,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
                 InterchangeableTypes = new List<ElementType>()
                 {
+                    ElementType.CheckBox,
                     ElementType.YesNo
                 }
             }},
             {ElementType.YesNo,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
                 InterchangeableTypes = new List<ElementType>()
                 {
+                    ElementType.YesNo,
                     ElementType.CheckBox
                 }
             }},
             {ElementType.TextBox,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
                 InterchangeableTypes = new List <ElementType>()
                 {
+                    ElementType.TextBox,
                     ElementType.MultiLineTextBox,
                     ElementType.NumericTextBox
                 }
@@ -67,6 +73,7 @@ namespace ModelMockupDesigner.Data
             {ElementType.CheckBoxList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
                 InterchangeableTypes = new List<ElementType>()
                 {
+                    ElementType.CheckBoxList,
                     ElementType.RadioList,
                     ElementType.DropDownList
                 }
@@ -81,12 +88,14 @@ namespace ModelMockupDesigner.Data
             {ElementType.DropDownList,  new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Fields,
                 InterchangeableTypes = new List<ElementType>()
                 {
+                    ElementType.DropDownList,
                     ElementType.CheckBoxList,
                     ElementType.RadioList
                 }
             }},
-            {ElementType.Grid, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Layout} },
-            {ElementType.Label, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Layout} }
+            {ElementType.Grid, new ElementDefinition(){Required=false,Scale=true,DesignGroup = DesignGroup.Layout} },
+            {ElementType.Label, new ElementDefinition(){Required=true,Scale=true,DesignGroup = DesignGroup.Layout} },
+            //{ElementType.Table, new ElementDefinition(){Required=false,Scale=true,DesignGroup = DesignGroup.Layout} }
         };
     
         public static Dictionary<ElementType, List<ElementType>> GetControlGroups()

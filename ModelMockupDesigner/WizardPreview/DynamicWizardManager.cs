@@ -1,4 +1,5 @@
-﻿using ModelMockupDesigner.Interfaces;
+﻿using ModelMockupDesigner.Controls;
+using ModelMockupDesigner.Interfaces;
 using ModelMockupDesigner.Models;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace ModelMockupDesigner.WizardPreview
 
         public double Width { get; set; } = 1020;
         public double Height { get; set; } = 720;
+
         public DynamicWizardManager(PreviewWizardLayout ui)
         {
             Ui = ui;
@@ -47,6 +49,32 @@ namespace ModelMockupDesigner.WizardPreview
 
                 await DisplayPage(0);
             }
+        }
+
+        public static async Task<IWizardPageLayout> BuildWizardPage(IWizardModel wizard, int pageIndex)
+        {
+            IWizardPageLayout page = null;
+            if (wizard is DynamicWizard dynamicWizard)
+            {
+                DynamicWizardSection section = dynamicWizard.Sections[pageIndex];
+                page = new DynamicWizardPageLayout(section);
+                await page.Build();
+            }
+
+            return page;
+        }
+        public static async Task<EditorSection> BuildDynamicWizardEditorPage(IWizardModel wizard, int pageIndex)
+        {
+            EditorSection section = null;
+            if (wizard is DynamicWizard dynamicWizard)
+            {
+                DynamicWizardSection sectionModel = dynamicWizard.Sections[pageIndex];
+                section = new EditorSection(null);
+
+                await section.LoadModel(sectionModel);
+            }
+
+            return section;
         }
         private async Task DisplayPage(int index)
         {

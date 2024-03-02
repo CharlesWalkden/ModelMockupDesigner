@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local="clr-namespace:ModelMockupDesigner"
+             xmlns:controls="clr-namespace:ModelMockupDesigner.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="{StaticResource EditorLightGrayBrush}" Margin="5">
@@ -17,7 +18,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Column="0" Grid.Row="0" >
-            <Border BorderBrush="black" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}" Width="auto" Margin="3,3,10,0" CornerRadius="6,0,0,0">
+            <Border BorderBrush="DimGray" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}" Width="auto" Margin="0,0,5,0" CornerRadius="5,0,0,0">
                 <!-- Save, Load or Close current project. -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
                     <TextBlock Text="Project Overview"  FontSize="12" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Top" />
@@ -35,7 +36,7 @@
         </Grid>
         
         <Grid Grid.Column="1" Grid.Row="0">
-            <Border BorderBrush="Black" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}" Width="auto" Margin="0,3,3,0" CornerRadius="0,6,0,0">
+            <Border BorderBrush="DimGray" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}" Width="auto" Margin="0" CornerRadius="0,5,0,0">
                 <Grid Margin="5,0,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="280"/>
@@ -58,7 +59,7 @@
             </Border>
         </Grid>
         <Grid Grid.Column="0" Grid.Row="1">
-            <Border BorderBrush="Black" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}" Width="auto" Margin="3,8,10,3" CornerRadius="0,0,0,6">
+            <Border BorderBrush="DimGray" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}" Width="auto" Margin="0,5,5,0" CornerRadius="0,0,0,5">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -77,7 +78,7 @@
                     <Grid Grid.Row="1">
                         <!-- Create or delete current selected wizard. -->
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                            <TextBlock Grid.Row="0" Text="Data Items:"  FontSize="12" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="0" Text="Actions:"  FontSize="12" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
                             <Button x:Name="createButton" Width="40" Height="40" Margin="5" Style="{StaticResource IconButton}" MouseLeftButtonUp="createButton_MouseLeftButtonUp" PreviewMouseLeftButtonDown="createButton_PreviewMouseLeftButtonDown">
                                 <Button.ContextMenu>
                                     <ContextMenu>
@@ -100,18 +101,30 @@
             </Border>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1">
-            <Border BorderBrush="Black" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}"  Margin="0,8,3,3" CornerRadius="0,0,6,0">
+            <Border BorderBrush="DimGray" BorderThickness="1" Background="{StaticResource EditorDarkGrayBrush}"  Margin="0,5,0,0" CornerRadius="0,0,5,0">
                 <Grid Grid.Row="0">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
+
+                    <Grid Grid.Row="0" Margin="0">
+                        <StackPanel Orientation="Vertical" >
+
+                            <TextBlock Text="Preview:" FontSize="12" HorizontalAlignment="Left" Foreground="White" Padding="10,10,0,0" VerticalAlignment="Center" />
+
+                            <controls:SlidingButton x:Name="previewSlidingButton" Visibility="Hidden" Option1Text="Wizard" Option2Text="Editor" CheckState="{Binding ToggleEditorPreview, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1" x:Name="preview">
                         <!-- Display wizard preview -->
-                        <TextBlock Text="Preview:"  FontSize="12" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Top" />
+                        <Image x:Name="previewImage" Stretch="None" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock x:Name="notSupportedText" Text="Preview for this wizard type is not yet supported..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="White"
+                                   Visibility="Collapsed"/>
                     </Grid>
 
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="2">
                         <!-- Edit button -->
                         <Button Margin="0,0,5,0"  Width="40" Height="40" Command="{Binding EditWizardCommand}" Style="{StaticResource IconButton}" HorizontalAlignment="Right">
                             <iconPacks:PackIconMaterial Kind="FolderOpen" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" />

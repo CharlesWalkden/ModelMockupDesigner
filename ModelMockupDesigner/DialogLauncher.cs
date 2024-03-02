@@ -111,7 +111,7 @@ namespace ModelMockupDesigner
                 System.Windows.Forms.Screen primary = System.Windows.Forms.Screen.FromRectangle(new System.Drawing.Rectangle((int)Window.Owner.Left, (int)Window.Owner.Top, (int)Window.Owner.Width, (int)Window.Owner.Height));
 
                 System.Windows.Forms.Screen second = System.Windows.Forms.Screen.AllScreens.FirstOrDefault(x => x.DeviceName != primary.DeviceName);
-
+                
                 Window.Left = second.WorkingArea.Left + (second.WorkingArea.Width / 4);
                 Window.Top = second.WorkingArea.Top + (second.WorkingArea.Height / 6);
 
