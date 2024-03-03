@@ -202,6 +202,7 @@ namespace ModelMockupDesigner
 
                                 this.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity));
 
+                                // If the image returned is larger than the current view, use the uniform image source so that the image will scale to the available space.
                                 if (imageSource.Width > this.DesiredSize.Width || imageSource.Height > this.DesiredSize.Height)
                                 {
                                     previewImageUniform.Source = imageSource;

@@ -108,16 +108,31 @@ namespace ModelMockupDesigner
         {
             if (OpenOnDifferentScreen && System.Windows.Forms.Screen.AllScreens.Count() > 1)
             {
+                // Gets the screen the window is on.
                 System.Windows.Forms.Screen primary = System.Windows.Forms.Screen.FromRectangle(new System.Drawing.Rectangle((int)Window.Owner.Left, (int)Window.Owner.Top, (int)Window.Owner.Width, (int)Window.Owner.Height));
 
+                // Gets the next screen in the list.
                 System.Windows.Forms.Screen second = System.Windows.Forms.Screen.AllScreens.FirstOrDefault(x => x.DeviceName != primary.DeviceName);
-                
-                Window.Left = second.WorkingArea.Left + (second.WorkingArea.Width / 4);
-                Window.Top = second.WorkingArea.Top + (second.WorkingArea.Height / 6);
+
+                int centerX = second.WorkingArea.Left + (second.WorkingArea.Width / 2);
+                int centerY = second.WorkingArea.Top + (second.WorkingArea.Height / 2);
+
+                // Make sure the window is properly sized and laid out before getting its dimensions
+                Window.WindowState = WindowState.Normal;
+                Window.Show();
+                Window.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                Window.Arrange(new Rect(0, 0, Window.DesiredSize.Width, Window.DesiredSize.Height));
+                Window.UpdateLayout();
+
+                // Calculate the center of the window
+                double windowCenterX = centerX - (Window.ActualWidth / 2);
+                double windowCenterY = centerY - (Window.ActualHeight / 2);
+
+                // Set the window position to the center
+                Window.Left = windowCenterX;
+                Window.Top = windowCenterY;
 
             }
-
-            Window.Show();
             
         }
         private void Close()
@@ -139,28 +154,6 @@ namespace ModelMockupDesigner
             }
             OnClose?.Invoke(this, new DialogEventArgs() { Result = DialogResult });
         }
-
-        //private int MonitorCount()
-        //{
-        //    ManagementObjectCollection collection = GetManagementCollection("root\\WMI", "Select * from WMIMonitorID");
-
-        //    return collection.Count;
-        //}
-        //private ManagementObjectCollection GetManagementCollection(string scope,string query)
-        //{
-        //    ManagementObjectSearcher s = new ManagementObjectSearcher(query);
-
-        //    return s.Get();
-        //}
-        //private void SetWindowLocation()
-        //{
-        //    ManagementObjectCollection monitors = GetManagementCollection("root\\WMI", "Select * from WmiMonitorBasicDisplayParams ");
-
-        //    foreach (ManagementObject monitor in monitors)
-        //    {
-
-        //    }
-        //}
 
         public T Control => ((ScrollViewer)Window.Content).Content as T;
         private void window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
