@@ -81,9 +81,9 @@
                             <TextBlock Grid.Row="0" Text="Actions:"  FontSize="12" HorizontalAlignment="Left" Foreground="White" Padding="10" VerticalAlignment="Center" />
                             <Button x:Name="createButton" Width="40" Height="40" Margin="5" Style="{StaticResource IconButton}" MouseLeftButtonUp="createButton_MouseLeftButtonUp" PreviewMouseLeftButtonDown="createButton_PreviewMouseLeftButtonDown">
                                 <Button.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="Create Category" Command="{Binding CreateNewCategoryCommand}"/>
-                                        <MenuItem Header="Create Wizard" Command="{Binding CreateNewWizardCommand}"/>
+                                    <ContextMenu Style="{StaticResource ContextMenuStyle}">
+                                        <MenuItem Style="{StaticResource MenuItemStyle}" Header="Create Category" Command="{Binding CreateNewCategoryCommand}"/>
+                                        <MenuItem Style="{StaticResource MenuItemStyle}" Header="Create Wizard" Command="{Binding CreateNewWizardCommand}"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
                                 <iconPacks:PackIconMaterial Kind="FilePlus" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource WhiteBrush}" Height="25" Width="25" ToolTip="Create new data item" />
@@ -114,7 +114,7 @@
 
                             <TextBlock Text="Preview:" FontSize="12" HorizontalAlignment="Left" Foreground="White" Padding="10,10,0,0" VerticalAlignment="Center" />
 
-                            <controls:SlidingButton x:Name="previewSlidingButton" Visibility="Hidden" Option1Text="Wizard" Option2Text="Editor" CheckState="{Binding ToggleEditorPreview, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <controls:SlidingButton x:Name="previewSlidingButton" BackgroundColor="{StaticResource EditorLightGrayBrush}" Visibility="Hidden" Option1Text="Wizard" Option2Text="Editor" CheckState="{Binding ToggleEditorPreview, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="1" x:Name="preview">

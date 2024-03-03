@@ -4,6 +4,16 @@
 
     <DataTemplate x:Key="treeFolder">
         <StackPanel Orientation="Horizontal" x:Name="stackPanel" Margin="0">
+            <!--<StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource EditorLightGrayBrush}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>-->
             <Image Height="18" Source="/Images/treeviewfolder.png" Stretch="Uniform" Width="26"/>
             <TextBlock x:Name="label" FontWeight="Normal" FontSize="12" Foreground="White" Margin="5,0,5,1" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Left" />
         </StackPanel>
@@ -11,6 +21,16 @@
 
     <DataTemplate x:Key="treeWizardAthena">
         <StackPanel Orientation="Horizontal" x:Name="stackPanel" Margin="0">
+            <!--<StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource EditorLightGrayBrush}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>-->
             <Image Height="18" Source="/Images/AthenaSmall.png" Stretch="Uniform" Width="26"/>
             <TextBlock x:Name="label" FontWeight="Normal" FontSize="12" Foreground="White" Margin="5,0,5,1" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Left" />
         </StackPanel>
@@ -18,11 +38,26 @@
 
     <DataTemplate x:Key="treeWizardGuardian">
         <StackPanel Orientation="Horizontal" x:Name="stackPanel" Margin="0">
+            <!--<StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource EditorLightGrayBrush}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>-->
             <Image Height="18" Source="/Images/GuardianSmall.png" Stretch="Uniform" Width="26"/>
             <TextBlock x:Name="label" FontWeight="Normal" FontSize="12" Foreground="White" Margin="5,0,5,1" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Left" />
         </StackPanel>
     </DataTemplate>
 
-
+    <Style TargetType="TreeView">
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Orange"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Orange"/>
+        </Style.Resources>
+    </Style>
 
 </ResourceDictionary>

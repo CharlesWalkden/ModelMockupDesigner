@@ -48,12 +48,6 @@ namespace ModelMockupDesigner
             }
         }
 
-        public void RemoveChild()
-        {
-            root.Children.Clear();
-            PreviewWizardLayout = null;
-        }
-
         #region Interface
 
         public event EventHandler<DialogEventArgs> OnClose;

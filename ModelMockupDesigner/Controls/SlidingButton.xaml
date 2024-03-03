@@ -28,7 +28,7 @@
                 <TextBlock x:Name="option1Text" Text="{Binding Option1Text, RelativeSource={RelativeSource AncestorType=UserControl}}"
                            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Foreground="White"/>
                 
-                <Border Width="40" Height="20" Background="DimGray" CornerRadius="10">
+                <Border x:Name="ellipseBorder" Width="40" Height="20" Background="DimGray" CornerRadius="10">
                     <Canvas x:Name="toggleCanvas" Width="20" Height="20" HorizontalAlignment="Left">
                         <Ellipse x:Name="toggleEllipse" Fill="White" Width="20" Height="20" HorizontalAlignment="Left" />
                     </Canvas>

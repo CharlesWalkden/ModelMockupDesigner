@@ -21,6 +21,17 @@ namespace ModelMockupDesigner.Controls
     /// </summary>
     public partial class SlidingButton : UserControl
     {
+        public Brush BackgroundColor
+        {
+            get => backGroundColor;
+            set
+            {
+                backGroundColor = value;
+                ellipseBorder.Background = value;
+            }
+        }
+        private Brush backGroundColor;
+
         public static readonly DependencyProperty Option1TextProperty =
             DependencyProperty.Register("Option1Text", typeof(string), typeof(SlidingButton));
 
