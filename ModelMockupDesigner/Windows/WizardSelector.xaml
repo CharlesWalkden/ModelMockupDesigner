@@ -120,6 +120,7 @@
                     <Grid Grid.Row="1" x:Name="preview">
                         <!-- Display wizard preview -->
                         <Image x:Name="previewImage" Stretch="None" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Image x:Name="previewImageUniform" Stretch="Uniform" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         <TextBlock x:Name="notSupportedText" Text="Preview for this wizard type is not yet supported..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="White"
                                    Visibility="Collapsed"/>
                     </Grid>

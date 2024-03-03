@@ -50,9 +50,11 @@ namespace ModelMockupDesigner.WizardPreview
 
         private static async Task<ImageSource> DynamicWizardSnapshot(IWizardModel model, int pageIndex)
         {
-            IWizardPageLayout page = await DynamicWizardManager.BuildWizardPage(model, pageIndex);
+            WizardDesignPreview preview = new WizardDesignPreview();
+            await preview.LoadWizard(model, pageIndex);
+            preview.Background = System.Windows.Media.Brushes.White;
 
-            return await TakePageSnapshot(page as FrameworkElement);
+            return await TakePageSnapshot(preview);
         }
 
         private static async Task<ImageSource> DynamicWizardEditorSnapshot(IWizardModel model, int pageIndex)
@@ -62,28 +64,25 @@ namespace ModelMockupDesigner.WizardPreview
             return await TakePageSnapshot(pageSection);
         }
 
-        private static Task<ImageSource> TakePageSnapshot(FrameworkElement pageElement)
+        private static Task<ImageSource> TakePageSnapshot(FrameworkElement element, int width = 0, int height = 0)
         {
             ImageSource imageSource = null;
 
-            if (pageElement != null)
+            if (element != null)
             {
-                pageElement.UpdateLayout();
 
-                pageElement.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity));
-                pageElement.Arrange(new Rect(0, 0, pageElement.DesiredSize.Width, pageElement.DesiredSize.Height));
+                element.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity));
+                element.Arrange(new Rect(0, 0, element.DesiredSize.Width, element.DesiredSize.Height));
 
-                int desiredWidth = (int)pageElement.DesiredSize.Width;
-                int desiredHeight = (int)pageElement.DesiredSize.Height;
+                int desiredWidth = width > 0 ? width : (int)element.DesiredSize.Width;
+                int desiredHeight = height > 0 ? height : (int)element.DesiredSize.Height;
 
-                //if (desiredWidth < 715)
-                //    desiredWidth = 715;
-
-                //if (desiredHeight < 600)
-                //    desiredHeight = 600;
+                element.UpdateLayout();
 
                 Canvas canvas = new Canvas();
-                canvas.Children.Add(pageElement);
+                canvas.Children.Add(element);
+                canvas.Width = desiredWidth;
+                canvas.Height = desiredHeight;
 
                 RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(desiredWidth, desiredHeight, 96d, 96d, System.Windows.Media.PixelFormats.Default);
 

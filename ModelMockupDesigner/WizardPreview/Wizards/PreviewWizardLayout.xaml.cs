@@ -53,16 +53,15 @@ namespace ModelMockupDesigner
                 await Manager.Reload();
         }
 
-        public async Task LoadWizard(IWizardModel wizardModel) 
+        public async Task LoadWizard(IWizardModel wizardModel, int pageIndex = 0) 
         {
             if (Manager != null)
-                await Manager.LoadWizard(wizardModel);
+                await Manager.LoadWizard(wizardModel, pageIndex);
         }
 
         public async Task DisplayPage(IWizardPageLayout pageLayout)
         {
             wizardContainer.Children.Clear();
-            
 
             if (pageLayout != null)
                 await pageLayout.Build();

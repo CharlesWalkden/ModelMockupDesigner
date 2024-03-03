@@ -12,7 +12,7 @@ namespace ModelMockupDesigner.WizardPreview
 {
     public class DynamicWizardManager : IWizardManager
     {
-        private readonly PreviewWizardLayout Ui;
+        public readonly PreviewWizardLayout Ui;
 
         private DynamicWizard DynamicWizard;
 
@@ -41,13 +41,13 @@ namespace ModelMockupDesigner.WizardPreview
                 await DisplayPage(0);
             }
         }
-        public async Task LoadWizard(IWizardModel wizard)
+        public async Task LoadWizard(IWizardModel wizard, int pageIndex = 0)
         {
             if (wizard is DynamicWizard dynamicWizard)
             {
                 DynamicWizard = dynamicWizard;
 
-                await DisplayPage(0);
+                await DisplayPage(pageIndex);
             }
         }
 

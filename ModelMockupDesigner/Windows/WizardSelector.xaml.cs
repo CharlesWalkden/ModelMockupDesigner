@@ -15,6 +15,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -188,6 +189,7 @@ namespace ModelMockupDesigner
         }
         private async Task UpdatePreview(TreeViewItem selection, bool editor) 
         {
+            ClearPreview();
             if (selection is WizardTreeViewItem selectedWizard)
             {
                 switch (selectedWizard.Wizard.WizardType)
@@ -196,7 +198,18 @@ namespace ModelMockupDesigner
                         {
                             if (selectedWizard.Wizard is DynamicWizard dynamicWizard)
                             {
-                                previewImage.Source = await WizardScreenshotManager.TakeWizardSnapshot(dynamicWizard, editor, 0);
+                                ImageSource imageSource = await WizardScreenshotManager.TakeWizardSnapshot(dynamicWizard, editor, 0);
+
+                                this.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity));
+
+                                if (imageSource.Width > this.DesiredSize.Width || imageSource.Height > this.DesiredSize.Height)
+                                {
+                                    previewImageUniform.Source = imageSource;
+                                }
+                                else
+                                {
+                                    previewImage.Source = imageSource;
+                                }
                             }
                             break;
                         }
@@ -216,6 +229,7 @@ namespace ModelMockupDesigner
         private void ClearPreview()
         {
             previewImage.Source = null;
+            previewImageUniform.Source = null;
             notSupportedText.Visibility = Visibility.Collapsed;
         }
     }

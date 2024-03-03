@@ -57,10 +57,12 @@ namespace ModelMockupDesigner.Controls
 
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            ThicknessAnimation animation = new ThicknessAnimation();
-            animation.From = toggleEllipse.Margin;
-            animation.To = new Thickness(20, 0, 0, 0);
-            animation.Duration = new Duration(TimeSpan.FromSeconds(0.3));
+            ThicknessAnimation animation = new ThicknessAnimation
+            {
+                From = toggleEllipse.Margin,
+                To = new Thickness(20, 0, 0, 0),
+                Duration = new Duration(TimeSpan.FromSeconds(0.3))
+            };
             toggleEllipse.BeginAnimation(MarginProperty, animation);
 
             option1Text.Opacity = 0.5;
@@ -71,10 +73,12 @@ namespace ModelMockupDesigner.Controls
 
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            ThicknessAnimation animation = new ThicknessAnimation();
-            animation.From = toggleEllipse.Margin;
-            animation.To = new Thickness(0, 0, 0, 0);
-            animation.Duration = new Duration(TimeSpan.FromSeconds(0.3));
+            ThicknessAnimation animation = new ThicknessAnimation
+            {
+                From = toggleEllipse.Margin,
+                To = new Thickness(0, 0, 0, 0),
+                Duration = new Duration(TimeSpan.FromSeconds(0.3))
+            };
             toggleEllipse.BeginAnimation(MarginProperty, animation);
 
             option1Text.Opacity = 1;

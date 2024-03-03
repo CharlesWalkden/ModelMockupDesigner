@@ -29,10 +29,10 @@ namespace ModelMockupDesigner
             InitializeComponent();
         }
 
-        public async Task LoadWizard(IWizardModel wizard)
+        public async Task LoadWizard(IWizardModel wizard, int pageIndex = 0)
         {
             PreviewWizardLayout = new PreviewWizardLayout(wizard.WizardType);
-            await PreviewWizardLayout.LoadWizard(wizard);
+            await PreviewWizardLayout.LoadWizard(wizard, pageIndex);
 
             SetSize();
 
@@ -46,6 +46,12 @@ namespace ModelMockupDesigner
                 this.Width = PreviewWizardLayout.GetWidth();
                 this.Height = PreviewWizardLayout.GetHeight();
             }
+        }
+
+        public void RemoveChild()
+        {
+            root.Children.Clear();
+            PreviewWizardLayout = null;
         }
 
         #region Interface
